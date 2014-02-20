@@ -1,0 +1,31 @@
+{
+	"author": {
+		"name": "Patrik Simek",
+		"url": "http://www.integromat.com"
+	},
+	"name": "imt-proto",
+	"description": "Integromat Proto-Classes",
+	"keywords": [
+		"integromat",
+		"imt"
+	],
+	"version": "0.1.0",
+	"main": "lib/proto.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/integratorscz/imt-proto"
+	},
+	"dependencies": {
+
+	},
+	"devDependencies": {
+		"coffee-script": ">=1.7.1",
+		"mocha": ">=1.12.0"
+	},
+	"engines": {
+		"node": ">=0.10"
+	},
+	"scripts": {
+		"test": "mocha"
+	}
+}
