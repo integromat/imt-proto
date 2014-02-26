@@ -84,15 +84,18 @@ Rate Limit Error. Used when API rate limit is exceeded.
 **IMPORTANT**: Also freezes the scenario for some time.
 
 @param {String} message Error message.
+@param {Number} [delay] Delay in milliseconds. Optional, default is 20 minutes.
 
 @property {String} stack Call stack.
 @property {String} message Error message.
+@property {Number} delay Delay in milliseconds.
 ###
 
 class global.RateLimitError extends Error
-	constructor: (message) ->
+	constructor: (message, delay) ->
 		@name = @constructor.name
 		@message = message
+		@delay = delay
 		
 		super()
 		Error.captureStackTrace @, @constructor
