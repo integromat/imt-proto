@@ -59,21 +59,18 @@ class global.DataError extends Error
 		Error.captureStackTrace @, @constructor
 
 ###
-Inconsistency Error. Used when commit fails. Process flow stops immediately. Commited data remain commited.
+Inconsistency Error. Used when commit/rollback fails. Process flow stops immediately. Commited data remain commited.
 
 @param {String} message Error message.
-@param {Array} [errors] Array of errors for each item in bundle.
 
 @property {String} stack Call stack.
 @property {String} message Error message.
-@property {Array} errors Array of errors.
 ###
 
 class global.InconsistencyError extends Error
-	constructor: (message, errors) ->
+	constructor: (message) ->
 		@name = @constructor.name
 		@message = message
-		@errors = errors ? []
 		
 		super()
 		Error.captureStackTrace @, @constructor
