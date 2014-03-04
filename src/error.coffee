@@ -11,7 +11,7 @@ class global.UnknownError extends Error
 	constructor: (err) ->
 		if typeof err is 'object'
 			@[k] = v for k, v of err
-			@message ?= "<no message>"
+			@message = err.message ? "<no message>"
 
 		else if typeof err is 'string'
 			@message = err
