@@ -56,7 +56,7 @@ class global.IMTBase extends EventEmitter
 	###
 
 	commit: (done) ->
-		done? null, []
+		done? null, null
 	
 	###
 	Print message to Scenario info log.
@@ -76,7 +76,7 @@ class global.IMTBase extends EventEmitter
 	###
 	
 	rollback: (done) ->
-		done? null, []
+		done? null, null
 		
 	###
 	Print message to Scenario warning log.
