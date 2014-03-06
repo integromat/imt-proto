@@ -149,3 +149,22 @@ class global.InvalidConfigurationError extends Error
 		
 		super()
 		Error.captureStackTrace @, @constructor
+
+###
+Invalid Access Token Error. Used when service access token is expired or invalid.
+
+**IMPORTANT**: Also disables the scenario.
+
+@param {String} message Error message.
+
+@property {String} stack Call stack.
+@property {String} message Error message.
+###
+
+class global.InvalidAccessTokenError extends InvalidConfigurationError
+	constructor: (message) ->
+		@name = @constructor.name
+		@message = message
+		
+		super()
+		Error.captureStackTrace @, @constructor
