@@ -46,18 +46,17 @@ class global.IMTBase extends EventEmitter
 		@removeAllListeners()
 		
 		done?()
-	
-	
-	
+
 	###
 	Commit all operations.
 	
 	@callback done Callback to call when operations are done.
 		@param {Error} err Error on error, otherwise null.
+		@param {Array} report Commit report (see docs).
 	###
 
 	commit: (done) ->
-		done?()
+		done? null, []
 	
 	###
 	Print message to Scenario info log.
@@ -73,10 +72,11 @@ class global.IMTBase extends EventEmitter
 	
 	@callback done Callback to call when operations are done.
 		@param {Error} err Error on error, otherwise null.
+		@param {Array} report Rollback report (see docs).
 	###
 	
 	rollback: (done) ->
-		done?()
+		done? null, []
 		
 	###
 	Print message to Scenario warning log.
