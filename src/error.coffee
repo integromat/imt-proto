@@ -168,3 +168,22 @@ class global.InvalidAccessTokenError extends InvalidConfigurationError
 		
 		super()
 		Error.captureStackTrace @, @constructor
+
+###
+Invalid Access Token Error. Used when unexpected things occurs.
+
+**IMPORTANT**: Also disables and lock the scenario. Staff revision is required in order to unlock the scenario.
+
+@param {String} message Error message.
+
+@property {String} stack Call stack.
+@property {String} message Error message.
+###
+
+class global.UnexpectedError
+	constructor: (message) ->
+		@name = @constructor.name
+		@message = message
+		
+		super()
+		Error.captureStackTrace @, @constructor
