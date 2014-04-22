@@ -4,6 +4,7 @@ Base class for all Actions.
 @property {Boolean} listening True, if module is listening.
 
 @event data Dispatched on new data.
+@event error Dispatched on error.
 ###
 
 class global.IMTListener extends IMTTrigger

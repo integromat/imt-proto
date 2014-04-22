@@ -3,6 +3,7 @@
 ###
 Base class for all Modules.
 
+@property {Object} scenario Collection of scenario parameters. Read only.
 @property {Object} common Collection of common parameters. Read only.
 @property {Object} data Collection of data specific to one concrete occurance of this module in Scenario.
 @property {Object} parameters Collection of config parameters. Read only.

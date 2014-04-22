@@ -1,0 +1,10 @@
+{
+	"source": "./src",
+	"deps": ["mdn", "node"],
+	"template": "html",
+	"inner": false,
+	"ignore": [],
+	"type": "merge",
+	"title": "Integromat Proto",
+	"index": "./README.md"
+}
