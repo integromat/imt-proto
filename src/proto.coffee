@@ -1,3 +1,6 @@
+if global.IMT_PROTO_LOADED then return
+global.IMT_PROTO_LOADED = true
+
 require './error.js'
 require './warning.js'
 require './base.js'

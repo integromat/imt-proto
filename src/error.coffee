@@ -180,7 +180,7 @@ Invalid Access Token Error. Used when unexpected things occurs.
 @property {String} message Error message.
 ###
 
-class global.UnexpectedError
+class global.UnexpectedError extends Error
 	constructor: (message) ->
 		@name = @constructor.name
 		@message = message

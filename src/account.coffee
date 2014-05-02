@@ -82,7 +82,7 @@ class global.IMTOAuthAccount extends IMTAccount
 	###
 	Create scope extension request and redirect user to OAuth provider.
 	
-	@param scope {Array|String} Permission or array of permission to request.
+	@param {Array|String} scope Permission or array of permission to request.
 	@callback done Callback to call when authorization request is ready.
 		@param {Error} err Error on error, otherwise null.
 		@param {String} url URL to redirect user to.
