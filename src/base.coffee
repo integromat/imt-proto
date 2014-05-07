@@ -62,11 +62,11 @@ class global.IMTBase extends EventEmitter
 	###
 	Print message to Scenario info log.
 	
-	@param {String} message Message to be printed to Scenario info log.
+	@param {...String} message Message to be printed to Scenario info log.
 	###
 	
-	log: (message...) ->
-		@emit 'log', message.join ' '
+	log: ->
+		@emit 'log', require('util').format arguments...
 
 	###
 	Rollback all operations.
