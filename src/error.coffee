@@ -189,7 +189,7 @@ class global.UnexpectedError extends Error
 		Error.captureStackTrace @, @constructor
 
 ###
-Boost Limit Exceeded Error. Used when boosted limit of bundles was exceeded.
+Batch Limit Exceeded Error. Used when batch limit of bundles was exceeded.
 
 **IMPORTANT**: Also disables the scenario.
 
@@ -199,7 +199,7 @@ Boost Limit Exceeded Error. Used when boosted limit of bundles was exceeded.
 @property {String} message Error message.
 ###
 
-class global.BoostLimitExceededError extends Error
+class global.BatchLimitExceededError extends Error
 	constructor: (message) ->
 		@name = @constructor.name
 		@message = message
