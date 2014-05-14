@@ -187,3 +187,39 @@ class global.UnexpectedError extends Error
 		
 		super()
 		Error.captureStackTrace @, @constructor
+
+###
+Boost Limit Exceeded Error. Used when boosted limit of bundles was exceeded.
+
+**IMPORTANT**: Also disables the scenario.
+
+@param {String} message Error message.
+
+@property {String} stack Call stack.
+@property {String} message Error message.
+###
+
+class global.BoostLimitExceededError extends Error
+	constructor: (message) ->
+		@name = @constructor.name
+		@message = message
+		
+		super()
+		Error.captureStackTrace @, @constructor
+
+###
+Incomplete Data Error. Used when received data are incomplete. 
+
+@param {String} message Error message.
+
+@property {String} stack Call stack.
+@property {String} message Error message.
+###
+
+class global.IncompleteDataError extends Error
+	constructor: (message) ->
+		@name = @constructor.name
+		@message = message
+		
+		super()
+		Error.captureStackTrace @, @constructor
