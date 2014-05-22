@@ -29,14 +29,24 @@ class global.IMTAccount
 		done?()
 		
 	###
-	Test account validity.
+	Test account connection.
 	
-	@callback done Callback to call when authorization request is ready.
+	@callback done Callback to call when test is complete.
 		@param {Error} err Error on error, otherwise null.
 		@param {Boolean} valid True if account is valid.
 	###
 		
 	test: (done) ->
+		done?()
+		
+	###
+	Test account validity.
+	
+	@callback done Callback to call when validation is complete.
+		@param {Error} err Error on error, otherwise null.
+	###
+		
+	validate: (done) ->
 		done?()
 
 ###
