@@ -70,12 +70,13 @@ class global.IMTOAuthAccount extends IMTAccount
 	###
 	Create authorization request and redirect user to OAuth provider.
 	
+	@param {Array} scope Array of permission to request.
 	@callback done Callback to call when authorization request is ready.
 		@param {Error} err Error on error, otherwise null.
 		@param {String} url URL to redirect user to.
 	###
 	
-	authorize: (done) ->
+	authorize: (scope, done) ->
 		done?()
 	
 	###
@@ -92,7 +93,7 @@ class global.IMTOAuthAccount extends IMTAccount
 	###
 	Create scope extension request and redirect user to OAuth provider.
 	
-	@param {Array|String} scope Permission or array of permission to request.
+	@param {Array} scope Array of permission to request.
 	@callback done Callback to call when authorization request is ready.
 		@param {Error} err Error on error, otherwise null.
 		@param {String} url URL to redirect user to.
