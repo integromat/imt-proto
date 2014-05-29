@@ -101,3 +101,14 @@ class global.IMTOAuthAccount extends IMTAccount
 	
 	extendScope: (scope, done) ->
 		done?()
+	
+	###
+	Create reauthorization request and redirect user to OAuth provider.
+	
+	@callback done Callback to call when authorization request is ready.
+		@param {Error} err Error on error, otherwise null.
+		@param {String} url URL to redirect user to.
+	###
+	
+	reauthorize: (done) ->
+		done?()
