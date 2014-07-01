@@ -20,6 +20,11 @@ class global.UnknownError extends Error
 		
 		super()
 		Error.captureStackTrace @, @constructor
+	
+	toJSON: ->
+		json = super()
+		json[k] = v for k, v of @
+		json
 
 ###
 Runtime Error. Used when error happens in program logic, not in invalid data. Flow will be rolled back.
@@ -223,3 +228,18 @@ class global.IncompleteDataError extends Error
 		
 		super()
 		Error.captureStackTrace @, @constructor
+
+###
+Error JSON serialization.
+###
+
+Object.defineProperty Error::, 'toJSON',
+	enumerable: false
+	writable: true
+	value: ->
+		json =
+			name: @name
+			message: @message
+			stack: @stack
+			
+		json
