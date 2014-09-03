@@ -216,12 +216,32 @@ class global.BatchLimitExceededError extends Error
 Incomplete Data Error. Used when received data are incomplete. 
 
 @param {String} message Error message.
+@param {Number} [delay] Delay in milliseconds. Optional.
+
+@property {String} stack Call stack.
+@property {String} message Error message.
+@property {Number} delay Delay in milliseconds.
+###
+
+class global.IncompleteDataError extends Error
+	constructor: (message, delay) ->
+		@name = @constructor.name
+		@message = message
+		@delay = delay
+		
+		super()
+		Error.captureStackTrace @, @constructor
+
+###
+Duplicate Data Error. Used when service receives duplicate data. 
+
+@param {String} message Error message.
 
 @property {String} stack Call stack.
 @property {String} message Error message.
 ###
 
-class global.IncompleteDataError extends Error
+class global.DuplicateDataError extends Error
 	constructor: (message) ->
 		@name = @constructor.name
 		@message = message
