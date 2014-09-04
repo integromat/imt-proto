@@ -44,21 +44,18 @@ class global.RuntimeError extends Error
 		Error.captureStackTrace @, @constructor
 
 ###
-Data Error. Used on invalid data. Data will be moved to DLQ. Process flow will be commited normally.
+Data Error. Used on invalid data. Bundle will be moved to DLQ. Process flow will be commited normally.
 
 @param {String} message Error message.
-@param {Object} data Invalid data.
 
 @property {String} stack Call stack.
-@property {Object} data Data passed to error as invalid.
 @property {String} message Error message.
 ###
 
 class global.DataError extends Error
-	constructor: (message, data) ->
+	constructor: (message) ->
 		@name = @constructor.name
 		@message = message
-		@data = data
 		
 		super()
 		Error.captureStackTrace @, @constructor
