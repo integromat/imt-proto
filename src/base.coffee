@@ -67,6 +67,12 @@ class global.IMTBase extends EventEmitter
 	
 	log: ->
 		@emit 'log', require('util').format arguments...
+	
+	###
+	Reset the module so it can be reused again.
+	###
+	
+	reset: ->
 
 	###
 	Rollback all operations.
