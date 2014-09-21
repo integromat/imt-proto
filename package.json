@@ -1,7 +1,7 @@
 {
 	"author": {
 		"name": "Patrik Simek",
-		"url": "http://www.integromat.com"
+		"url": "https://www.integromat.com"
 	},
 	"name": "imt-proto",
 	"description": "Integromat Proto-Classes",
@@ -9,11 +9,11 @@
 		"integromat",
 		"imt"
 	],
-	"version": "0.1.20",
+	"version": "0.1.21",
 	"main": "lib/proto.js",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/integratorscz/imt-proto"
+		"url": "https://github.com/integromat/imt-proto"
 	},
 	"dependencies": {
 
