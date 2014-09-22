@@ -13,3 +13,18 @@ class global.Warning
 		@message = message
 
 		Error.captureStackTrace @, @constructor
+
+###
+Warning JSON serialization.
+###
+
+Object.defineProperty Warning::, 'toJSON',
+	enumerable: false
+	writable: true
+	value: ->
+		json =
+			name: @name
+			message: @message
+			stack: @stack
+			
+		json
