@@ -165,11 +165,7 @@ Invalid Access Token Error. Used when service access token is expired or invalid
 
 class global.InvalidAccessTokenError extends InvalidConfigurationError
 	constructor: (message) ->
-		@name = @constructor.name
-		@message = message
-		
-		super()
-		Error.captureStackTrace @, @constructor
+		super message
 
 ###
 Invalid Access Token Error. Used when unexpected things occurs.
