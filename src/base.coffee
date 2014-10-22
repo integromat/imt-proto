@@ -60,6 +60,15 @@ class global.IMTBase extends EventEmitter
 		done? null, null
 	
 	###
+	Print debug message to Scenario info log. Debug messages are only visible to system administrators.
+	
+	@param {...String} message Message to be printed to Scenario info log.
+	###
+	
+	debug: ->
+		@emit 'debug', require('util').format arguments...
+	
+	###
 	Print message to Scenario info log.
 	
 	@param {...String} message Message to be printed to Scenario info log.
@@ -88,8 +97,8 @@ class global.IMTBase extends EventEmitter
 	###
 	Print message to Scenario warning log.
 	
-	@param {String} message Message to be printed to Scenario warning log.
+	@param {...String} message Message to be printed to Scenario warning log.
 	###
 	
-	warn: (message...) ->
-		@emit 'warn', message.join ' '
+	warn: ->
+		@emit 'warn', require('util').format arguments...
