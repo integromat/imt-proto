@@ -254,5 +254,7 @@ Object.defineProperty Error::, 'toJSON',
 			name: @name
 			message: @message
 			stack: @stack
+		
+		json.imtExceptionHash = @imtExceptionHash if @imtExceptionHash?
 			
 		json
