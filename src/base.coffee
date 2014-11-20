@@ -20,6 +20,8 @@ class global.IMTBase extends EventEmitter
 	@MODULETYPE_ROUTER: 3
 	@MODULETYPE_ACTION: 4
 	@MODULETYPE_LISTENER: 5
+	@MODULETYPE_FEEDER: 6
+	@MODULETYPE_AGGREGATOR: 7
 	
 	common: null
 	data: null
