@@ -77,7 +77,11 @@ class global.IMTBase extends EventEmitter
 	###
 	
 	log: ->
-		@emit 'log', require('util').format arguments...
+		if arguments[0] instanceof Warning or arguments[0] instanceof Error
+			@emit 'log', arguments[0]
+		
+		else
+			@emit 'log', require('util').format arguments...
 	
 	###
 	Reset the module so it can be reused again.
