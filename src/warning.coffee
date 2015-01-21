@@ -15,6 +15,26 @@ class global.Warning
 		Error.captureStackTrace @, @constructor
 
 ###
+Warning toString.
+###
+
+Object.defineProperty Warning::, 'toString',
+	enumerable: false
+	writable: true
+	value: ->
+		"#{@name}: #{@message}"
+
+###
+Warning inspect.
+###
+
+Object.defineProperty Warning::, 'inspect',
+	enumerable: false
+	writable: true
+	value: ->
+		"[#{@name}: #{@message}]"
+
+###
 Warning JSON serialization.
 ###
 
