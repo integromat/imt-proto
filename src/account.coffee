@@ -11,7 +11,7 @@ class global.IMTAccount
 	###
 	Initializes the account. Function that overrides should always call super.
 	
-	@callback done Callback to call when authorization request is ready.
+	@callback done Callback to call when account is initialized.
 		@param {Error} err Error on error, otherwise null.
 	###
 
@@ -21,7 +21,7 @@ class global.IMTAccount
 	###
 	Finalizes the account. Function that overrides should always call super.
 	
-	@callback done Callback to call when module is finalized.
+	@callback done Callback to call when account is finalized.
 		@param {Error} err Error on error, otherwise null.
 	###
 	
