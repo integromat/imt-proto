@@ -15,3 +15,9 @@ class global.IMTAction extends IMTBase
 
 	write: (bundle, done) ->
 		throw new Error "Must override a superclass method 'write'."
+
+###
+Base Gateway Action.
+###
+
+class global.IMTGatewayAction extends IMTAction

@@ -27,3 +27,9 @@ class global.IMTTrigger extends IMTBase
 
 	read: (done) ->
 		throw new Error "Must override a superclass method 'read'."
+
+###
+Base Gateway Trigger.
+###
+
+class global.IMTGatewayTrigger extends IMTTrigger
