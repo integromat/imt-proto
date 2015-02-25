@@ -1,5 +1,6 @@
 if global.IMT_PROTO_LOADED then return
 global.IMT_PROTO_LOADED = true
+global.requireCommon ?= -> null
 
 require './extensions.js'
 require './error.js'
