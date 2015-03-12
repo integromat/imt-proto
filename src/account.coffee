@@ -51,13 +51,9 @@ class global.IMTAccount
 
 ###
 Base class for all OAuth Accounts.
-
-@property {Object} TOKENS Collection of active request tokens (used by OAuth1).
 ###
 
 class global.IMTOAuthAccount extends IMTAccount
-	@TOKENS: {}
-	
 	###
 	Sets account ID by received data.
 	
