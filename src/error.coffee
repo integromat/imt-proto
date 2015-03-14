@@ -256,5 +256,6 @@ Object.defineProperty Error::, 'toJSON',
 			stack: @stack
 		
 		json.imtExceptionHash = @imtExceptionHash if @imtExceptionHash?
+		json.suberrors = @suberrors if Array.isArray @suberrors
 			
 		json
