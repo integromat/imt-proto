@@ -187,6 +187,8 @@ class global.UnexpectedError extends Error
 		Error.captureStackTrace @, @constructor
 
 ###
+DEPRECATED
+
 Batch Limit Exceeded Error. Used when batch limit of bundles was exceeded.
 
 **IMPORTANT**: Also disables the scenario.
@@ -198,6 +200,25 @@ Batch Limit Exceeded Error. Used when batch limit of bundles was exceeded.
 ###
 
 class global.BatchLimitExceededError extends Error
+	constructor: (message) ->
+		@name = @constructor.name
+		@message = message
+		
+		super()
+		Error.captureStackTrace @, @constructor
+
+###
+Max Results Exceeded Error. Used when limit of results was exceeded.
+
+**IMPORTANT**: Also disables the scenario.
+
+@param {String} message Error message.
+
+@property {String} stack Call stack.
+@property {String} message Error message.
+###
+
+class global.MaxResultsExceededError extends Error
 	constructor: (message) ->
 		@name = @constructor.name
 		@message = message
