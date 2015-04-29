@@ -1,1 +1,0 @@
-coffee --compile --watch --bare --output ./lib ./src
