@@ -1,3 +1,5 @@
+{EventEmitter} = require 'events'
+
 ###
 Base class for RPC.
 
@@ -6,7 +8,7 @@ Base class for RPC.
 @property {Object} parameters Collection of config parameters. Read only.
 ###
 
-class global.IMTRPC
+class global.IMTRPC extends EventEmitter
 	common: null
 	parameters: null
 	environment: null
