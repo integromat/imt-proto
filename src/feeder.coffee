@@ -16,11 +16,6 @@ class global.IMTFeeder extends IMTTransformer
 	###
 
 	transform: (bundle, done) ->
-		if not bundle?.array?
-			err = new RuntimeError "Unexpected undefined data to the feeder."
-			err.hash = 'scenario-feeder-invalid-bundle'
-			return done err
-		
 		array = bundle.array
 		if not Array.isArray array then array = [array]
 		
