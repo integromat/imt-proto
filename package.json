@@ -26,6 +26,7 @@
 		"node": ">=0.10"
 	},
 	"scripts": {
-		"test": "mocha"
+		"test": "mocha",
+		"post-merge": "coffee -c -b -o ./lib ./src && npm update"
 	}
 }
