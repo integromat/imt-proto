@@ -1,11 +1,11 @@
 task 'compile', 'compile sources', ->
 	setImmediate -> run [
-		'coffeemaker --compile --bare --output ./lib ./src'
+		'coffee --compile --bare --output ./lib ./src'
 	]
 
 task 'watch', 'watch & compile sources', ->
 	setImmediate -> run [
-		'coffeemaker --compile --watch --bare --output ./lib ./src'
+		'coffee --compile --watch --bare --output ./lib ./src'
 	]
 
 # ---------------
