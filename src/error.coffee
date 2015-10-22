@@ -206,6 +206,25 @@ class global.MaxResultsExceededError extends Error
 		Error.captureStackTrace @, @constructor
 
 ###
+Max File Size Exceeded Error. Used when limit of file size was exceeded.
+
+**IMPORTANT**: Also disables the scenario.
+
+@param {String} message Error message.
+
+@property {String} stack Call stack.
+@property {String} message Error message.
+###
+
+class global.MaxFileSizeExceededError extends Error
+	constructor: (message) ->
+		@name = @constructor.name
+		@message = message
+		
+		super()
+		Error.captureStackTrace @, @constructor
+
+###
 Incomplete Data Error. Used when received data are incomplete. 
 
 @param {String} message Error message.
