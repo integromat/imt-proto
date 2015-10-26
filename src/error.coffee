@@ -262,6 +262,40 @@ class global.DuplicateDataError extends Error
 		Error.captureStackTrace @, @constructor
 
 ###
+Module Timeout Error. Used when service module operation exceeds time limit.
+
+@param {String} message Error message.
+
+@property {String} stack Call stack.
+@property {String} message Error message.
+###
+
+class global.ModuleTimeoutError extends Error
+	constructor: (message) ->
+		@name = @constructor.name
+		@message = message
+		
+		super()
+		Error.captureStackTrace @, @constructor
+
+###
+Scenario Timeout Error. Used when service scenario execution exceeds time limit.
+
+@param {String} message Error message.
+
+@property {String} stack Call stack.
+@property {String} message Error message.
+###
+
+class global.ScenarioTimeoutError extends Error
+	constructor: (message) ->
+		@name = @constructor.name
+		@message = message
+		
+		super()
+		Error.captureStackTrace @, @constructor
+
+###
 Error JSON serialization.
 ###
 
