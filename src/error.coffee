@@ -296,6 +296,40 @@ class global.ScenarioTimeoutError extends Error
 		Error.captureStackTrace @, @constructor
 
 ###
+Used when processing of a scenario exceeds operations limit.
+
+@param {String} message Error message.
+
+@property {String} stack Call stack.
+@property {String} message Error message.
+###
+
+class global.OperationsLimitExceededError extends Error
+	constructor: (message) ->
+		@name = @constructor.name
+		@message = message
+		
+		super()
+		Error.captureStackTrace @, @constructor
+
+###
+Used when processing of a scenario exceeds data size limit.
+
+@param {String} message Error message.
+
+@property {String} stack Call stack.
+@property {String} message Error message.
+###
+
+class global.DataSizeLimitExceededError extends Error
+	constructor: (message) ->
+		@name = @constructor.name
+		@message = message
+		
+		super()
+		Error.captureStackTrace @, @constructor
+
+###
 Error JSON serialization.
 ###
 
