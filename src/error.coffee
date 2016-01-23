@@ -341,11 +341,8 @@ Object.defineProperty Error::, 'toJSON',
 			name: @name
 			message: @message
 			stack: @stack
-		
-		if (/^IM\d\d\d$/i).test @code
-			json.code = @code
-		
-		json.imtExceptionHash = @imtExceptionHash if @imtExceptionHash?
+
+		json.hash = @hash if @hash?
 		json.suberrors = @suberrors if Array.isArray @suberrors
 			
 		json
