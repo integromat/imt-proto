@@ -342,6 +342,9 @@ Object.defineProperty Error::, 'toJSON',
 			message: @message
 			stack: @stack
 		
+		if (/^IM\d\d\d$/i).test @code
+			json.code = @code
+		
 		json.imtExceptionHash = @imtExceptionHash if @imtExceptionHash?
 		json.suberrors = @suberrors if Array.isArray @suberrors
 			
