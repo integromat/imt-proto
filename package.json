@@ -9,7 +9,7 @@
 		"integromat",
 		"imt"
 	],
-	"version": "0.1.42",
+	"version": "0.1.43",
 	"main": "lib/proto.js",
 	"repository": {
 		"type": "git",
