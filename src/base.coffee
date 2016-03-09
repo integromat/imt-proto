@@ -68,6 +68,9 @@ class global.IMTBase extends EventEmitter
 	###
 	
 	debug: ->
+		if arguments.length is 1 and 'object' is typeof arguments[0]
+			return @emit 'debug', arguments[0]
+		
 		@emit 'debug', require('util').format arguments...
 	
 	###
