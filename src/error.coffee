@@ -330,6 +330,23 @@ class global.DataSizeLimitExceededError extends Error
 		Error.captureStackTrace @, @constructor
 
 ###
+Used when execution is interrupted.
+
+@param {String} message Error message.
+
+@property {String} stack Call stack.
+@property {String} message Error message.
+###
+
+class global.ExecutionInterruptedError extends Error
+	constructor: (message) ->
+		@name = @constructor.name
+		@message = message
+		
+		super()
+		Error.captureStackTrace @, @constructor
+
+###
 Error JSON serialization.
 ###
 
