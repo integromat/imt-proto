@@ -362,5 +362,6 @@ Object.defineProperty Error::, 'toJSON',
 		json.hash = @hash if @hash?
 		json.bundle = @bundle if @bundle?
 		json.suberrors = @suberrors if Array.isArray @suberrors
+		json.external = @external if @external?
 			
 		json
