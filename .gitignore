@@ -3,3 +3,4 @@ node_modules
 .svn
 lib/*
 docs/*
+_site

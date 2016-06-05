@@ -14,7 +14,7 @@ require('imt-proto');
 
 ## License
 
-Copyright (c) 2014 Integromat
+Copyright (c) 2014-2016 Integromat
 
 The MIT License
 

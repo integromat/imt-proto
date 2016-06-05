@@ -1,5 +1,13 @@
 if global.IMT_PROTO_LOADED then return
 global.IMT_PROTO_LOADED = true
+
+###
+Requrie module from common collection of pre-loaded modules.
+
+@param {String} name Module nane.
+@returns {*}
+###
+
 global.requireCommon ?= -> null
 
 require './extensions.js'
