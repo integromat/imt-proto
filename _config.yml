@@ -1,0 +1,7 @@
+exclude:
+  - lib
+  - node_modules
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM

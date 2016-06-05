@@ -1,0 +1,59 @@
+.cs-main dd > p {
+  margin: 0;
+}
+.cs-main {
+  background-color: #fff;
+  padding: 0 30px;
+}
+.cs-main .well {
+  background: transparent;
+  border-top: 1px solid #eee;
+  padding: 9px;
+  margin: 0;
+}
+.cs-main h4.cs-header {
+  background-color: rgba(171, 90, 30, 0.08);
+  margin: 0;
+  padding: 10px 9px;
+}
+.cs-main .cs-defined {
+  margin: 10px 9px;
+}
+.cs-main > .cs-class > .cs-methods > .cs-builtin.cs-inherited {
+  display: none;
+}
+.cs-main > .cs-methods > .cs-methods > li.cs-builtin {
+  display: none;
+}
+.cs-main dl.cs-arguments {
+  margin-top: 0;
+}
+.cs-main dl.cs-arguments dt {
+  text-align: left;
+}
+.cs-main .cs-arguments-title {
+  font-weight: bold;
+  margin: 15px 0 0 0;
+  color: #aaa;
+}
+.cs-nav {
+  padding-top: 15px;
+}
+.cs-nav h5 {
+  padding: 15px 0 5px 10px;
+  margin: 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #aaa;
+}
+.cs-nav h5 > a {
+  color: #aaa;
+}
+.cs-nav ul > li > a {
+  padding: 5px 10px;
+}
+@media (max-width:767px) {
+  .cs-main h3 {
+    padding-left: 40px;
+  }
+}

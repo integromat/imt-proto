@@ -1,0 +1,11 @@
+body > header .navbar-brand {background-color: #ab1e24;}
+body > header .navbar-brand:after {content: "docs"}
+.navbar {min-height: 86px;}
+body > footer > .copyright {margin-top: 0; background-color: transparent; padding-top: 0;}
+a {color: #ab1e24}
+a:hover {color: #89181d}
+.content-kb .page a:not(.btn):not(.badge) {color: #ab1e24; border-bottom: 1px solid #ab1e24;}
+.content-kb .page a:not(.btn):not(.badge):hover {border-bottom: 1px solid #89181d;}
+.content-kb .page pre, ul {margin-bottom: 20px;}
+.content-kb .index h3 a {color: inherit;}
+code {color: inherit; background-color: rgba(0,0,0,0.04);}
