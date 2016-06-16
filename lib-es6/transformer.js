@@ -8,9 +8,7 @@ global.IMTTransformer = class IMTTransformer extends IMTBase {
 	constructor() {
 		super();
 		
-		Object.defineProperty(this, 'type', {
-			value: IMTBase.MODULETYPE_TRANSFORMER
-		})
+		this.type = IMTBase.MODULETYPE_TRANSFORMER;
 	}
 	
 	/**

@@ -4,9 +4,7 @@ global.IMTAction = class IMTAction extends IMTBase {
 	constructor() {
 		super();
 		
-		Object.defineProperty(this, 'type', {
-			value: IMTBase.MODULETYPE_ACTION
-		})
+		this.type = IMTBase.MODULETYPE_ACTION;
 	}
 
 	/**

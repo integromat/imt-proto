@@ -8,8 +8,6 @@ global.IMTAggregator = class IMTAggregator extends IMTTransformer {
 	constructor() {
 		super();
 		
-		Object.defineProperty(this, 'type', {
-			value: IMTBase.MODULETYPE_AGGREGATOR
-		})
+		this.type = IMTBase.MODULETYPE_AGGREGATOR;
 	}
 };

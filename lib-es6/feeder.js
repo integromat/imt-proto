@@ -8,9 +8,7 @@ global.IMTFeeder = class IMTFeeder extends IMTTransformer {
 	constructor() {
 		super();
 		
-		Object.defineProperty(this, 'type', {
-			value: IMTBase.MODULETYPE_FEEDER
-		})
+		this.type = IMTBase.MODULETYPE_FEEDER;
 	}
 	
 	/**

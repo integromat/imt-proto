@@ -1,16 +1,12 @@
 'use strict'
 
-if (global.IMT_PROTO_LOADED) return;
-global.IMT_PROTO_LOADED = true;
-
 /**
- * Requrie module from common collection of pre-loaded modules. This method is set later by Integromat's core.
- * 
- * @param {String} name Module nane.
- * @returns {*}
+ * For API docummentation see ES6 version.
  */
 
-if (!global.requireCommon) global.requireCommon = () => null;
+if (global.IMT_PROTO_LOADED) return;
+global.IMT_PROTO_LOADED = true;
+if (!global.requireCommon) global.requireCommon = function() { return null; };
 
 require('./extensions.js');
 require('./error.js');

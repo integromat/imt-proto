@@ -14,7 +14,7 @@ class TestTrigger extends IMTTrigger {
 	}
 }
 
-describe('IMTAction', () => {
+describe('IMTTrigger', () => {
 	it('should operate successfuly', (done) => {
 		let trigger = new TestTrigger();
 		trigger.parameters = {host: 'www.integromat.com'};

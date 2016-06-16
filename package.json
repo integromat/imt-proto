@@ -10,7 +10,7 @@
     "imt"
   ],
   "version": "1.1.0",
-  "main": "lib/proto.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/integromat/imt-proto"
@@ -25,6 +25,8 @@
     "node": ">=4.0"
   },
   "scripts": {
-    "test": "mocha test"
+    "test": "npm run-script test-es5 && npm run-script test-es6",
+    "test-es5": "IMT_ES=es5 mocha test",
+    "test-es6": "IMT_ES=es6 mocha test"
   }
 }

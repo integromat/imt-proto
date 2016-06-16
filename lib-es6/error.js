@@ -20,7 +20,7 @@ global.UnknownError = class UnknownError extends Error {
 			this.message = err;
 		}
 		
-		this.name = 'UnknownError';
+		this.name = this.constructor.name;
 
 		Error.captureStackTrace(this, this.constructor);
 	}
@@ -43,7 +43,7 @@ global.RuntimeError = class RuntimeError extends Error {
 	constructor(message) {
 		super(message);
 		
-		this.name = 'RuntimeError';
+		this.name = this.constructor.name;
 		
 		Error.captureStackTrace(this, this.constructor);
 	}
@@ -62,7 +62,7 @@ global.DataError = class DataError extends Error {
 	constructor(message) {
 		super(message);
 		
-		this.name = 'DataError';
+		this.name = this.constructor.name;
 		
 		Error.captureStackTrace(this, this.constructor);
 	}
@@ -81,7 +81,7 @@ global.InconsistencyError = class InconsistencyError extends Error {
 	constructor(message) {
 		super(message);
 		
-		this.name = 'InconsistencyError';
+		this.name = this.constructor.name;
 		
 		Error.captureStackTrace(this, this.constructor);
 	}
@@ -104,7 +104,7 @@ global.RateLimitError = class RateLimitError extends Error {
 	constructor(message, delay) {
 		super(message);
 		
-		this.name = 'RateLimitError';
+		this.name = this.constructor.name;
 		this.delay = delay;
 		
 		Error.captureStackTrace(this, this.constructor);
@@ -124,7 +124,7 @@ global.OutOfSpaceError = class OutOfSpaceError extends Error {
 	constructor(message) {
 		super(message);
 		
-		this.name = 'OutOfSpaceError';
+		this.name = this.constructor.name;
 
 		Error.captureStackTrace(this, this.constructor);
 	}
@@ -143,7 +143,7 @@ global.ConnectionError = class ConnectionError extends Error {
 	constructor(message) {
 		super(message);
 		
-		this.name = 'ConnectionError';
+		this.name = this.constructor.name;
 
 		Error.captureStackTrace(this, this.constructor);
 	}
@@ -202,7 +202,7 @@ global.UnexpectedError = class UnexpectedError extends Error {
 	constructor(message) {
 		super(message);
 		
-		this.name = 'UnexpectedError';
+		this.name = this.constructor.name;
 		
 		Error.captureStackTrace(this, this.constructor);
 	}
@@ -223,7 +223,7 @@ global.MaxResultsExceededError = class MaxResultsExceededError extends Error {
 	constructor(message) {
 		super(message);
 		
-		this.name = 'MaxResultsExceededError';
+		this.name = this.constructor.name;
 		
 		Error.captureStackTrace(this, this.constructor);
 	}
@@ -244,7 +244,7 @@ global.MaxFileSizeExceededError = class MaxFileSizeExceededError extends Error {
 	constructor(message) {
 		super(message);
 		
-		this.name = 'MaxFileSizeExceededError';
+		this.name = this.constructor.name;
 		
 		Error.captureStackTrace(this, this.constructor);
 	}
@@ -265,7 +265,7 @@ global.IncompleteDataError = class IncompleteDataError extends Error {
 	constructor(message, delay) {
 		super(message);
 		
-		this.name = 'IncompleteDataError';
+		this.name = this.constructor.name;
 		this.delay = delay;
 		
 		Error.captureStackTrace(this, this.constructor);
@@ -285,7 +285,7 @@ global.DuplicateDataError = class DuplicateDataError extends Error {
 	constructor(message) {
 		super(message);
 		
-		this.name = 'DuplicateDataError';
+		this.name = this.constructor.name;
 		
 		Error.captureStackTrace(this, this.constructor);
 	}
@@ -304,7 +304,7 @@ global.ModuleTimeoutError = class ModuleTimeoutError extends Error {
 	constructor(message) {
 		super(message);
 		
-		this.name = 'ModuleTimeoutError';
+		this.name = this.constructor.name;
 		
 		Error.captureStackTrace(this, this.constructor);
 	}
@@ -323,7 +323,7 @@ global.ScenarioTimeoutError = class ScenarioTimeoutError extends Error {
 	constructor(message) {
 		super(message);
 		
-		this.name = 'ScenarioTimeoutError';
+		this.name = this.constructor.name;
 		
 		Error.captureStackTrace(this, this.constructor);
 	}
@@ -342,7 +342,7 @@ global.OperationsLimitExceededError = class OperationsLimitExceededError extends
 	constructor(message) {
 		super(message);
 		
-		this.name = 'OperationsLimitExceededError';
+		this.name = this.constructor.name;
 
 		Error.captureStackTrace(this, this.constructor);
 	}
@@ -361,7 +361,7 @@ global.DataSizeLimitExceededError = class DataSizeLimitExceededError extends Err
 	constructor(message) {
 		super(message);
 		
-		this.name = 'DataSizeLimitExceededError';
+		this.name = this.constructor.name;
 
 		Error.captureStackTrace(this, this.constructor);
 	}
@@ -380,7 +380,7 @@ global.ExecutionInterruptedError = class ExecutionInterruptedError extends Error
 	constructor(message) {
 		super(message);
 		
-		this.name = 'ExecutionInterruptedError';
+		this.name = this.constructor.name;
 
 		Error.captureStackTrace(this, this.constructor);
 	}
@@ -390,7 +390,7 @@ global.ExecutionInterruptedError = class ExecutionInterruptedError extends Error
  * Error JSON serialization.
  */
 
-Object.defineProperty(Error.prototype, 'toJSON', {
+Reflect.defineProperty(Error.prototype, 'toJSON', {
 	enumerable: false,
 	writable: true,
 	value() {
@@ -402,7 +402,7 @@ Object.defineProperty(Error.prototype, 'toJSON', {
 
 		if (this.hash != null) json.hash = this.hash;
 		if (this.bundle != null) json.bundle = this.bundle;
-		if (Array.isArray(this.suberrors)) json.suberrors = this.suberrors;
+		if (Array.isArray(this.suberrors)) json.suberrors = this.suberrors.map(item => item.toJSON());
 		if (this.external != null) json.external = this.external;
 
 		return json;

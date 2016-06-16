@@ -22,8 +22,8 @@ global.Warning = class Warning {
  * Warning toString.
  */
 
-Object.defineProperty(Warning.prototype, 'toString', {
-	enumerable: false,
+Reflect.defineProperty(Warning.prototype, 'toString', {
+	configurable: true,
 	writable: true,
 	value() {
 		return `${this.name}: ${this.message}`;
@@ -34,8 +34,8 @@ Object.defineProperty(Warning.prototype, 'toString', {
  * Warning inspect.
  */
 
-Object.defineProperty(Warning.prototype, 'inspect', {
-	enumerable: false,
+Reflect.defineProperty(Warning.prototype, 'inspect', {
+	configurable: true,
 	writable: true,
 	value() {
 		return `[${this.name}: ${this.message}]`;
@@ -46,8 +46,8 @@ Object.defineProperty(Warning.prototype, 'inspect', {
  * Warning JSON serialization.
  */
 
-Object.defineProperty(Warning.prototype, 'toJSON', {
-	enumerable: false,
+Reflect.defineProperty(Warning.prototype, 'toJSON', {
+	configurable: true,
 	writable: true,
 	value() {
 		return {
