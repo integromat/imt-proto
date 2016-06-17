@@ -6,7 +6,7 @@ class TestAction extends IMTAction {
 	write(bundle, done) {
 		if (bundle.number > 10)
 			return done(new DataError('Number is greater than 10.'))
-		
+
 		done(null, {result: bundle.number * 2});
 	}
 }
@@ -24,7 +24,9 @@ describe('IMTAction', () => {
 			action.write(input, (err, output) => {
 				if (err) return done(err);
 				
-				assert.strictEqual(action.type, IMTBase.MODULETYPE_ACTION);
+				assert.ok(action instanceof IMTBase);
+				assert.ok(action instanceof IMTAction);
+				assert.strictEqual(action.type, 4);
 				assert.strictEqual(output.result, 2, 'Result should be equal to 2.');
 				
 				action.commit((err) => {

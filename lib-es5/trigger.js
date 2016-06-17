@@ -17,7 +17,7 @@ global.IMTTrigger = function(supr) {
 		throw new Error("Must override a superclass method 'fetch'.");
 	}
 	
-	IMTTrigger.prototype.read = function read(bundle, done) {
+	IMTTrigger.prototype.read = function read(done) {
 		throw new Error("Must override a superclass method 'read'.");
 	}
 

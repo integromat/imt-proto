@@ -24,7 +24,9 @@ describe('IMTTrigger', () => {
 			trigger.read((err, output) => {
 				if (err) return done(err);
 				
-				assert.strictEqual(trigger.type, IMTBase.MODULETYPE_TRIGGER);
+				assert.ok(trigger instanceof IMTBase);
+				assert.ok(trigger instanceof IMTTrigger);
+				assert.strictEqual(trigger.type, 1);
 				assert.deepStrictEqual(output, [
 					{id: 1, name: 'Peter'},
 					{id: 2, name: 'Patrick'}
