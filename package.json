@@ -1,32 +1,32 @@
 {
-	"author": {
-		"name": "Patrik Simek",
-		"url": "https://www.integromat.com"
-	},
-	"name": "imt-proto",
-	"description": "Integromat Proto-Classes",
-	"keywords": [
-		"integromat",
-		"imt"
-	],
-	"version": "1.0.1",
-	"main": "lib/proto.js",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/integromat/imt-proto"
-	},
-	"dependencies": {
-
-	},
-	"devDependencies": {
-		"coffee-script": ">=1.7.1",
-		"mocha": ">=1.12.0"
-	},
-	"engines": {
-		"node": ">=0.10"
-	},
-	"scripts": {
-		"test": "mocha",
-		"post-merge": "coffee -c -b -o ./lib ./src && npm update"
-	}
+  "author": {
+    "name": "Patrik Simek",
+    "url": "https://www.integromat.com"
+  },
+  "name": "imt-proto",
+  "description": "Integromat Proto-Classes",
+  "keywords": [
+    "integromat",
+    "imt"
+  ],
+  "version": "1.1.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/integromat/imt-proto"
+  },
+  "dependencies": {
+    "mocha": "^2.5.3"
+  },
+  "devDependencies": {
+    "mocha": ">=2.0.0"
+  },
+  "engines": {
+    "node": ">=4.0"
+  },
+  "scripts": {
+    "test": "npm run-script test-es5 && npm run-script test-es6",
+    "test-es5": "IMT_ES=es5 mocha test",
+    "test-es6": "IMT_ES=es6 mocha test"
+  }
 }

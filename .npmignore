@@ -1,12 +1,7 @@
 node_modules
 .DS_Store
-.svn
 .git
 .gitignore
 .npmignore
-.nodemonignore
-Cakefile
-src
 docs
 test
-Makefile
