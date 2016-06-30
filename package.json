@@ -15,9 +15,7 @@
     "type": "git",
     "url": "https://github.com/integromat/imt-proto"
   },
-  "dependencies": {
-    "mocha": "^2.5.3"
-  },
+  "dependencies": {},
   "devDependencies": {
     "mocha": ">=2.0.0"
   },
