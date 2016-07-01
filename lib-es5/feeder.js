@@ -14,7 +14,7 @@ global.IMTFeeder = function(supr) {
 	}
 
 	IMTFeeder.prototype.transform = function transform(bundle, done) {
-		let array = bundle.array;
+		var array = bundle.array;
 		if (!Array.isArray(array)) array = [array];
 		if ('function' === typeof done) done(null, array);
 	}
