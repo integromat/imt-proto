@@ -15,6 +15,7 @@
     "type": "git",
     "url": "https://github.com/integromat/imt-proto"
   },
+  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
     "mocha": ">=2.0.0"
