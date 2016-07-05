@@ -22,7 +22,7 @@ global.Warning = class Warning {
  * Warning toString.
  */
 
-Reflect.defineProperty(Warning.prototype, 'toString', {
+Object.defineProperty(Warning.prototype, 'toString', {
 	configurable: true,
 	writable: true,
 	value() {
@@ -34,7 +34,7 @@ Reflect.defineProperty(Warning.prototype, 'toString', {
  * Warning inspect.
  */
 
-Reflect.defineProperty(Warning.prototype, 'inspect', {
+Object.defineProperty(Warning.prototype, 'inspect', {
 	configurable: true,
 	writable: true,
 	value() {
@@ -46,7 +46,7 @@ Reflect.defineProperty(Warning.prototype, 'inspect', {
  * Warning JSON serialization.
  */
 
-Reflect.defineProperty(Warning.prototype, 'toJSON', {
+Object.defineProperty(Warning.prototype, 'toJSON', {
 	configurable: true,
 	writable: true,
 	value() {

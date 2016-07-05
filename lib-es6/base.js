@@ -74,7 +74,7 @@ global.IMTBase = class IMTBase extends EventEmitter {
 		if (arguments.length === 1 && 'object' === typeof arguments[0]) {
 			this.emit('debug', arguments[0]);
 		} else {
-			this.emit('debug', util.format(...arguments));
+			this.emit('debug', util.format.apply(util, arguments));
 		}
 	}
 
@@ -88,7 +88,7 @@ global.IMTBase = class IMTBase extends EventEmitter {
 		if (arguments[0] instanceof Warning || arguments[0] instanceof Error) {
 			this.emit('log', arguments[0]);
 		} else {
-			this.emit('log', util.format(...arguments));
+			this.emit('log', util.format.apply(util, arguments));
 		}
 	}
 
@@ -117,7 +117,7 @@ global.IMTBase = class IMTBase extends EventEmitter {
 	 */
 
 	warn() {
-		this.emit('warn', util.format(...arguments));
+		this.emit('warn', util.format.apply(util, arguments));
 	}
 }
 
