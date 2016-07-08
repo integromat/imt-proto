@@ -390,7 +390,7 @@ global.ExecutionInterruptedError = class ExecutionInterruptedError extends Error
  * Error JSON serialization.
  */
 
-Reflect.defineProperty(Error.prototype, 'toJSON', {
+Object.defineProperty(Error.prototype, 'toJSON', {
 	enumerable: false,
 	writable: true,
 	value() {

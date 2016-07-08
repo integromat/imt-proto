@@ -12,9 +12,9 @@ Object.defineProperty(Function.prototype, 'property', {
 
 Object.defineProperty(Function.prototype, 'inherits', {
 	value: function(parent) {
-		let child = this;
+		var child = this;
 		
-		for (let key in parent) {
+		for (var key in parent) {
 			if (Object.prototype.hasOwnProperty.call(parent, key)) child[key] = parent[key];
 		}
 		
