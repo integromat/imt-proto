@@ -18,5 +18,6 @@ require('./action.js');
 require('./transformer.js');
 require('./aggregator.js');
 require('./feeder.js');
+require('./listener.js');
 require('./hook.js');
 require('./rpc.js');
