@@ -1,6 +1,6 @@
 import {Readable} from "stream";
 import {ClientRequest} from "http";
-import EventEmitter = NodeJS.EventEmitter;
+import {EventEmitter} from "events";
 
 declare namespace imtProto {
 
@@ -20,7 +20,7 @@ declare namespace imtProto {
         new (): IMTBase;
     }
 
-    interface IMTBase {
+    export interface IMTBase {
         common: any;
         data: any;
         parameters: any;
@@ -28,8 +28,8 @@ declare namespace imtProto {
         environment: any;
         type: number;
 
-        initialize(done: (err: Error | null) => void): void;
-        finalize(done: (err: Error | null) => void): void;
+        initialize(done: (err?: Error) => void): void;
+        finalize(done: (err?: Error) => void): void;
         commit(done: (err: Error | null, report: any[]) => void): void;
         warn(...args): void;
         debug(...args): void;
@@ -48,20 +48,20 @@ declare namespace imtProto {
         new (): IMTOAuthAccount;
     }
 
-    interface IMTAccount {
+    export interface IMTAccount {
         common: any;
         data: any;
 
-        initialize(done: (err: Error | null) => any);
-        finalize(done: (err: Error | null) => any);
+        initialize(done: (err?: Error) => any);
+        finalize(done: (err?: Error) => any);
         test(done: (err: Error | null, isValid: boolean) => any);
-        validate(done: (err: Error | null) => any)
+        validate(done: (err?: Error) => any)
     }
 
-    interface IMTOAuthAccount extends IMTAccount {
+    export interface IMTOAuthAccount extends IMTAccount {
         accountFromCallbackRequest(req: Readable);
         authorize(scope: string[], done: (err: Error | null, url: string) => any);
-        callback(req: Readable, done: (err: Error | null) => any);
+        callback(req: Readable, done: (err?: Error) => any);
         extendScope(scope: string[], done: (err: Error | null, url: string) => any);
         reauthorize(done: (err: Error | null, url: string) => any);
     }
@@ -72,7 +72,7 @@ declare namespace imtProto {
         new (): IMTAction;
     }
 
-    interface IMTAction extends IMTBase {
+    export interface IMTAction extends IMTBase {
         write(bundle: any, done: (err: Error | null, done: any) => void): void;
     }
 
@@ -80,7 +80,7 @@ declare namespace imtProto {
         new (): IMTGatewayAction;
     }
 
-    interface IMTGatewayAction extends IMTAction {
+    export interface IMTGatewayAction extends IMTAction {
 
     }
 
@@ -90,7 +90,7 @@ declare namespace imtProto {
         new (): IMTAggregator;
     }
 
-    interface IMTAggregator extends IMTTransformer {
+    export interface IMTAggregator extends IMTTransformer {
 
     }
 
@@ -100,7 +100,7 @@ declare namespace imtProto {
         new (): IMTFeeder;
     }
 
-    interface IMTFeeder extends IMTTransformer {
+    export interface IMTFeeder extends IMTTransformer {
         transform(bundle: any, done: (err: Error | null, result: any) => void): void;
     }
 
@@ -110,9 +110,9 @@ declare namespace imtProto {
         new (): IMTHook;
     }
 
-    interface IMTHook {
-        initialize(done: (err: Error | null) => void): void;
-        finalize(done: (err: Error | null) => void): void;
+    export interface IMTHook {
+        initialize(done: (err?: Error) => void): void;
+        finalize(done: (err?: Error) => void): void;
         parse(req: ClientRequest, done: (err: Error | null, items: any[]) => void): void;
     }
 
@@ -122,9 +122,9 @@ declare namespace imtProto {
         new (): IMTListener;
     }
 
-    interface IMTListener extends IMTBase {
-        start(done: (err: Error | null) => void): void;
-        stop(done: (err: Error | null) => void): void;
+    export interface IMTListener extends IMTBase {
+        start(done: (err?: Error) => void): void;
+        stop(done: (err?: Error) => void): void;
     }
 
     // ====== IMTRPC
@@ -133,13 +133,13 @@ declare namespace imtProto {
         new (): IMTRPC;
     }
 
-    interface IMTRPC extends EventEmitter {
+    export interface IMTRPC extends EventEmitter {
         common: any;
         parameters: any;
         environment: any;
 
-        initialize(done: (err: Error | null) => void): void;
-        finalize(done: (err: Error | null) => void): void;
+        initialize(done: (err?: Error) => void): void;
+        finalize(done: (err?: Error) => void): void;
         execute(done: (err: Error | null, result: any) => void): void;
     }
 
@@ -149,7 +149,7 @@ declare namespace imtProto {
         new (): IMTTransformer;
     }
 
-    interface IMTTransformer extends IMTBase {
+    export interface IMTTransformer extends IMTBase {
         transform(bundle: any, done: (err: Error | null, result: any) => void): void;
     }
 
@@ -159,8 +159,8 @@ declare namespace imtProto {
         new (): IMTTrigger;
     }
 
-    interface IMTTrigger extends IMTBase {
-        fetch(id: number, done: (err: Error | null) => void): void;
+    export interface IMTTrigger extends IMTBase {
+        fetch(id: number, done: (err?: Error) => void): void;
         read(done: (err: Error | null, result: any) => void): void;
     }
 
@@ -170,7 +170,7 @@ declare namespace imtProto {
         new (): Warning;
     }
 
-    interface Warning {
+    export interface Warning {
         name: string;
         message: string;
         toString(): string;
@@ -180,7 +180,7 @@ declare namespace imtProto {
 
     // ====== Errors
 
-    interface Error {
+    export interface Error {
         toJson(): {
             name: string,
             message: string,
@@ -196,31 +196,31 @@ declare namespace imtProto {
         new (err: Error | string): UnknownError;
     }
 
-    interface UnknownError extends Error {}
+    export interface UnknownError extends Error {}
 
     interface RuntimeErrorConstructor {
         new (err: Error | string): RuntimeError;
     }
 
-    interface RuntimeError extends Error {}
+    export interface RuntimeError extends Error {}
 
     interface DataErrorConstructor {
         new (err: Error | string): DataError;
     }
 
-    interface DataError extends Error {}
+    export interface DataError extends Error {}
 
     interface InconsistencyErrorConstructor {
         new (err: Error | string): InconsistencyError;
     }
 
-    interface InconsistencyError extends Error {}
+    export interface InconsistencyError extends Error {}
 
     interface RateLimitErrorConstructor {
         new (err: Error | string): RateLimitError;
     }
 
-    interface RateLimitError extends Error {
+    export interface RateLimitError extends Error {
         delay: number;
     }
 
@@ -228,49 +228,49 @@ declare namespace imtProto {
         new (err: Error | string): OutOfSpaceError;
     }
 
-    interface OutOfSpaceError extends Error {}
+    export interface OutOfSpaceError extends Error {}
 
     interface ConnectionErrorConstructor {
         new (err: Error | string): ConnectionError;
     }
 
-    interface ConnectionError extends Error {}
+    export interface ConnectionError extends Error {}
 
     interface InvalidConfigurationErrorConstructor {
         new (err: Error | string): InvalidConfigurationError;
     }
 
-    interface InvalidConfigurationError extends Error {}
+    export interface InvalidConfigurationError extends Error {}
 
     interface InvalidAccessTokenErrorConstructor {
         new (err: Error | string): InvalidAccessTokenError;
     }
 
-    interface InvalidAccessTokenError extends Error {}
+    export interface InvalidAccessTokenError extends Error {}
 
     interface UnexpectedErrorConstructor {
         new (err: Error | string): UnexpectedError;
     }
 
-    interface UnexpectedError extends Error {}
+    export interface UnexpectedError extends Error {}
 
     interface MaxResultsExceededErrorConstructor {
         new (err: Error | string): MaxResultsExceededError;
     }
 
-    interface MaxResultsExceededError extends Error {}
+    export interface MaxResultsExceededError extends Error {}
 
     interface MaxFileSizeExceededErrorConstructor {
         new (err: Error | string): MaxFileSizeExceededError;
     }
 
-    interface MaxFileSizeExceededError extends Error {}
+    export interface MaxFileSizeExceededError extends Error {}
 
     interface IncompleteDataErrorConstructor {
         new (err: Error | string): IncompleteDataError;
     }
 
-    interface IncompleteDataError extends Error {
+    export interface IncompleteDataError extends Error {
         delay: number;
     }
 
@@ -278,42 +278,38 @@ declare namespace imtProto {
         new (err: Error | string): DuplicateDataError;
     }
 
-    interface DuplicateDataError extends Error {}
+    export interface DuplicateDataError extends Error {}
 
     interface ModuleTimeoutErrorConstructor {
         new (err: Error | string): ModuleTimeoutError;
     }
 
-    interface ModuleTimeoutError extends Error {}
+    export interface ModuleTimeoutError extends Error {}
 
     interface ScenarioTimeoutErrorConstructor {
         new (err: Error | string): ScenarioTimeoutError;
     }
 
-    interface ScenarioTimeoutError extends Error {}
+    export interface ScenarioTimeoutError extends Error {}
 
     interface OperationLimitExceededErrorConstructor {
         new (err: Error | string): OperationLimitExceededError;
     }
 
-    interface OperationLimitExceededError extends Error {}
+    export interface OperationLimitExceededError extends Error {}
 
     interface DataSizeLimitExceededErrorConstructor {
         new (err: Error | string): DataSizeLimitExceededError;
     }
 
-    interface DataSizeLimitExceededError extends Error {}
+    export interface DataSizeLimitExceededError extends Error {}
 
     interface ExecutionInterruptedErrorConstructor {
         new (err: Error | string): ExecutionInterruptedError;
     }
 
-    interface ExecutionInterruptedError extends Error {}
+    export interface ExecutionInterruptedError extends Error {}
 }
-
-// declare module "imt-proto" {
-//     export = imtProto;
-// }
 
 declare const IMTBase: imtProto.IMTBaseConstructor;
 declare const IMTAccount: imtProto.IMTAccountConstructor;
@@ -348,3 +344,5 @@ declare const ScenarioTimeoutError: imtProto.ScenarioTimeoutErrorConstructor;
 declare const OperationLimitExceededError: imtProto.OperationLimitExceededErrorConstructor;
 declare const DataSizeLimitExceededError: imtProto.DataSizeLimitExceededErrorConstructor;
 declare const ExecutionInterruptedError: imtProto.ExecutionInterruptedErrorConstructor;
+
+export = imtProto;
