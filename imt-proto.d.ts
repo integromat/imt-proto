@@ -1,7 +1,3 @@
-import {Readable} from "stream";
-import {ClientRequest} from "http";
-import {EventEmitter} from "events";
-
 interface IMTBaseConstructor {
     new (): imtProto.IMTBase;
 }
@@ -99,7 +95,11 @@ interface ExecutionInterruptedErrorConstructor {
     new (err: Error | string): imtProto.ExecutionInterruptedError;
 }
 
-namespace imtProto {
+declare namespace imtProto {
+    import {Readable} from "stream";
+    import {ClientRequest} from "http";
+    import {EventEmitter} from "events";
+
     interface IMTBase {
         MODULETYPE_NONE: number;
         MODULETYPE_TRIGGER: number;
@@ -252,5 +252,3 @@ declare const ScenarioTimeoutError: ScenarioTimeoutErrorConstructor;
 declare const OperationLimitExceededError: OperationLimitExceededErrorConstructor;
 declare const DataSizeLimitExceededError: DataSizeLimitExceededErrorConstructor;
 declare const ExecutionInterruptedError: ExecutionInterruptedErrorConstructor;
-
-export = imtProto;
