@@ -12,7 +12,7 @@
   "version": "1.2.0",
   "main": "index.js",
   "typescript": {
-    "definition": "index.d.ts"
+    "definition": "imt-proto.d.ts"
   },
   "repository": {
     "type": "git",
