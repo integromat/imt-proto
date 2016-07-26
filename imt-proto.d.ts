@@ -41,58 +41,58 @@ interface UnknownErrorConstructor {
     new (err: Error | string): imtProto.UnknownError;
 }
 interface RuntimeErrorConstructor {
-    new (err: Error | string): imtProto.RuntimeError;
+    new (message: string): imtProto.RuntimeError;
 }
 interface DataErrorConstructor {
-    new (err: Error | string): imtProto.DataError;
+    new (message: string): imtProto.DataError;
 }
 interface InconsistencyErrorConstructor {
-    new (err: Error | string): imtProto.InconsistencyError;
+    new (message: string): imtProto.InconsistencyError;
 }
 interface RateLimitErrorConstructor {
-    new (err: Error | string): imtProto.RateLimitError;
+    new (message: string, delay: number): imtProto.RateLimitError;
 }
 interface OutOfSpaceErrorConstructor {
-    new (err: Error | string): imtProto.OutOfSpaceError;
+    new (message: string): imtProto.OutOfSpaceError;
 }
 interface ConnectionErrorConstructor {
-    new (err: Error | string): imtProto.ConnectionError;
+    new (message: string): imtProto.ConnectionError;
 }
 interface InvalidConfigurationErrorConstructor {
-    new (err: Error | string): imtProto.InvalidConfigurationError;
+    new (message: string): imtProto.InvalidConfigurationError;
 }
 interface InvalidAccessTokenErrorConstructor {
-    new (err: Error | string): imtProto.InvalidAccessTokenError;
+    new (message: string): imtProto.InvalidAccessTokenError;
 }
 interface UnexpectedErrorConstructor {
-    new (err: Error | string): imtProto.UnexpectedError;
+    new (message: string): imtProto.UnexpectedError;
 }
 interface MaxResultsExceededErrorConstructor {
-    new (err: Error | string): imtProto.MaxResultsExceededError;
+    new (message: string): imtProto.MaxResultsExceededError;
 }
 interface MaxFileSizeExceededErrorConstructor {
-    new (err: Error | string): imtProto.MaxFileSizeExceededError;
+    new (message: string): imtProto.MaxFileSizeExceededError;
 }
 interface IncompleteDataErrorConstructor {
-    new (err: Error | string): imtProto.IncompleteDataError;
+    new (message: string, delay: number): imtProto.IncompleteDataError;
 }
 interface DuplicateDataErrorConstructor {
-    new (err: Error | string): imtProto.DuplicateDataError;
+    new (message: string): imtProto.DuplicateDataError;
 }
 interface ModuleTimeoutErrorConstructor {
-    new (err: Error | string): imtProto.ModuleTimeoutError;
+    new (message: string): imtProto.ModuleTimeoutError;
 }
 interface ScenarioTimeoutErrorConstructor {
-    new (err: Error | string): imtProto.ScenarioTimeoutError;
+    new (message: string): imtProto.ScenarioTimeoutError;
 }
 interface OperationLimitExceededErrorConstructor {
-    new (err: Error | string): imtProto.OperationLimitExceededError;
+    new (message: string): imtProto.OperationLimitExceededError;
 }
 interface DataSizeLimitExceededErrorConstructor {
-    new (err: Error | string): imtProto.DataSizeLimitExceededError;
+    new (message: string): imtProto.DataSizeLimitExceededError;
 }
 interface ExecutionInterruptedErrorConstructor {
-    new (err: Error | string): imtProto.ExecutionInterruptedError;
+    new (message: string): imtProto.ExecutionInterruptedError;
 }
 
 declare namespace imtProto {
