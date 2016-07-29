@@ -41,4 +41,19 @@ global.IMTHook = class IMTHook {
 	parse(req, done) {
 		throw new Error("Must override a superclass method 'parse'.");
 	}
+	
+	/**
+	 * Filter received items. Only effective in shared webhooks.
+	 *
+	 * @param {Object} Item
+	 * @param {Object} Hook's data object.
+	 * @callback done Callback to call when filter was resolved.
+	 *     @param {Error} err Error on error, otherwise null.
+	 *     @param {Boolean} passed Whether the item should be accepted.
+	 */
+
+	filter(item, data, done) {
+		if ("function" === typeof done) done(null, true);
+	}
+	 
 };

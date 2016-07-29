@@ -18,6 +18,10 @@ global.IMTHook = function() {
 	IMTHook.prototype.parse = function parse(req, done) {
 		throw new Error("Must override a superclass method 'parse'.");
 	}
+
+	IMTHook.prototype.filter = function filter(item, data, done) {
+		if ("function" === typeof done) done(null, true);
+	}
 	
 	return IMTHook;
 }();
