@@ -68,10 +68,14 @@ global.IMTOAuthAccount = class IMTOAuthAccount extends IMTAccount {
 	 * Sets account ID by received data.
 	 * 
 	 * @param {stream.Readdable} req HTTP request stream.
+	 * @callback done Callback to call when account was resolved from request.
+	 *     @param {Error} err Error on error, otherwise null.
 	 */
 	
-	accountFromCallbackRequest(req) {
+	accountFromCallbackRequest(req, done) {
 		this.id = null;
+		
+		if ("function" === typeof done) done();
 	}
 	
 	/**

@@ -36,8 +36,10 @@ global.IMTOAuthAccount = function(supr) {
 		IMTOAuthAccount.__super__.constructor.call(this);
 	}
 
-	IMTOAuthAccount.prototype.accountFromCallbackRequest = function accountFromCallbackRequest(req) {
+	IMTOAuthAccount.prototype.accountFromCallbackRequest = function accountFromCallbackRequest(req, done) {
 		this.id = null;
+		
+		if ("function" === typeof done) done();
 	}
 
 	IMTOAuthAccount.prototype.authorize = function authorize(scope, done) {
