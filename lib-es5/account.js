@@ -57,6 +57,10 @@ global.IMTOAuthAccount = function(supr) {
 	IMTOAuthAccount.prototype.reauthorize = function reauthorize(done) {
 		if ("function" === typeof done) done();
 	}
+
+	IMTOAuthAccount.prototype.invalidate = function invalidate(done) {
+		if ("function" === typeof done) done();
+	}
 	
 	return IMTOAuthAccount;
 }(IMTAccount);
