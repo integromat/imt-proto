@@ -82,7 +82,7 @@ global.IMTOAuthAccount = class IMTOAuthAccount extends IMTAccount {
 	 * Create authorization request and redirect user to OAuth provider.
 	 * 
 	 * @param {Array} scope Array of permission to request.
-	 * @callback done Callback to call when authorization request is ready.
+	 * @callback done Callback to call when authorization request is complete.
 	 *     @param {Error} err Error on error, otherwise null.
 	 *     @param {String} url URL to redirect user to.
 	 */
@@ -95,7 +95,7 @@ global.IMTOAuthAccount = class IMTOAuthAccount extends IMTAccount {
 	 * Callback from OAuth provider.
 	 * 
 	 * @param {stream.Readdable} req HTTP request stream.
-	 * @callback done Callback to call when authorization request is ready.
+	 * @callback done Callback to call when authorization request is complete.
 	 *     @param {Error} err Error on error, otherwise null.
 	 */
 	
@@ -107,7 +107,7 @@ global.IMTOAuthAccount = class IMTOAuthAccount extends IMTAccount {
 	 * Create scope extension request and redirect user to OAuth provider.
 	 * 
 	 * @param {Array} scope Array of permission to request.
-	 * @callback done Callback to call when authorization request is ready.
+	 * @callback done Callback to call when authorization request is complete.
 	 *     @param {Error} err Error on error, otherwise null.
 	 *     @param {String} url URL to redirect user to.
 	 */
@@ -119,12 +119,23 @@ global.IMTOAuthAccount = class IMTOAuthAccount extends IMTAccount {
 	/**
 	 * Create reauthorization request and redirect user to OAuth provider.
 	 * 
-	 * @callback done Callback to call when authorization request is ready.
+	 * @callback done Callback to call when authorization request is complete.
 	 *     @param {Error} err Error on error, otherwise null.
 	 *     @param {String} url URL to redirect user to.
 	 */
 	
 	reauthorize(done) {
+		if ("function" === typeof done) done();
+	}
+	
+	/**
+	 * Invalidate current access token.
+	 * 
+	 * @callback done Callback to call when invalidation request is complete.
+	 *     @param {Error} err Error on error, otherwise null.
+	 */
+	
+	invalidate(done) {
 		if ("function" === typeof done) done();
 	}
 };
