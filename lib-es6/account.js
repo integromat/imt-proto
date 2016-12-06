@@ -52,6 +52,7 @@ global.IMTAccount = class IMTAccount {
 	 * 
 	 * @callback done Callback to call when validation is complete.
 	 *     @param {Error} err Error on error, otherwise null.
+	 *     @param {Boolean} changed True if validation made changes in account's data.
 	 */
 		
 	validate(done) {
