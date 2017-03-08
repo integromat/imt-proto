@@ -25,3 +25,9 @@ global.IMTAction = class IMTAction extends IMTBase {
  */
 
 global.IMTGatewayAction = class IMTGatewayAction extends IMTAction {}
+
+/**
+ * Base Gateway Responder.
+ */
+
+global.IMTGatewayResponder = class IMTGatewayResponder extends IMTAction {};
