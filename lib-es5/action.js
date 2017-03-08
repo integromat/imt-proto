@@ -29,3 +29,13 @@ global.IMTGatewayAction = function(supr) {
 
 	return IMTGatewayAction;
 }(IMTAction);
+
+global.IMTGatewayResponder = function(supr) {
+	IMTGatewayResponder.inherits(supr);
+
+	function IMTGatewayResponder() {
+		IMTGatewayResponder.__super__.constructor.call(this);
+	}
+
+	return IMTGatewayResponder;
+}(IMTAction);
