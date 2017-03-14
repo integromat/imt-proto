@@ -45,11 +45,7 @@ global.IMTBase = function(supr) {
 	}
 
 	IMTBase.prototype.debug = function debug() {
-		if (arguments.length === 1 && 'object' === typeof arguments[0]) {
-			this.emit('debug', arguments[0]);
-		} else {
-			this.emit('debug', util.format.apply(util, arguments));
-		}
+		this.emit('debug', Array.prototype.slice.call(arguments));
 	}
 
 	IMTBase.prototype.log = function log() {
@@ -67,7 +63,11 @@ global.IMTBase = function(supr) {
 	}
 	
 	IMTBase.prototype.warn = function warn() {
-		this.emit('warn', util.format.apply(util, arguments));
+		if (arguments[0] instanceof Warning || arguments[0] instanceof Error) {
+			this.emit('log', arguments[0]);
+		} else {
+			this.emit('log', util.format.apply(util, arguments));
+		}
 	}
 
 	return IMTBase;
