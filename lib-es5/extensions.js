@@ -5,12 +5,16 @@
  */
 
 Object.defineProperty(Function.prototype, 'property', {
+	writable: true,
+	configurable: true,
 	value: function(prop, desc) {
 		Object.defineProperty(this.prototype, prop, desc);
 	}
 })
 
 Object.defineProperty(Function.prototype, 'inherits', {
+	writable: true,
+	configurable: true,
 	value: function(parent) {
 		var child = this;
 		
