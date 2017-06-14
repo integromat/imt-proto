@@ -53,6 +53,17 @@ global.IMTBase = class IMTBase extends EventEmitter {
 	}
 
 	/**
+	 * Adds module to a shared transaction.
+	 * 
+	 * @param {Number} [id] Transaction ID. If omited, new transaction ID is generated.
+	 * @return {Number} Transaction ID.
+	 */
+
+	addSharedTransaction(done) {
+		throw new Error("Must override a superclass method 'addSharedTransaction'.");
+	}
+
+	/**
 	 * Commit all operations.
 	 * 
 	 * @callback done Callback to call when operations are done.

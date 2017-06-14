@@ -29,5 +29,9 @@ global.IMTRPC = function(supr) {
 		throw new Error("Must override a superclass method 'execute'.");
 	}
 
+	IMTRPC.prototype.debug = function debug() {
+		throw new Error("Must override a superclass method 'debug'.");
+	}
+
 	return IMTRPC;
 }(EventEmitter);

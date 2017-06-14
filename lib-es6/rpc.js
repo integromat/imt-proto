@@ -50,4 +50,14 @@ global.IMTRPC = class IMTRPC extends EventEmitter {
 	execute(done) {
 		throw new Error("Must override a superclass method 'execute'.");
 	}
+
+	/**
+	 * Print debug message to Scenario info log. Debug messages are only visible to system administrators.
+	 * 
+	 * @param {...*} message Message to be printed to Scenario info log.
+	 */
+
+	debug() {
+		throw new Error("Must override a superclass method 'debug'.");
+	}
 }
