@@ -40,6 +40,10 @@ global.IMTBase = function(supr) {
 		if ("function" === typeof done) done();
 	}
 
+	IMTBase.prototype.addSharedTransaction = function addSharedTransaction() {
+		throw new Error("Must override a superclass method 'addSharedTransaction'.");
+	}
+
 	IMTBase.prototype.commit = function commit(done) {
 		if ("function" === typeof done) done(null, null);
 	}
