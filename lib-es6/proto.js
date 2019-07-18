@@ -22,5 +22,7 @@ require('./transformer.js');
 require('./aggregator.js');
 require('./feeder.js');
 require('./listener.js');
+require('./converger.js');
+require('./router.js');
 require('./hook.js');
 require('./rpc.js');

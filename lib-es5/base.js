@@ -19,6 +19,7 @@ global.IMTBase = function(supr) {
 	IMTBase.MODULETYPE_FEEDER = 6;
 	IMTBase.MODULETYPE_AGGREGATOR = 7;
 	IMTBase.MODULETYPE_DIRECTIVE = 8;
+	IMTBase.MODULETYPE_CONVERGER = 9;
 
 	function IMTBase() {
 		IMTBase.__super__.constructor.call(this);
