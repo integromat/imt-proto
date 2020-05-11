@@ -24,7 +24,7 @@
     "mocha": "^7.1.2"
   },
   "engines": {
-    "node": ">=4.0"
+    "node": ">=8.0"
   },
   "scripts": {
     "test": "npm run-script test-es5 && npm run-script test-es6",
