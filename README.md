@@ -5,18 +5,18 @@
 ## Installation
 
 ```sh
-$ npm install imt-proto --save-dev
+$ npm install @integromat/proto --save-dev
 ```
 
 ## Usage
 
 ```javascript
-require('imt-proto');
+require('@integromat/proto');
 ```
 
 ## License
 
-Copyright (c) 2014-2016 Integromat
+Copyright (c) 2014-2020 Integromat
 
 The MIT License
 
