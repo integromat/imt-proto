@@ -3,7 +3,7 @@
     "name": "Patrik Simek",
     "url": "https://www.integromat.com"
   },
-  "name": "imt-proto",
+  "name": "@integromat/proto",
   "description": "Integromat Proto-Classes",
   "keywords": [
     "integromat",
@@ -21,8 +21,7 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "mocha": "^6.1.4",
-    "typings": "^1.3.2"
+    "mocha": "^7.1.2"
   },
   "engines": {
     "node": ">=4.0"
