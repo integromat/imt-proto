@@ -22,6 +22,9 @@ interface IMTConvergerConstructor {
 interface IMTRouterConstructor {
     new (): imtProto.IMTRouter;
 }
+interface IMTHITLConstructor {
+    new (): imtProto.IMTHITL;
+}
 interface IMTFeederConstructor {
     new (): imtProto.IMTFeeder;
 }
@@ -156,6 +159,9 @@ declare namespace imtProto {
     interface IMTAggregator extends IMTTransformer {}
     interface IMTConverger extends IMTBase {}
     interface IMTRouter extends IMTBase {}
+    interface IMTHITL extends IMTBase {
+        execute(bundle: any, done: (err: Error | null, done: any) => void): void;
+    }
     interface IMTFeeder extends IMTTransformer {
         transform(bundle: any, done: (err: Error | null, result: any) => void): void;
     }
@@ -235,6 +241,7 @@ declare const IMTGatewayAction: IMTGatewayActionConstructor;
 declare const IMTAggregator: IMTAggregatorConstructor;
 declare const IMTConverger: IMTConvergerConstructor;
 declare const IMTRouter: IMTRouterConstructor;
+declare const IMTHITL: IMTHITLConstructor;
 declare const IMTFeeder: IMTFeederConstructor;
 declare const IMTHook: IMTHookConstructor;
 declare const IMTListener: IMTListenerConstructor;
