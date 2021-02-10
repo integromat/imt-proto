@@ -21,7 +21,7 @@ global.IMTBase = function(supr) {
 	IMTBase.MODULETYPE_DIRECTIVE = 8;
 	IMTBase.MODULETYPE_CONVERGER = 9;
 	IMTBase.MODULETYPE_HITL = 10;
-	IMTBase.MODULETYPE_LRS = 11;
+	IMTBase.MODULETYPE_PAUSER = 11;
 
 	function IMTBase() {
 		IMTBase.__super__.constructor.call(this);
