@@ -24,6 +24,7 @@ require('./feeder.js');
 require('./listener.js');
 require('./converger.js');
 require('./hitl.js');
+require('./pauser.js');
 require('./router.js');
 require('./hook.js');
 require('./rpc.js');
