@@ -169,6 +169,7 @@ declare namespace imtProto {
         initialize(done: (err?: Error) => void): void;
         finalize(done: (err?: Error) => void): void;
         parse(req: ClientRequest, done: (err: Error | null, items: any[]) => void): void;
+        getFormSpec(req: ClientRequest, done: (err: Error | null, form: any) => void): void;
     }
     interface IMTListener extends IMTBase {
         start(done: (err?: Error) => void): void;

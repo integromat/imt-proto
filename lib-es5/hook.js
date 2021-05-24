@@ -22,6 +22,10 @@ global.IMTHook = function() {
 	IMTHook.prototype.filter = function filter(item, data, done) {
 		if ("function" === typeof done) done(null, true);
 	}
-	
+
+	IMTHook.prototype.getFormSpec = function getFormSpec(req, done) {
+		if ("function" === typeof done) done();
+	}
+
 	return IMTHook;
 }();

@@ -7,3 +7,4 @@ docs
 test
 .travis.yml
 .vscode
+.idea
