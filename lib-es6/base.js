@@ -64,6 +64,16 @@ global.IMTBase = class IMTBase extends EventEmitter {
 	}
 
 	/**
+	 * Emit audit message to Engine log. The arguments provided are intended to be shown in the Audit Trail for Module Execution Logs
+	 *
+	 * @param {object} payload Payload to be added to the Module Execution Log
+	 */
+
+	audit(payload) {
+		this.emit('audit', payload);
+	}
+
+	/**
 	 * Commit all operations.
 	 * 
 	 * @callback done Callback to call when operations are done.
