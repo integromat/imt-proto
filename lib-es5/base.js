@@ -47,6 +47,10 @@ global.IMTBase = function(supr) {
 		throw new Error("Must override a superclass method 'addSharedTransaction'.");
 	}
 
+	IMTBase.prototype.audit = function audit(payload) {
+		this.emit('audit', payload);
+	}
+
 	IMTBase.prototype.commit = function commit(done) {
 		if ("function" === typeof done) done(null, null);
 	}
