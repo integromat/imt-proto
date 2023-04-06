@@ -129,7 +129,7 @@ declare namespace imtProto {
 
         initialize(done: (err?: Error) => void): void;
         finalize(done: (err?: Error) => void): void;
-        audit(payload): void;
+        audit(payload: Record<string, unknown>): void;
         commit(done: (err: Error | null, report: any[]) => void): void;
         warn(...args): void;
         debug(...args): void;
