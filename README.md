@@ -10,9 +10,18 @@ $ npm install @integromat/proto --save-dev
 
 ## Usage
 
-```javascript
-require('@integromat/proto');
+### A. Usage via module import
+
+```ts
+import { /* ... */ } from '@integromat/proto';
 ```
+
+### B. Usage via globals (deprecated)
+
+```js
+require('@integromat/iml/global');
+```
+
 
 ## License
 

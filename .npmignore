@@ -7,3 +7,5 @@ docs
 test
 .travis.yml
 .vscode
+.prettierrc
+.eslintignore
