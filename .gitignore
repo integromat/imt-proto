@@ -5,3 +5,4 @@ _site
 .idea/
 *.iml
 .vscode
+dist/

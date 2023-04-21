@@ -9,26 +9,41 @@
     "integromat",
     "imt"
   ],
-  "version": "1.6.0",
-  "main": "index.js",
-  "typescript": {
-    "definition": "imt-proto.d.ts"
-  },
+  "version": "2.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/integromat/imt-proto"
   },
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
-    "mocha": "^7.1.2"
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.15.11",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-typescript": "^0.14.0",
+    "mocha": "^10.2.0",
+    "prettier": "^2.8.7",
+    "source-map-support": "^0.5.21",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
   },
   "engines": {
-    "node": ">=8.0"
+    "node": ">=16.19.0 <17.0.0"
   },
   "scripts": {
-    "test": "npm run-script test-es5 && npm run-script test-es6",
-    "test-es5": "IMT_ES=es5 mocha test",
-    "test-es6": "IMT_ES=es6 mocha test"
+    "clean": "rm -Rf ./dist",
+    "build": "npm run clean && npm run build:ts",
+    "build:ts": "tsc",
+    "lint": "eslint -c .eslintrc.js --ext .ts src test",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "npm run lint && npm run test:unit",
+    "test:unit": "TS_NODE_PROJECT='./tsconfig.spec.json' mocha test"
   }
 }
