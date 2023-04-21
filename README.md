@@ -19,7 +19,7 @@ import { /* ... */ } from '@integromat/proto';
 ### B. Usage via globals (deprecated)
 
 ```js
-require('@integromat/iml/global');
+require('@integromat/proto/global');
 ```
 
 
