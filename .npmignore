@@ -8,3 +8,5 @@ test
 .travis.yml
 .vscode
 .idea
+.prettierrc
+.eslintignore
