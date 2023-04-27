@@ -1,4 +1,4 @@
-import {DoneCallback, DoneWithFormCallback, DoneWithInfoCallback, DoneWithResultCallback} from './types';
+import { DoneCallback, DoneWithFormCallback, DoneWithInfoCallback } from './types';
 
 export type Item = any;
 export type HookData = any;
@@ -69,7 +69,6 @@ export abstract class IMTHook {
 	 *     @param {Object} form The Form Specification
 	 */
 	getFormSpec(req: Request, done: DoneWithFormCallback) {
-		if ("function" === typeof done) done();
+		if ('function' === typeof done) done();
 	}
-
 }
