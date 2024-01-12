@@ -1,12 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/mocharc.json",
-  "require": [
-    "source-map-support/register",
-    "ts-node/register"
-  ],
-  "extension": [
-    "ts"
-  ],
+  "require": ["source-map-support/register", "ts-node/register"],
+  "extension": ["ts"],
   "recursive": true,
   "timeout": 2000,
   "failZero": true,

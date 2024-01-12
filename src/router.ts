@@ -5,5 +5,5 @@ import { IMTBase, ModuleType } from './base';
  */
 
 export abstract class IMTRouter extends IMTBase {
-	public readonly type = ModuleType.ROUTER;
+  public readonly type = ModuleType.ROUTER;
 }

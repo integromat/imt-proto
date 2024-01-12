@@ -5,5 +5,5 @@ import { IMTBase, ModuleType } from './base';
  */
 
 export abstract class IMTConverger extends IMTBase {
-	public readonly type = ModuleType.CONVERGER;
+  public readonly type = ModuleType.CONVERGER;
 }

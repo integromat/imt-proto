@@ -11,55 +11,55 @@ import { DoneCallback, DoneWithResultCallback } from './types';
  */
 
 export abstract class IMTRPC extends EventEmitter {
-	public common: Common | null;
-	public parameters: Parameters | null;
-	public environment: Environment | null;
+  public common: Common | null;
+  public parameters: Parameters | null;
+  public environment: Environment | null;
 
-	protected constructor() {
-		super();
+  protected constructor() {
+    super();
 
-		this.common = null;
-		this.parameters = null;
-		this.environment = null;
-	}
+    this.common = null;
+    this.parameters = null;
+    this.environment = null;
+  }
 
-	/**
-	 * Initializes the RPC. Function that overrides should always call super.
-	 *
-	 * @callback done Callback to call when RPC is initialized.
-	 *     @param {Error} err Error on error, otherwise null.
-	 */
+  /**
+   * Initializes the RPC. Function that overrides should always call super.
+   *
+   * @callback done Callback to call when RPC is initialized.
+   *     @param {Error} err Error on error, otherwise null.
+   */
 
-	initialize(done: DoneCallback) {
-		if ('function' === typeof done) done();
-	}
+  initialize(done: DoneCallback) {
+    if ('function' === typeof done) done();
+  }
 
-	/**
-	 * Finalizes the RPC. Function that overrides should always call super.
-	 *
-	 * @callback done Callback to call when RPC is finalized.
-	 *     @param {Error} err Error on error, otherwise null.
-	 */
+  /**
+   * Finalizes the RPC. Function that overrides should always call super.
+   *
+   * @callback done Callback to call when RPC is finalized.
+   *     @param {Error} err Error on error, otherwise null.
+   */
 
-	finalize(done: DoneCallback) {
-		if ('function' === typeof done) done();
-	}
+  finalize(done: DoneCallback) {
+    if ('function' === typeof done) done();
+  }
 
-	/**
-	 * Executes the RPC.
-	 *
-	 * @callback done Callback to call when RPC is done.
-	 *     @param {Error} err Error on error, otherwise null.
-	 *     @param {Object} response RPC response.
-	 */
+  /**
+   * Executes the RPC.
+   *
+   * @callback done Callback to call when RPC is done.
+   *     @param {Error} err Error on error, otherwise null.
+   *     @param {Object} response RPC response.
+   */
 
-	abstract execute(done: DoneWithResultCallback): void;
+  abstract execute(done: DoneWithResultCallback): void;
 
-	/**
-	 * Print debug message to Scenario info log. Debug messages are only visible to system administrators.
-	 *
-	 * @param {...*} message Message to be printed to Scenario info log.
-	 */
+  /**
+   * Print debug message to Scenario info log. Debug messages are only visible to system administrators.
+   *
+   * @param {...*} message Message to be printed to Scenario info log.
+   */
 
-	abstract debug(): void;
+  abstract debug(): void;
 }
