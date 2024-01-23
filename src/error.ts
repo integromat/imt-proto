@@ -1,27 +1,27 @@
 import { Bundle } from './types';
 
 declare global {
-	interface Error {
-		name: string;
-		message: string;
-		stack?: string;
-		hash?: string;
-		bundle?: Bundle;
-		suberrors?: Error[];
-		external?: any;
+  interface Error {
+    name: string;
+    message: string;
+    stack?: string;
+    hash?: string;
+    bundle?: Bundle;
+    suberrors?: Error[];
+    external?: any;
 
-		toJSON(): ErrorJSON;
-	}
+    toJSON(): ErrorJSON;
+  }
 }
 
 export interface ErrorJSON {
-	name: string;
-	message: string;
-	stack?: string;
-	hash?: string;
-	bundle?: Bundle;
-	suberrors?: ErrorJSON[];
-	external?: any;
+  name: string;
+  message: string;
+  stack?: string;
+  hash?: string;
+  bundle?: Bundle;
+  suberrors?: ErrorJSON[];
+  external?: any;
 }
 
 /**
@@ -34,24 +34,24 @@ export interface ErrorJSON {
  */
 
 export class UnknownError extends Error {
-	constructor(err: Error | string) {
-		super();
+  constructor(err: Error | string) {
+    super();
 
-		if ('object' === typeof err) {
-			Object.assign(this, err);
-			this.message = err.message || '<no message>';
-		} else if ('string' === typeof err) {
-			this.message = err;
-		}
+    if ('object' === typeof err) {
+      Object.assign(this, err);
+      this.message = err.message || '<no message>';
+    } else if ('string' === typeof err) {
+      this.message = err;
+    }
 
-		this.name = this.constructor.name;
+    this.name = this.constructor.name;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 
-	toJSON() {
-		return Object.assign(super.toJSON(), this);
-	}
+  toJSON() {
+    return Object.assign(super.toJSON(), this);
+  }
 }
 
 /**
@@ -64,13 +64,13 @@ export class UnknownError extends Error {
  */
 
 export class RuntimeError extends Error {
-	constructor(message: string) {
-		super(message);
+  constructor(message: string) {
+    super(message);
 
-		this.name = this.constructor.name;
+    this.name = this.constructor.name;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 /**
@@ -83,13 +83,13 @@ export class RuntimeError extends Error {
  */
 
 export class DataError extends Error {
-	constructor(message: string) {
-		super(message);
+  constructor(message: string) {
+    super(message);
 
-		this.name = this.constructor.name;
+    this.name = this.constructor.name;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 /**
@@ -102,13 +102,13 @@ export class DataError extends Error {
  */
 
 export class InconsistencyError extends Error {
-	constructor(message: string) {
-		super(message);
+  constructor(message: string) {
+    super(message);
 
-		this.name = this.constructor.name;
+    this.name = this.constructor.name;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 /**
@@ -125,16 +125,16 @@ export class InconsistencyError extends Error {
  */
 
 export class RateLimitError extends Error {
-	public delay: number;
+  public delay: number;
 
-	constructor(message: string, delay: number) {
-		super(message);
+  constructor(message: string, delay: number) {
+    super(message);
 
-		this.name = this.constructor.name;
-		this.delay = delay;
+    this.name = this.constructor.name;
+    this.delay = delay;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 /**
@@ -147,13 +147,13 @@ export class RateLimitError extends Error {
  */
 
 export class OutOfSpaceError extends Error {
-	constructor(message: string) {
-		super(message);
+  constructor(message: string) {
+    super(message);
 
-		this.name = this.constructor.name;
+    this.name = this.constructor.name;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 /**
@@ -166,13 +166,13 @@ export class OutOfSpaceError extends Error {
  */
 
 export class ConnectionError extends Error {
-	constructor(message: string) {
-		super(message);
+  constructor(message: string) {
+    super(message);
 
-		this.name = this.constructor.name;
+    this.name = this.constructor.name;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 /**
@@ -187,13 +187,13 @@ export class ConnectionError extends Error {
  */
 
 export class InvalidConfigurationError extends Error {
-	constructor(message: string) {
-		super(message);
+  constructor(message: string) {
+    super(message);
 
-		this.name = this.constructor.name;
+    this.name = this.constructor.name;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 /**
@@ -208,9 +208,9 @@ export class InvalidConfigurationError extends Error {
  */
 
 export class InvalidAccessTokenError extends InvalidConfigurationError {
-	constructor(message: string) {
-		super(message);
-	}
+  constructor(message: string) {
+    super(message);
+  }
 }
 
 /**
@@ -225,13 +225,13 @@ export class InvalidAccessTokenError extends InvalidConfigurationError {
  */
 
 export class UnexpectedError extends Error {
-	constructor(message: string) {
-		super(message);
+  constructor(message: string) {
+    super(message);
 
-		this.name = this.constructor.name;
+    this.name = this.constructor.name;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 /**
@@ -246,13 +246,13 @@ export class UnexpectedError extends Error {
  */
 
 export class MaxResultsExceededError extends Error {
-	constructor(message: string) {
-		super(message);
+  constructor(message: string) {
+    super(message);
 
-		this.name = this.constructor.name;
+    this.name = this.constructor.name;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 /**
@@ -267,13 +267,13 @@ export class MaxResultsExceededError extends Error {
  */
 
 export class MaxFileSizeExceededError extends Error {
-	constructor(message: string) {
-		super(message);
+  constructor(message: string) {
+    super(message);
 
-		this.name = this.constructor.name;
+    this.name = this.constructor.name;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 /**
@@ -288,16 +288,16 @@ export class MaxFileSizeExceededError extends Error {
  */
 
 export class IncompleteDataError extends Error {
-	public delay: number;
+  public delay: number;
 
-	constructor(message: string, delay: number) {
-		super(message);
+  constructor(message: string, delay: number) {
+    super(message);
 
-		this.name = this.constructor.name;
-		this.delay = delay;
+    this.name = this.constructor.name;
+    this.delay = delay;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 /**
@@ -310,13 +310,13 @@ export class IncompleteDataError extends Error {
  */
 
 export class DuplicateDataError extends Error {
-	constructor(message: string) {
-		super(message);
+  constructor(message: string) {
+    super(message);
 
-		this.name = this.constructor.name;
+    this.name = this.constructor.name;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 /**
@@ -329,13 +329,13 @@ export class DuplicateDataError extends Error {
  */
 
 export class ModuleTimeoutError extends Error {
-	constructor(message: string) {
-		super(message);
+  constructor(message: string) {
+    super(message);
 
-		this.name = this.constructor.name;
+    this.name = this.constructor.name;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 /**
@@ -348,13 +348,13 @@ export class ModuleTimeoutError extends Error {
  */
 
 export class ScenarioTimeoutError extends Error {
-	constructor(message: string) {
-		super(message);
+  constructor(message: string) {
+    super(message);
 
-		this.name = this.constructor.name;
+    this.name = this.constructor.name;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 /**
@@ -367,13 +367,13 @@ export class ScenarioTimeoutError extends Error {
  */
 
 export class OperationsLimitExceededError extends Error {
-	constructor(message: string) {
-		super(message);
+  constructor(message: string) {
+    super(message);
 
-		this.name = this.constructor.name;
+    this.name = this.constructor.name;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 /**
@@ -386,13 +386,13 @@ export class OperationsLimitExceededError extends Error {
  */
 
 export class DataSizeLimitExceededError extends Error {
-	constructor(message: string) {
-		super(message);
+  constructor(message: string) {
+    super(message);
 
-		this.name = this.constructor.name;
+    this.name = this.constructor.name;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 /**
@@ -405,13 +405,13 @@ export class DataSizeLimitExceededError extends Error {
  */
 
 export class ExecutionInterruptedError extends Error {
-	constructor(message: string) {
-		super(message);
+  constructor(message: string) {
+    super(message);
 
-		this.name = this.constructor.name;
+    this.name = this.constructor.name;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 /**
@@ -419,20 +419,20 @@ export class ExecutionInterruptedError extends Error {
  */
 
 Object.defineProperty(Error.prototype, 'toJSON', {
-	enumerable: false,
-	writable: true,
-	value(this: Error): ErrorJSON {
-		const json: { name: string; message: string } & Record<string, unknown> = {
-			name: this.name,
-			message: this.message,
-			stack: this.stack,
-		};
+  enumerable: false,
+  writable: true,
+  value(this: Error): ErrorJSON {
+    const json: { name: string; message: string } & Record<string, unknown> = {
+      name: this.name,
+      message: this.message,
+      stack: this.stack,
+    };
 
-		if (this.hash != null) json.hash = this.hash;
-		if (this.bundle != null) json.bundle = this.bundle;
-		if (Array.isArray(this.suberrors)) json.suberrors = this.suberrors.map((item: Error) => item.toJSON());
-		if (this.external != null) json.external = this.external;
+    if (this.hash != null) json.hash = this.hash;
+    if (this.bundle != null) json.bundle = this.bundle;
+    if (Array.isArray(this.suberrors)) json.suberrors = this.suberrors.map((item: Error) => item.toJSON());
+    if (this.external != null) json.external = this.external;
 
-		return json;
-	},
+    return json;
+  },
 });

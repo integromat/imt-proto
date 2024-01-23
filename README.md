@@ -13,7 +13,7 @@ $ npm install @integromat/proto --save-dev
 ### A. Usage via module import
 
 ```ts
-import { /* ... */ } from '@integromat/proto';
+import { ... } from '@integromat/proto';
 ```
 
 ### B. Usage via globals (deprecated)
@@ -21,7 +21,6 @@ import { /* ... */ } from '@integromat/proto';
 ```js
 require('@integromat/proto/global');
 ```
-
 
 ## License
 

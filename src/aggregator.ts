@@ -6,7 +6,7 @@ import { IMTTransformer } from './transformer';
  */
 
 export abstract class IMTAggregator extends IMTTransformer {
-	protected constructor() {
-		super(ModuleType.AGGREGATOR);
-	}
+  protected constructor() {
+    super(ModuleType.AGGREGATOR);
+  }
 }

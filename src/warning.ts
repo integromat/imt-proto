@@ -8,16 +8,16 @@
  */
 
 export class Warning {
-	name: string;
-	message: string;
-	stack?: string;
+  name: string;
+  message: string;
+  stack?: string;
 
-	constructor(message: string) {
-		this.name = 'Warning';
-		this.message = message;
+  constructor(message: string) {
+    this.name = 'Warning';
+    this.message = message;
 
-		Error.captureStackTrace(this, this.constructor);
-	}
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 /**
@@ -25,11 +25,11 @@ export class Warning {
  */
 
 Object.defineProperty(Warning.prototype, 'toString', {
-	configurable: true,
-	writable: true,
-	value(this: Warning) {
-		return `${this.name}: ${this.message}`;
-	},
+  configurable: true,
+  writable: true,
+  value(this: Warning) {
+    return `${this.name}: ${this.message}`;
+  },
 });
 
 /**
@@ -37,11 +37,11 @@ Object.defineProperty(Warning.prototype, 'toString', {
  */
 
 Object.defineProperty(Warning.prototype, 'inspect', {
-	configurable: true,
-	writable: true,
-	value(this: Warning) {
-		return `[${this.name}: ${this.message}]`;
-	},
+  configurable: true,
+  writable: true,
+  value(this: Warning) {
+    return `[${this.name}: ${this.message}]`;
+  },
 });
 
 /**
@@ -49,13 +49,13 @@ Object.defineProperty(Warning.prototype, 'inspect', {
  */
 
 Object.defineProperty(Warning.prototype, 'toJSON', {
-	configurable: true,
-	writable: true,
-	value(this: Warning) {
-		return {
-			name: this.name,
-			message: this.message,
-			stack: this.stack,
-		};
-	},
+  configurable: true,
+  writable: true,
+  value(this: Warning) {
+    return {
+      name: this.name,
+      message: this.message,
+      stack: this.stack,
+    };
+  },
 });
