@@ -6,3 +6,5 @@ _site
 *.iml
 .vscode
 dist/
+coverage
+junit.xml
