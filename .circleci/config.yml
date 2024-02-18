@@ -10,13 +10,13 @@ jobs:
       - checkout
       - run:
           command: |
-            npm i --no-save
+            npm ci
           name: Install deps
       - testing-orb/run_tests:
           test_type: unit
           command: npm run test:unit
       - testing-orb/upload_and_comment_coverage:
-          lcov_file_path: ./coverage/lcov.info
+          lcov_file_path: ./coverage/unit/lcov.info
           test_type: unit
       - store_artifacts:
           path: coverage/unit
