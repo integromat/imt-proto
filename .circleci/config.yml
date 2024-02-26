@@ -1,0 +1,31 @@
+version: 2.1
+orbs:
+  testing-orb: integromat/testing-orb@1.0.2
+jobs:
+  test-and-build:
+    executor:
+      name: testing-orb/default
+      tag: '16.20.2'
+    steps:
+      - checkout
+      - run:
+          command: |
+            npm ci
+          name: Install deps
+      - testing-orb/run_tests:
+          test_type: unit
+          command: npm run test:unit
+      - testing-orb/upload_and_comment_coverage:
+          lcov_file_path: ./coverage/unit/lcov.info
+          test_type: unit
+      - store_artifacts:
+          path: coverage/unit
+      - store_test_results:
+          path: coverage/unit
+workflows:
+  build:
+    jobs:
+      - test-and-build:
+          context:
+            - org-default
+            - testing
