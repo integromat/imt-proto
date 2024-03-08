@@ -12,8 +12,13 @@
   "version": "2.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./global": "./dist/global.js"
+  },
   "files": [
-    "/dist"
+    "/dist",
+    "/src"
   ],
   "repository": {
     "type": "git",
@@ -37,12 +42,10 @@
     "typescript": "^5.4.2"
   },
   "engines": {
-    "node": ">=16.19.0 <17.0.0"
+    "node": ">=16.19.0"
   },
   "scripts": {
-    "clean": "rm -Rf ./dist",
-    "build": "npm run clean && npm run build:ts",
-    "build:ts": "tsc",
+    "build": "tsc --build tsconfig.json --clean && tsc --build tsconfig.json",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run lint && npm run test:unit",
