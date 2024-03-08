@@ -5,10 +5,6 @@ import { DoneWithResultCallback } from '../src/types';
 import { IMTBase } from '../src';
 
 class TestTrigger extends IMTTrigger {
-  addSharedTransaction(): number {
-    return -1;
-  }
-
   fetch = () => undefined;
 
   read(done: DoneWithResultCallback) {
@@ -26,10 +22,16 @@ describe('IMTTrigger', () => {
     const trigger = new TestTrigger();
     trigger.parameters = { host: 'www.integromat.com' };
     trigger.initialize((err) => {
-      if (err) return done(err);
+      if (err) {
+        done(err);
+        return;
+      }
 
       trigger.read((err, output) => {
-        if (err) return done(err);
+        if (err) {
+          done(err);
+          return;
+        }
 
         assert.ok(trigger instanceof IMTBase);
         assert.ok(trigger instanceof IMTTrigger);
@@ -44,7 +46,10 @@ describe('IMTTrigger', () => {
         );
 
         trigger.commit((err) => {
-          if (err) return done(err);
+          if (err) {
+            done(err);
+            return;
+          }
 
           trigger.finalize(done);
         });
@@ -56,14 +61,20 @@ describe('IMTTrigger', () => {
     const trigger = new TestTrigger();
     trigger.parameters = { host: '127.0.0.1' };
     trigger.initialize((err) => {
-      if (err) return done(err);
+      if (err) {
+        done(err);
+        return;
+      }
 
       trigger.read((err) => {
         assert.ok(err, 'Write should return error.');
         assert.ok(err instanceof ConnectionError, 'Error should be instanceof DataError.');
 
         trigger.rollback((err) => {
-          if (err) return done(err);
+          if (err) {
+            done(err);
+            return;
+          }
 
           trigger.finalize(done);
         });
