@@ -10,22 +10,26 @@ class TestAction extends IMTAction {
 
     done(null, { result: bundle.number * 2 });
   }
-
-  addSharedTransaction = () => -1;
 }
 
 describe('IMTAction', () => {
-  it('should operate successfuly', (done) => {
+  it('should operate successfully', (done) => {
     const input = {
       number: 1,
     };
 
     const action = new TestAction();
     action.initialize((err) => {
-      if (err) return done(err);
+      if (err) {
+        done(err);
+        return;
+      }
 
       action.write(input, (err, output) => {
-        if (err) return done(err);
+        if (err) {
+          done(err);
+          return;
+        }
 
         assert.ok(action instanceof IMTBase);
         assert.ok(action instanceof IMTAction);
@@ -33,7 +37,10 @@ describe('IMTAction', () => {
         assert.strictEqual(output.result, 2, 'Result should be equal to 2.');
 
         action.commit((err) => {
-          if (err) return done(err);
+          if (err) {
+            done(err);
+            return;
+          }
 
           action.finalize(done);
         });
@@ -48,14 +55,20 @@ describe('IMTAction', () => {
 
     const action = new TestAction();
     action.initialize((err) => {
-      if (err) return done(err);
+      if (err) {
+        done(err);
+        return;
+      }
 
       action.write(input, (err) => {
         assert.ok(err, 'Write should return error.');
         assert.ok(err instanceof DataError, 'Error should be instanceof DataError.');
 
         action.rollback((err) => {
-          if (err) return done(err);
+          if (err) {
+            done(err);
+            return;
+          }
 
           action.finalize(done);
         });

@@ -1,4 +1,5 @@
 import { DoneCallback, DoneWithFormCallback, DoneWithInfoCallback } from './types';
+import type { Request } from 'request';
 
 export type Item = any;
 export type HookData = any;

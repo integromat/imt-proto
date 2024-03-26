@@ -94,7 +94,10 @@ export abstract class IMTBase extends EventEmitter {
    * @param {Number} [id] Transaction ID. If omited, new transaction ID is generated.
    * @return {Number} Transaction ID.
    */
-  abstract addSharedTransaction(id: number): number;
+  addSharedTransaction(id: number): number {
+    void id;
+    throw new Error("Must override a superclass method 'addSharedTransaction'.");
+  }
 
   /**
    * Emit audit message to Engine log. The arguments provided are intended to be shown in the Audit Trail for Module Execution Logs

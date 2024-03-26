@@ -1,8 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "types": ["node", "mocha"],
-    "noImplicitAny": false
+    "types": ["node", "jest"]
   },
   "include": ["*.spec.ts", "test/**/*.ts"]
 }
