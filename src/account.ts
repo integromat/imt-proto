@@ -1,5 +1,5 @@
 import { Readable } from 'stream';
-import { Common, Data } from './base';
+import { CommonData, ModuleData } from './base';
 import { DoneCallback } from './types';
 
 export type Scope = string[];
@@ -12,9 +12,9 @@ export type DoneWithUrlCallback = (err?: Error | null, url?: string) => void;
  * @property common - Collection of common parameters. Read only.
  * @property data - Collection of config parameters.
  */
-export abstract class IMTAccount {
-  public common: Common | null;
-  public data: Data | null;
+export class IMTAccount {
+  public common: CommonData | null;
+  public data: ModuleData | null;
 
   constructor() {
     this.common = null;
@@ -68,7 +68,7 @@ export abstract class IMTAccount {
 Base class for all OAuth Accounts.
 */
 
-export abstract class IMTOAuthAccount extends IMTAccount {
+export class IMTOAuthAccount extends IMTAccount {
   private id?: string | null;
 
   /**
