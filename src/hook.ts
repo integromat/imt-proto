@@ -1,4 +1,4 @@
-import { DoneCallback, DoneWithFormCallback, DoneWithInfoCallback } from './types';
+import { DoneCallback, DoneWithFormCallback, DoneWithInfoCallback, DoneWithResultCallback } from './types';
 import type { Request } from 'request';
 
 export type Item = any;
@@ -10,7 +10,7 @@ export type HookData = any;
  * @property {Object} data Collection of data specific to this hook. Read only.
  */
 
-export abstract class IMTHook {
+export class IMTHook {
   /**
    * Initializes the hook. Function that overrides should always call super.
    *
@@ -36,13 +36,17 @@ export abstract class IMTHook {
   /**
    * Parse request.
    *
-   * @param {Request} req Request object.
+   * @param {Request} request Request object.
    * @callback done Callback to call when test is complete.
    *     @param {Error} err Error on error, otherwise null.
    *     @param {Array} items Array of items parsed from request.
    */
 
-  abstract parse(req: Request, done: DoneCallback): void;
+  parse(request: Request, done: DoneWithResultCallback): void {
+    void request;
+    void done;
+    throw new Error("Must override a superclass method 'parse'.");
+  }
   /**
    * Filter received items. Only effective in shared webhooks.
    *

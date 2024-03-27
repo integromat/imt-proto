@@ -1,11 +1,11 @@
 import { IMTBase, ModuleType } from './base';
-import { Bundle, DoneCallback } from './types';
+import { Bundle, DoneWithResultCallback } from './types';
 
 /**
  * Base class for all Feeders.
  */
 
-export abstract class IMTPauser extends IMTBase {
+export class IMTPauser extends IMTBase {
   public readonly type = ModuleType.PAUSER;
 
   /**
@@ -17,5 +17,9 @@ export abstract class IMTPauser extends IMTBase {
    *     @param {Object} bundle Collection of output data.
    */
 
-  abstract pause(bundle: Bundle, done: DoneCallback): void;
+  pause(bundle: Bundle, done: DoneWithResultCallback): void {
+    void bundle;
+    void done;
+    throw new Error("Must override a superclass method 'pause'.");
+  }
 }

@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { Common, Environment, Parameters } from './base';
+import { CommonData, EnvironmentData, Parameters } from './base';
 import { DoneCallback, DoneWithResultCallback } from './types';
 
 /**
@@ -10,12 +10,12 @@ import { DoneCallback, DoneWithResultCallback } from './types';
  * @property {Object} parameters Collection of config parameters. Read only.
  */
 
-export abstract class IMTRPC extends EventEmitter {
-  public common: Common | null;
+export class IMTRPC extends EventEmitter {
+  public common: CommonData | null;
   public parameters: Parameters | null;
-  public environment: Environment | null;
+  public environment: EnvironmentData | null;
 
-  protected constructor() {
+  constructor() {
     super();
 
     this.common = null;
@@ -53,7 +53,10 @@ export abstract class IMTRPC extends EventEmitter {
    *     @param {Object} response RPC response.
    */
 
-  abstract execute(done: DoneWithResultCallback): void;
+  execute(done: DoneWithResultCallback): void {
+    void done;
+    throw new Error("Must override a superclass method 'execute'.");
+  }
 
   /**
    * Print debug message to Scenario info log. Debug messages are only visible to system administrators.
@@ -61,5 +64,7 @@ export abstract class IMTRPC extends EventEmitter {
    * @param {...*} message Message to be printed to Scenario info log.
    */
 
-  abstract debug(): void;
+  debug(): void {
+    throw new Error("Must override a superclass method 'debug'.");
+  }
 }

@@ -5,7 +5,7 @@ import { DoneCallback, DoneWithResultCallback } from './types';
  * Base class for all Triggers.
  */
 
-export abstract class IMTTrigger extends IMTBase {
+export class IMTTrigger extends IMTBase {
   public readonly type = ModuleType.TRIGGER;
 
   /**
@@ -16,7 +16,11 @@ export abstract class IMTTrigger extends IMTBase {
    *     @param {Error} err Error on error, otherwise null.
    */
 
-  abstract fetch(id: number, done: DoneCallback): void;
+  fetch(id: number, done: DoneCallback): void {
+    void id;
+    void done;
+    throw new Error("Must override a superclass method 'fetch'.");
+  }
 
   /**
    * Reads data.
@@ -26,11 +30,14 @@ export abstract class IMTTrigger extends IMTBase {
    *     @param {Object|Array} bundle Collection of data read. Or batch of collections.
    */
 
-  abstract read(done: DoneWithResultCallback): void;
+  read(done: DoneWithResultCallback): void {
+    void done;
+    throw new Error("Must override a superclass method 'read'.");
+  }
 }
 
 /**
  * Base Gateway Trigger.
  */
 
-export abstract class IMTGatewayTrigger extends IMTTrigger {}
+export class IMTGatewayTrigger extends IMTTrigger {}
