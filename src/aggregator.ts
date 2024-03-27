@@ -5,8 +5,8 @@ import { IMTTransformer } from './transformer';
  * Base class for all Aggregators.
  */
 
-export abstract class IMTAggregator extends IMTTransformer {
-  protected constructor() {
+export class IMTAggregator extends IMTTransformer {
+  constructor() {
     super(ModuleType.AGGREGATOR);
   }
 }

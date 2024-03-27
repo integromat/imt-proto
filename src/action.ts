@@ -1,7 +1,7 @@
 import { IMTBase, ModuleType } from './base';
 import { Bundle, DoneWithInfoCallback } from './types';
 
-export abstract class IMTAction extends IMTBase {
+export class IMTAction extends IMTBase {
   public readonly type = ModuleType.ACTION;
 
   /**
@@ -12,17 +12,21 @@ export abstract class IMTAction extends IMTBase {
    *     @param {Error} err Error on error, otherwise null.
    */
 
-  abstract write(bundle: Bundle, done: DoneWithInfoCallback): void;
+  write(bundle: Bundle, done: DoneWithInfoCallback): void {
+    void bundle;
+    void done;
+    throw new Error("Must override a superclass method 'write'.");
+  }
 }
 
 /**
  * Base Gateway Action.
  */
 
-export abstract class IMTGatewayAction extends IMTAction {}
+export class IMTGatewayAction extends IMTAction {}
 
 /**
  * Base Gateway Responder.
  */
 
-export abstract class IMTGatewayResponder extends IMTAction {}
+export class IMTGatewayResponder extends IMTAction {}

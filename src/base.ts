@@ -3,17 +3,17 @@ import { Warning } from './warning';
 import { EventEmitter } from 'events';
 import { DoneCallback, DoneWithReportCallback } from './types';
 
-export type Common = Record<string, any>;
+export type CommonData = Record<string, any>;
 
-export type Data = Record<string, any>;
+export type ModuleData = Record<string, any>;
 
 export type Parameters = {
   host: string;
 } & Record<string, any>;
 
-export type Scenario = Record<string, any>;
+export type ScenarioData = Record<string, any>;
 
-export type Environment = Record<string, any>;
+export type EnvironmentData = Record<string, any>;
 
 export enum ModuleType {
   NONE = 0,
@@ -43,8 +43,8 @@ export enum ModuleType {
  * @event log - Dispatched when message is about to be printed to info log.
  * @event warn - Dispatched when message is about to be printed to warning log.
  */
-export abstract class IMTBase extends EventEmitter {
-  public abstract readonly type: ModuleType;
+export class IMTBase extends EventEmitter {
+  public readonly type: ModuleType = ModuleType.NONE;
 
   public static readonly MODULETYPE_NONE = ModuleType.NONE;
   public static readonly MODULETYPE_TRIGGER = ModuleType.TRIGGER;
@@ -59,11 +59,11 @@ export abstract class IMTBase extends EventEmitter {
   public static readonly MODULETYPE_HITL = ModuleType.HITL;
   public static readonly MODULETYPE_PAUSER = ModuleType.PAUSER;
 
-  public common: Common | null = null;
-  public data: Data | null = null;
+  public common: CommonData | null = null;
+  public data: ModuleData | null = null;
   public parameters: Parameters | null = null;
-  public scenario: Scenario | null = null;
-  public environment: Environment | null = null;
+  public scenario: ScenarioData | null = null;
+  public environment: EnvironmentData | null = null;
 
   /**
    * Initializes the module. Function that overrides should always call super.

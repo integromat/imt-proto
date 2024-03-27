@@ -6,7 +6,7 @@ import { Bundle, DoneWithResultCallback } from './types';
  * Base class for all Feeders.
  */
 
-export abstract class IMTFeeder extends IMTTransformer {
+export class IMTFeeder extends IMTTransformer {
   public readonly type = ModuleType.FEEDER;
 
   /**

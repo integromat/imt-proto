@@ -1,11 +1,11 @@
 import { IMTBase, ModuleType } from './base';
-import { Bundle, DoneCallback } from './types';
+import { Bundle, DoneWithResultCallback } from './types';
 
 /**
  * Base class for all Transformers.
  */
 
-export abstract class IMTTransformer extends IMTBase {
+export class IMTTransformer extends IMTBase {
   public readonly type;
 
   constructor(type = ModuleType.TRANSFORMER) {
@@ -21,5 +21,9 @@ export abstract class IMTTransformer extends IMTBase {
    * 	@param {Error} err Error on error, otherwise null.
    * 	@param {Object} bundle Collection of transformed data.
    */
-  abstract transform(bundle: Bundle, done: DoneCallback): void;
+  transform(bundle: Bundle, done: DoneWithResultCallback): void {
+    void bundle;
+    void done;
+    throw new Error("Must override a superclass method 'transform'.");
+  }
 }

@@ -44,7 +44,8 @@ export class UnknownError extends Error {
       this.message = err;
     }
 
-    this.name = this.constructor.name;
+    this.name = 'UnknownError';
+    Object.setPrototypeOf(this, UnknownError.prototype);
 
     Error.captureStackTrace(this, this.constructor);
   }
@@ -67,7 +68,8 @@ export class RuntimeError extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = this.constructor.name;
+    this.name = 'RuntimeError';
+    Object.setPrototypeOf(this, RuntimeError.prototype);
 
     Error.captureStackTrace(this, this.constructor);
   }
@@ -86,7 +88,8 @@ export class DataError extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = this.constructor.name;
+    this.name = 'DataError';
+    Object.setPrototypeOf(this, DataError.prototype);
 
     Error.captureStackTrace(this, this.constructor);
   }
@@ -105,7 +108,8 @@ export class InconsistencyError extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = this.constructor.name;
+    this.name = 'InconsistencyError';
+    Object.setPrototypeOf(this, InconsistencyError.prototype);
 
     Error.captureStackTrace(this, this.constructor);
   }
@@ -130,7 +134,8 @@ export class RateLimitError extends Error {
   constructor(message: string, delay: number) {
     super(message);
 
-    this.name = this.constructor.name;
+    this.name = 'RateLimitError';
+    Object.setPrototypeOf(this, RateLimitError.prototype);
     this.delay = delay;
 
     Error.captureStackTrace(this, this.constructor);
@@ -150,7 +155,8 @@ export class OutOfSpaceError extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = this.constructor.name;
+    this.name = 'OutOfSpaceError';
+    Object.setPrototypeOf(this, OutOfSpaceError.prototype);
 
     Error.captureStackTrace(this, this.constructor);
   }
@@ -169,7 +175,8 @@ export class ConnectionError extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = this.constructor.name;
+    this.name = 'ConnectionError';
+    Object.setPrototypeOf(this, ConnectionError.prototype);
 
     Error.captureStackTrace(this, this.constructor);
   }
@@ -190,7 +197,8 @@ export class InvalidConfigurationError extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = this.constructor.name;
+    this.name = 'InvalidConfigurationError';
+    Object.setPrototypeOf(this, InvalidConfigurationError.prototype);
 
     Error.captureStackTrace(this, this.constructor);
   }
@@ -210,6 +218,9 @@ export class InvalidConfigurationError extends Error {
 export class InvalidAccessTokenError extends InvalidConfigurationError {
   constructor(message: string) {
     super(message);
+
+    this.name = 'InvalidAccessTokenError';
+    Object.setPrototypeOf(this, InvalidAccessTokenError.prototype);
   }
 }
 
@@ -228,7 +239,8 @@ export class UnexpectedError extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = this.constructor.name;
+    this.name = 'UnexpectedError';
+    Object.setPrototypeOf(this, UnexpectedError.prototype);
 
     Error.captureStackTrace(this, this.constructor);
   }
@@ -249,7 +261,8 @@ export class MaxResultsExceededError extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = this.constructor.name;
+    this.name = 'MaxResultsExceededError';
+    Object.setPrototypeOf(this, MaxResultsExceededError.prototype);
 
     Error.captureStackTrace(this, this.constructor);
   }
@@ -270,7 +283,8 @@ export class MaxFileSizeExceededError extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = this.constructor.name;
+    this.name = 'MaxFileSizeExceededError';
+    Object.setPrototypeOf(this, MaxFileSizeExceededError.prototype);
 
     Error.captureStackTrace(this, this.constructor);
   }
@@ -293,7 +307,8 @@ export class IncompleteDataError extends Error {
   constructor(message: string, delay: number) {
     super(message);
 
-    this.name = this.constructor.name;
+    this.name = 'IncompleteDataError';
+    Object.setPrototypeOf(this, IncompleteDataError.prototype);
     this.delay = delay;
 
     Error.captureStackTrace(this, this.constructor);
@@ -313,7 +328,8 @@ export class DuplicateDataError extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = this.constructor.name;
+    this.name = 'DuplicateDataError';
+    Object.setPrototypeOf(this, DuplicateDataError.prototype);
 
     Error.captureStackTrace(this, this.constructor);
   }
@@ -332,7 +348,8 @@ export class ModuleTimeoutError extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = this.constructor.name;
+    this.name = 'ModuleTimeoutError';
+    Object.setPrototypeOf(this, ModuleTimeoutError.prototype);
 
     Error.captureStackTrace(this, this.constructor);
   }
@@ -351,7 +368,8 @@ export class ScenarioTimeoutError extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = this.constructor.name;
+    this.name = 'ScenarioTimeoutError';
+    Object.setPrototypeOf(this, ScenarioTimeoutError.prototype);
 
     Error.captureStackTrace(this, this.constructor);
   }
@@ -370,7 +388,8 @@ export class OperationsLimitExceededError extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = this.constructor.name;
+    this.name = 'OperationsLimitExceededError';
+    Object.setPrototypeOf(this, OperationsLimitExceededError.prototype);
 
     Error.captureStackTrace(this, this.constructor);
   }
@@ -389,7 +408,8 @@ export class DataSizeLimitExceededError extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = this.constructor.name;
+    this.name = 'DataSizeLimitExceededError';
+    Object.setPrototypeOf(this, DataSizeLimitExceededError.prototype);
 
     Error.captureStackTrace(this, this.constructor);
   }
@@ -408,7 +428,8 @@ export class ExecutionInterruptedError extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = this.constructor.name;
+    this.name = 'ExecutionInterruptedError';
+    Object.setPrototypeOf(this, ExecutionInterruptedError.prototype);
 
     Error.captureStackTrace(this, this.constructor);
   }

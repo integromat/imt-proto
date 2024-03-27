@@ -9,7 +9,7 @@ import { IMTBase, ModuleType } from './base';
  * @event data Module dispatches this event on new data.
  */
 
-export abstract class IMTListener extends IMTBase {
+export class IMTListener extends IMTBase {
   public readonly type = ModuleType.LISTENER;
 
   /**
@@ -19,7 +19,10 @@ export abstract class IMTListener extends IMTBase {
    *     @param {Error} err Error on error, otherwise null.
    */
 
-  abstract start(done: DoneCallback): void;
+  start(done: DoneCallback): void {
+    void done;
+    throw new Error("Must override a superclass method 'start'.");
+  }
 
   /**
    * Stop listening for new data.
@@ -28,5 +31,8 @@ export abstract class IMTListener extends IMTBase {
    *     @param {Error} err Error on error, otherwise null.
    */
 
-  abstract stop(done: DoneCallback): void;
+  stop(done: DoneCallback): void {
+    void done;
+    throw new Error("Must override a superclass method 'stop'.");
+  }
 }
