@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { CommonData, EnvironmentData, Parameters } from './base';
+import { CommonData, EnvironmentData, InternalData, Parameters } from './base';
 import { DoneCallback, DoneWithResultCallback } from './types';
 
 /**
@@ -14,6 +14,7 @@ export class IMTRPC extends EventEmitter {
   public common: CommonData | null;
   public parameters: Parameters | null;
   public environment: EnvironmentData | null;
+  public internal: InternalData | null;
 
   constructor() {
     super();
@@ -21,6 +22,7 @@ export class IMTRPC extends EventEmitter {
     this.common = null;
     this.parameters = null;
     this.environment = null;
+    this.internal = null;
   }
 
   /**
