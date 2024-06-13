@@ -15,6 +15,8 @@ export type ScenarioData = Record<string, any>;
 
 export type EnvironmentData = Record<string, any>;
 
+export type InternalData = Record<string, any>;
+
 export enum ModuleType {
   NONE = 0,
   TRIGGER = 1,
@@ -64,6 +66,7 @@ export class IMTBase extends EventEmitter {
   public parameters: Parameters | null = null;
   public scenario: ScenarioData | null = null;
   public environment: EnvironmentData | null = null;
+  public internal: InternalData | null = null;
 
   /**
    * Initializes the module. Function that overrides should always call super.
