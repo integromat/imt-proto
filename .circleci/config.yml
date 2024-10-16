@@ -12,6 +12,12 @@ jobs:
           command: |
             npm ci
           name: Install deps
+      - run:
+          command: npm run format:check
+          name: Check formatting
+      - run:
+          command: npm run lint
+          name: Check lint
       - testing-orb/run_tests:
           test_type: unit
           command: npm run test:unit
