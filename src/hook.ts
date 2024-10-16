@@ -1,5 +1,6 @@
 import { DoneCallback, DoneWithFormCallback, DoneWithInfoCallback, DoneWithResultCallback } from './types';
 import type { Request } from 'request';
+import { EventEmitter } from 'events';
 
 export type Item = any;
 export type HookData = any;
@@ -10,7 +11,7 @@ export type HookData = any;
  * @property {Object} data Collection of data specific to this hook. Read only.
  */
 
-export class IMTHook {
+export class IMTHook extends EventEmitter {
   /**
    * Initializes the hook. Function that overrides should always call super.
    *
