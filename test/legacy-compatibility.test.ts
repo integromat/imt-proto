@@ -65,6 +65,7 @@ describe('Legacy Compatibility', () => {
     expect(global.IMTRPC).toBeDefined();
     expect(global.IMTFeeder).toBeDefined();
     expect(global.IMTTransformer).toBeDefined();
+    expect(global.IMTHITL).toBeDefined();
   });
 
   it('should have same values for globals and for public API', () => {
@@ -105,6 +106,7 @@ describe('Legacy Compatibility', () => {
     expect(global.IMTRPC === publicApi.IMTRPC).toBe(true);
     expect(global.IMTFeeder === publicApi.IMTFeeder).toBe(true);
     expect(global.IMTTransformer === publicApi.IMTTransformer).toBe(true);
+    expect(global.IMTHITL === publicApi.IMTHITL).toBe(true);
   });
 
   it('should be compatible with CoffeeScript classes', () => {

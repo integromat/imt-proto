@@ -9,20 +9,23 @@ declare global {
     bundle?: Bundle;
     suberrors?: Error[];
     external?: any;
-
+    imtExceptionHash?: string; // moved from imt-blueprint - it is the same thing as hash, it is just a historical inconsistency
+    imtInternalError?: Error; // moved from imt-blueprint
     toJSON(): ErrorJSON;
   }
 }
 
-export interface ErrorJSON {
+export type ErrorJSON = {
   name: string;
   message: string;
   stack?: string;
   hash?: string;
+  imtExceptionHash?: string;
+  imtInternalError?: ErrorJSON;
   bundle?: Bundle;
   suberrors?: ErrorJSON[];
-  external?: any;
-}
+  external?: unknown;
+};
 
 /**
  * Unknown Error. Used when non-instanceof-error error happens in program logic.
@@ -50,8 +53,8 @@ export class UnknownError extends Error {
     Error.captureStackTrace(this, this.constructor);
   }
 
-  toJSON() {
-    return Object.assign(super.toJSON(), this);
+  toJSON(): ErrorJSON {
+    return { ...this, ...super.toJSON() };
   }
 }
 
@@ -443,7 +446,7 @@ Object.defineProperty(Error.prototype, 'toJSON', {
   enumerable: false,
   writable: true,
   value(this: Error): ErrorJSON {
-    const json: { name: string; message: string } & Record<string, unknown> = {
+    const json: ErrorJSON = {
       name: this.name,
       message: this.message,
       stack: this.stack,
@@ -453,7 +456,22 @@ Object.defineProperty(Error.prototype, 'toJSON', {
     if (this.bundle != null) json.bundle = this.bundle;
     if (Array.isArray(this.suberrors)) json.suberrors = this.suberrors.map((item: Error) => item.toJSON());
     if (this.external != null) json.external = this.external;
+    if (this.imtInternalError) json.imtInternalError = this.imtInternalError.toJSON();
+    if (this.imtExceptionHash) json.imtExceptionHash = this.imtExceptionHash;
 
     return json;
+  },
+});
+
+/**
+ * Hash and imtExceptionHash are the same thing with different names - this keeps them synchronized to just 1 value
+ */
+Object.defineProperty(Error.prototype, 'imtExceptionHash', {
+  enumerable: true,
+  set(this: Error, newValue: string) {
+    this.hash = newValue;
+  },
+  get(this: Error): string | undefined {
+    return this.hash;
   },
 });
