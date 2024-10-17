@@ -9,7 +9,13 @@ declare global {
     bundle?: Bundle;
     suberrors?: Error[];
     external?: any;
+    /**
+     * @deprecated use hash instead
+     */
     imtExceptionHash?: string; // moved from imt-blueprint - it is the same thing as hash, it is just a historical inconsistency
+    /**
+     * @deprecated do not use
+     */
     imtInternalError?: Error; // moved from imt-blueprint
     toJSON(): ErrorJSON;
   }
@@ -20,7 +26,13 @@ export type ErrorJSON = {
   message: string;
   stack?: string;
   hash?: string;
+  /**
+   * @deprecated use hash instead
+   */
   imtExceptionHash?: string;
+  /**
+   * @deprecated do not use
+   */
   imtInternalError?: ErrorJSON;
   bundle?: Bundle;
   suberrors?: ErrorJSON[];
