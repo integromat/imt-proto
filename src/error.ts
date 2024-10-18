@@ -14,7 +14,7 @@ declare global {
      */
     imtExceptionHash?: string; // moved from imt-blueprint - it is the same thing as hash, it is just a historical inconsistency
     /**
-     * @deprecated do not use
+     * @deprecated use `cause` instead
      */
     imtInternalError?: Error; // moved from imt-blueprint
     toJSON(): ErrorJSON;
