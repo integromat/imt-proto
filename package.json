@@ -9,7 +9,7 @@
     "integromat",
     "imt"
   ],
-  "version": "2.4.0",
+  "version": "2.5.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -25,10 +25,12 @@
     "url": "https://github.com/integromat/imt-proto"
   },
   "license": "MIT",
+  "dependencies": {
+    "@types/request": "^2.48.12"
+  },
   "devDependencies": {
     "@types/jest": "^29.5.6",
     "@types/node": "^18.15.11",
-    "@types/request": "^2.48.12",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "eslint": "^8.57.0",

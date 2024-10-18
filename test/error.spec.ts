@@ -57,6 +57,7 @@ describe('Error', () => {
     e.external = true;
     e.something = 'donotserializeme';
     e.suberrors = [ee];
+    e.imtInternalError = ee;
 
     assert.deepStrictEqual(e.toJSON(), {
       name: 'DataError',
@@ -71,8 +72,26 @@ describe('Error', () => {
           stack: ee.stack,
         },
       ],
+      imtInternalError: {
+        name: 'TypeError',
+        message: 'Type message.',
+        stack: ee.stack,
+      },
+      imtExceptionHash: 'im-hash',
     });
 
     done();
+  });
+
+  it('should keep hash and imtExceptionHash in sync', () => {
+    const error = new Error('Some Message');
+
+    error.hash = 'hash value';
+    expect(error.hash).toEqual('hash value');
+    expect(error.imtExceptionHash).toEqual('hash value');
+
+    error.imtExceptionHash = 'imtExceptionHash';
+    expect(error.hash).toEqual('imtExceptionHash');
+    expect(error.imtExceptionHash).toEqual('imtExceptionHash');
   });
 });
