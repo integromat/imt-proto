@@ -480,6 +480,10 @@ Object.defineProperty(Error.prototype, 'toJSON', {
  */
 Object.defineProperty(Error.prototype, 'imtExceptionHash', {
   enumerable: true,
+  /**
+   *   imt-bluperint does some crazy things and the proto get's loaded multiple times. Without this, it fails on redefinition of the same property
+   */
+  configurable: true,
   set(this: Error, newValue: string) {
     this.hash = newValue;
   },
