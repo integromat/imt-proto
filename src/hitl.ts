@@ -4,8 +4,8 @@ import { Bundle, DoneWithInfoCallback } from './types';
 /**
  * Base class for all Human-in-the-loop modules.
  */
-export abstract class IMTHITL extends IMTBase {
-  public readonly type: ModuleType = ModuleType.HITL;
+export class IMTHITL extends IMTBase {
+  public readonly type = ModuleType.HITL;
 
   /**
    * Executes the HITL flow.
@@ -15,5 +15,9 @@ export abstract class IMTHITL extends IMTBase {
    *     @param {Error} err Error on error, otherwise null.
    */
 
-  abstract execute(bundle: Bundle, done: DoneWithInfoCallback): void;
+  execute(bundle: Bundle, done: DoneWithInfoCallback): void {
+    void bundle;
+    void done;
+    throw new Error("Must override a superclass method 'execute'.");
+  }
 }

@@ -6,12 +6,7 @@ import { Bundle, DoneWithResultCallback } from './types';
  */
 
 export class IMTTransformer extends IMTBase {
-  public readonly type;
-
-  constructor(type = ModuleType.TRANSFORMER) {
-    super();
-    this.type = type;
-  }
+  public readonly type: ModuleType.TRANSFORMER | ModuleType.AGGREGATOR | ModuleType.FEEDER = ModuleType.TRANSFORMER;
 
   /**
    * Transforms data.
