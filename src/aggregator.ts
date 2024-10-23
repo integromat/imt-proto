@@ -6,7 +6,5 @@ import { IMTTransformer } from './transformer';
  */
 
 export class IMTAggregator extends IMTTransformer {
-  constructor() {
-    super(ModuleType.AGGREGATOR);
-  }
+  public readonly type = ModuleType.AGGREGATOR;
 }
