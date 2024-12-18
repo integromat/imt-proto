@@ -2,7 +2,7 @@ import * as assert from 'assert';
 import { DataError, InvalidAccessTokenError, UnknownError } from '../src/error';
 
 describe('Error', () => {
-  it('UnknownError', (done) => {
+  it('UnknownError', () => {
     let e = new UnknownError(new Error('Error message.'));
 
     assert.equal(e.message, 'Error message.');
@@ -25,62 +25,130 @@ describe('Error', () => {
 
     assert.equal(err.message, 'Error message.');
     assert.equal(err.something, true);
-
-    done();
   });
 
-  it('DataError', (done) => {
+  it('DataError', () => {
     const e = new DataError('Some message.');
 
     assert.equal(e.name, 'DataError');
     assert.equal(e.message, 'Some message.');
     assert.ok(/^DataError: Some message.\n/.test(e.stack!));
-
-    done();
   });
 
-  it('InvalidAccessTokenError', (done) => {
+  it('InvalidAccessTokenError', () => {
     const e = new InvalidAccessTokenError('Some message.');
 
     assert.equal(e.name, 'InvalidAccessTokenError');
     assert.equal(e.message, 'Some message.');
     assert.ok(/^InvalidAccessTokenError: Some message.\n/.test(e.stack!));
-
-    done();
   });
 
-  it('JSON serialization', (done) => {
-    const e: any = new DataError('Some message.');
-    const ee = new TypeError('Type message.');
+  it('JSON serialization with sub-error', () => {
+    const error: any = new DataError('Some message.');
+    const subError = new TypeError('Type message.');
 
-    e.hash = 'im-hash';
-    e.external = true;
-    e.something = 'donotserializeme';
-    e.suberrors = [ee];
-    e.imtInternalError = ee;
+    error.hash = 'im-hash';
+    error.external = true;
+    error.something = 'donotserializeme';
+    error.suberrors = [subError];
+    error.imtInternalError = subError;
 
-    assert.deepStrictEqual(e.toJSON(), {
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(error)), {
       name: 'DataError',
       message: 'Some message.',
-      stack: e.stack,
+      stack: error.stack,
       hash: 'im-hash',
       external: true,
       suberrors: [
         {
           name: 'TypeError',
           message: 'Type message.',
-          stack: ee.stack,
+          stack: subError.stack,
         },
       ],
       imtInternalError: {
         name: 'TypeError',
         message: 'Type message.',
-        stack: ee.stack,
+        stack: subError.stack,
       },
       imtExceptionHash: 'im-hash',
     });
+  });
 
-    done();
+  it('JSON serialization with sub-error and sub-sub-error', () => {
+    const error: any = new DataError('Some message.');
+    const subError = new TypeError('Type message.');
+    const subSubError = new TypeError('Type message.');
+
+    error.hash = 'im-hash';
+    error.external = true;
+    error.something = 'donotserializeme';
+    error.suberrors = [subError];
+    error.imtInternalError = subError;
+    subError.suberrors = [subSubError];
+
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(error)), {
+      name: 'DataError',
+      message: 'Some message.',
+      stack: error.stack,
+      hash: 'im-hash',
+      external: true,
+      suberrors: [
+        {
+          name: 'TypeError',
+          message: 'Type message.',
+          stack: subError.stack,
+          suberrors: [
+            {
+              name: 'TypeError',
+              message: 'Type message.',
+              stack: subSubError.stack,
+            },
+          ],
+        },
+      ],
+      imtInternalError: {
+        name: 'TypeError',
+        message: 'Type message.',
+        stack: subError.stack,
+        suberrors: [
+          {
+            name: 'TypeError',
+            message: 'Type message.',
+            stack: subSubError.stack,
+          },
+        ],
+      },
+      imtExceptionHash: 'im-hash',
+    });
+  });
+
+  it('JSON serialization with sub-error that is not an Error class instance', () => {
+    const error: any = new DataError('Some message.');
+    const subError = { message: 'Type message.' };
+
+    error.hash = 'im-hash';
+    error.external = true;
+    error.something = 'donotserializeme';
+    error.suberrors = [subError];
+    error.imtInternalError = subError;
+
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(error)), {
+      name: 'DataError',
+      message: 'Some message.',
+      stack: error.stack,
+      hash: 'im-hash',
+      external: true,
+      suberrors: [
+        {
+          message: 'Type message.',
+        },
+      ],
+      imtInternalError: {
+        message: 'Type message.',
+      },
+      imtExceptionHash: 'im-hash',
+    });
   });
 
   it('should keep hash and imtExceptionHash in sync', () => {
