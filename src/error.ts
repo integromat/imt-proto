@@ -466,9 +466,9 @@ Object.defineProperty(Error.prototype, 'toJSON', {
 
     if (this.hash != null) json.hash = this.hash;
     if (this.bundle != null) json.bundle = this.bundle;
-    if (Array.isArray(this.suberrors)) json.suberrors = this.suberrors.map((item: Error) => item.toJSON());
+    if (Array.isArray(this.suberrors)) json.suberrors = this.suberrors.map((item: Error) => item);
     if (this.external != null) json.external = this.external;
-    if (this.imtInternalError) json.imtInternalError = this.imtInternalError.toJSON();
+    if (this.imtInternalError) json.imtInternalError = this.imtInternalError;
     if (this.imtExceptionHash) json.imtExceptionHash = this.imtExceptionHash;
 
     return json;
