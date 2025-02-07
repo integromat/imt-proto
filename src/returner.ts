@@ -11,9 +11,8 @@ export class IMTReturner extends IMTBase {
    * @callback done Callback to call when operations are done.
    *     @param {Error} err Error on error, otherwise null.
    *     @param {Bundle} bundle Collection of returned data.
-   * 
+   *
    */
-
 
   returnData(bundle: Bundle, done: DoneWithResultCallback): void {
     void bundle;
