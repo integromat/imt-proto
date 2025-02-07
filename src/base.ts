@@ -30,6 +30,7 @@ export enum ModuleType {
   CONVERGER = 9,
   HITL = 10,
   PAUSER = 11,
+  RETURNER = 12,
 }
 
 /**
@@ -60,6 +61,7 @@ export class IMTBase extends EventEmitter {
   public static readonly MODULETYPE_CONVERGER = ModuleType.CONVERGER;
   public static readonly MODULETYPE_HITL = ModuleType.HITL;
   public static readonly MODULETYPE_PAUSER = ModuleType.PAUSER;
+  public static readonly MODULETYPE_RETURNER = ModuleType.RETURNER;
 
   public common: CommonData | null = null;
   public data: ModuleData | null = null;

@@ -46,6 +46,7 @@ declare global {
   var IMTFeeder: typeof publicApi.IMTFeeder;
   var IMTTransformer: typeof publicApi.IMTTransformer;
   var IMTHITL: typeof publicApi.IMTHITL;
+  var IMTReturner: typeof publicApi.IMTReturner;
   /* eslint-enable no-var */
 }
 
@@ -98,4 +99,5 @@ if (!global.IMT_PROTO_LOADED) {
   global.IMTFeeder = publicApi.IMTFeeder;
   global.IMTTransformer = publicApi.IMTTransformer;
   global.IMTHITL = publicApi.IMTHITL;
+  global.IMTReturner = publicApi.IMTReturner;
 }
