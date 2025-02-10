@@ -9,6 +9,7 @@ import {
   IMTRouter,
   IMTTransformer,
   IMTTrigger,
+  IMTReturner,
   ModuleType,
 } from '../src';
 
@@ -25,6 +26,7 @@ describe('ModuleType', () => {
       new IMTRouter(),
       new IMTTransformer(),
       new IMTTrigger(),
+      new IMTReturner(),
     ];
 
     for (const module of allModuleTypes) {
@@ -59,6 +61,9 @@ describe('ModuleType', () => {
           break;
         case ModuleType.PAUSER:
           expect(module).toBeInstanceOf(IMTPauser);
+          break;
+        case ModuleType.RETURNER:
+          expect(module).toBeInstanceOf(IMTReturner);
           break;
         default:
           throw new Error('Unexpected module type');
