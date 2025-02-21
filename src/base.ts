@@ -27,10 +27,11 @@ export enum ModuleType {
   FEEDER = 6,
   AGGREGATOR = 7,
   DIRECTIVE = 8,
-  CONVERGER = 9,
-  HITL = 10,
-  PAUSER = 11,
+  SEARCH = 9,
+  CONVERGER = 10,
+  HITL = 11,
   RETURNER = 12,
+  PAUSER = 13,
 }
 
 /**
