@@ -3,9 +3,9 @@ export type Bundle = { array?: Array<any> } & Record<string, any>;
 export type Link = {
   type: 'link';
   valueLabel: string;
-  resourceId: string;
+  resourceId?: string;
   resourceType: 'execution' | 'scenario';
-  additionalParams: Record<string, string>;
+  additionalParams?: Record<string, string>;
 };
 
 export type Metadata = {
