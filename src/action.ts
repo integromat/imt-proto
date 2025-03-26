@@ -1,5 +1,5 @@
 import { IMTBase, ModuleType } from './base';
-import { Bundle, DoneWithInfoCallback } from './types';
+import { Bundle, DoneWithResultCallback } from './types';
 
 export class IMTAction extends IMTBase {
   public readonly type = ModuleType.ACTION;
@@ -12,7 +12,7 @@ export class IMTAction extends IMTBase {
    *     @param {Error} err Error on error, otherwise null.
    */
 
-  write(bundle: Bundle, done: DoneWithInfoCallback): void {
+  write(bundle: Bundle, done: DoneWithResultCallback): void {
     void bundle;
     void done;
     throw new Error("Must override a superclass method 'write'.");
