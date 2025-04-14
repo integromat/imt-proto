@@ -32,7 +32,25 @@ export enum ModuleType {
   HITL = 11,
   RETURNER = 12,
   PAUSER = 13,
+  STARTER = 14,
 }
+
+export const moduleTypeNames = {
+  [ModuleType.TRIGGER]: { singular: 'trigger', plural: 'triggers' },
+  [ModuleType.TRANSFORMER]: { singular: 'transformer', plural: 'transformers' },
+  [ModuleType.ROUTER]: { singular: 'router', plural: 'routers' },
+  [ModuleType.ACTION]: { singular: 'action', plural: 'actions' },
+  [ModuleType.LISTENER]: { singular: 'listener', plural: 'listeners' },
+  [ModuleType.FEEDER]: { singular: 'feeder', plural: 'feeders' },
+  [ModuleType.AGGREGATOR]: { singular: 'aggregator', plural: 'aggregators' },
+  [ModuleType.DIRECTIVE]: { singular: 'directive', plural: 'directives' },
+  [ModuleType.SEARCH]: { singular: 'search', plural: 'searches' },
+  [ModuleType.CONVERGER]: { singular: 'converger', plural: 'convergers' },
+  [ModuleType.HITL]: { singular: 'hitl', plural: 'hitls' },
+  [ModuleType.RETURNER]: { singular: 'returner', plural: 'returners' },
+  [ModuleType.PAUSER]: { singular: 'pauser', plural: 'pausers' },
+  [ModuleType.STARTER]: { singular: 'starter', plural: 'starters' },
+};
 
 /**
  * Base class for all Modules.
@@ -63,6 +81,7 @@ export class IMTBase extends EventEmitter {
   public static readonly MODULETYPE_HITL = ModuleType.HITL;
   public static readonly MODULETYPE_PAUSER = ModuleType.PAUSER;
   public static readonly MODULETYPE_RETURNER = ModuleType.RETURNER;
+  public static readonly MODULETYPE_STARTER = ModuleType.STARTER;
 
   public common: CommonData | null = null;
   public data: ModuleData | null = null;
