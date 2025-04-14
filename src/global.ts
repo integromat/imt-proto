@@ -101,4 +101,5 @@ if (!global.IMT_PROTO_LOADED) {
   global.IMTTransformer = publicApi.IMTTransformer;
   global.IMTHITL = publicApi.IMTHITL;
   global.IMTReturner = publicApi.IMTReturner;
+  global.IMTStarter = publicApi.IMTStarter;
 }

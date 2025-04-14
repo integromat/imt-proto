@@ -35,6 +35,23 @@ export enum ModuleType {
   STARTER = 14,
 }
 
+export const moduleTypeNames = {
+  [ModuleType.TRIGGER]: { singular: 'trigger', plural: 'triggers' },
+  [ModuleType.TRANSFORMER]: { singular: 'transformer', plural: 'transformers' },
+  [ModuleType.ROUTER]: { singular: 'router', plural: 'routers' },
+  [ModuleType.ACTION]: { singular: 'action', plural: 'actions' },
+  [ModuleType.LISTENER]: { singular: 'listener', plural: 'listeners' },
+  [ModuleType.FEEDER]: { singular: 'feeder', plural: 'feeders' },
+  [ModuleType.AGGREGATOR]: { singular: 'aggregator', plural: 'aggregators' },
+  [ModuleType.DIRECTIVE]: { singular: 'directive', plural: 'directives' },
+  [ModuleType.SEARCH]: { singular: 'search', plural: 'searches' },
+  [ModuleType.CONVERGER]: { singular: 'converger', plural: 'convergers' },
+  [ModuleType.HITL]: { singular: 'hitl', plural: 'hitls' },
+  [ModuleType.RETURNER]: { singular: 'returner', plural: 'returners' },
+  [ModuleType.PAUSER]: { singular: 'pauser', plural: 'pausers' },
+  [ModuleType.STARTER]: { singular: 'starter', plural: 'starters' },
+};
+
 /**
  * Base class for all Modules.
  *
