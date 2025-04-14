@@ -47,6 +47,7 @@ declare global {
   var IMTTransformer: typeof publicApi.IMTTransformer;
   var IMTHITL: typeof publicApi.IMTHITL;
   var IMTReturner: typeof publicApi.IMTReturner;
+  var IMTStarter: typeof publicApi.IMTStarter;
   /* eslint-enable no-var */
 }
 

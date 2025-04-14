@@ -16,3 +16,4 @@ export * from './converger';
 export * from './aggregator';
 export * from './transformer';
 export * from './returner';
+export * from './starter';

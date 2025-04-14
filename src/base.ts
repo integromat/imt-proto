@@ -32,6 +32,7 @@ export enum ModuleType {
   HITL = 11,
   RETURNER = 12,
   PAUSER = 13,
+  STARTER = 14,
 }
 
 /**
@@ -63,6 +64,7 @@ export class IMTBase extends EventEmitter {
   public static readonly MODULETYPE_HITL = ModuleType.HITL;
   public static readonly MODULETYPE_PAUSER = ModuleType.PAUSER;
   public static readonly MODULETYPE_RETURNER = ModuleType.RETURNER;
+  public static readonly MODULETYPE_STARTER = ModuleType.STARTER;
 
   public common: CommonData | null = null;
   public data: ModuleData | null = null;
