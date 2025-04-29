@@ -1,37 +1,86 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
-orbs:
-  testing-orb: integromat/testing-orb@1.0.2
+
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  test-and-build:
-    executor:
-      name: testing-orb/default
-      tag: '16.20.2'
+  security-scan:
+    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+    docker:
+      - image: circleci/openjdk:11.0.2-jdk
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
       - run:
+          name: "Update codebase"
           command: |
-            npm ci
-          name: Install deps
+              git config --global user.email "d.idehen@make.com"
+              git config --global user.name "dennyidehen"
+              git checkout -b vrcscan1 origin/master
+              
+      - run: 
+            name: "Bundle artifact for upload to Veracode"
+            command: zip -r upload.zip lib package-lock.json package.json
+
       - run:
-          command: npm run format:check
-          name: Check formatting
+          name: "Get the Veracode agent"
+          command: |
+              wget https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/19.2.5.6/vosp-api-wrappers-java-19.2.5.6.jar -O VeracodeJavaAPI.jar
+              chmod 755 VeracodeJavaAPI.jar
       - run:
-          command: npm run lint
-          name: Check lint
-      - testing-orb/run_tests:
-          test_type: unit
-          command: npm run test:unit
-      - testing-orb/upload_and_comment_coverage:
-          lcov_file_path: ./coverage/unit/lcov.info
-          test_type: unit
-      - store_artifacts:
-          path: coverage/unit
-      - store_test_results:
-          path: coverage/unit
+          name: "Upload to Veracode"
+          command: java -jar VeracodeJavaAPI.jar 
+              -vid $VERACODE_API_ID 
+              -vkey $VERACODE_API_SECRET
+              -action uploadandscan
+              -scantimeout 120
+              -appname "integromat/$CIRCLE_PROJECT_REPONAME"
+              -createprofile true 
+              -version CircleCI-$CIRCLE_BUILD_NUM
+              -filepath upload.zip
+        
+      - run: 
+          name: "Delete scanned artifact"
+          command: rm -r upload.zip
+  sca:
+    docker:
+      - image: circleci/openjdk:11.0.2-jdk
+    steps:
+      - checkout
+      - run:
+          name: "Update codebase"
+          command: |
+              git config --global user.email "d.idehen@make.com"
+              git config --global user.name "dennyidehen"
+              git checkout -b vrcscan1 origin/master
+
+      - run: 
+            name: "Veracode SCA agent based"
+            command: |
+              export JAVA_TOOL_OPTIONS=-Xmx4g
+              KEYNAME=$(echo $CIRCLE_PROJECT_REPONAME | tr [a-z] [A-Z] | tr - _)
+              export SRCCLR_API_TOKEN=${!KEYNAME}
+              curl -sSL https://download.sourceclear.com/ci.sh | sh
+
+# Invoke jobs via workflows
+# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  build:
-    jobs:
-      - test-and-build:
-          context:
-            - org-default
-            - testing
+   version: 2
+   nightly:
+     triggers:
+     - schedule:
+        cron: "0 0 * * *"
+        filters:
+          branches:
+            only:
+              - veracode
+     jobs:
+       - security-scan:
+          name: "Veracode SAST"
+          context: sast-scan
+       - sca:
+          name: "Veracode SCA - agent based"
+          context: sca-scan
