@@ -23,7 +23,7 @@ jobs:
               
       - run: 
             name: "Bundle artifact for upload to Veracode"
-            command: zip -r upload.zip lib package-lock.json package.json
+            command: zip -r upload.zip src package-lock.json package.json
 
       - run:
           name: "Get the Veracode agent"
