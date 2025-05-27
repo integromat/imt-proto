@@ -36,20 +36,20 @@ export enum ModuleType {
 }
 
 export const moduleTypeNames = {
-  [ModuleType.TRIGGER]: { singular: 'trigger', plural: 'triggers' },
-  [ModuleType.TRANSFORMER]: { singular: 'transformer', plural: 'transformers' },
-  [ModuleType.ROUTER]: { singular: 'router', plural: 'routers' },
-  [ModuleType.ACTION]: { singular: 'action', plural: 'actions' },
-  [ModuleType.LISTENER]: { singular: 'listener', plural: 'listeners' },
-  [ModuleType.FEEDER]: { singular: 'feeder', plural: 'feeders' },
-  [ModuleType.AGGREGATOR]: { singular: 'aggregator', plural: 'aggregators' },
-  [ModuleType.DIRECTIVE]: { singular: 'directive', plural: 'directives' },
-  [ModuleType.SEARCH]: { singular: 'search', plural: 'searches' },
-  [ModuleType.CONVERGER]: { singular: 'converger', plural: 'convergers' },
-  [ModuleType.HITL]: { singular: 'hitl', plural: 'hitls' },
-  [ModuleType.RETURNER]: { singular: 'returner', plural: 'returners' },
-  [ModuleType.PAUSER]: { singular: 'pauser', plural: 'pausers' },
-  [ModuleType.STARTER]: { singular: 'starter', plural: 'starters' },
+  [ModuleType.TRIGGER]: { singular: 'trigger', plural: 'triggers' } as const,
+  [ModuleType.TRANSFORMER]: { singular: 'transformer', plural: 'transformers' } as const,
+  [ModuleType.ROUTER]: { singular: 'router', plural: 'routers' } as const,
+  [ModuleType.ACTION]: { singular: 'action', plural: 'actions' } as const,
+  [ModuleType.LISTENER]: { singular: 'listener', plural: 'listeners' } as const,
+  [ModuleType.FEEDER]: { singular: 'feeder', plural: 'feeders' } as const,
+  [ModuleType.AGGREGATOR]: { singular: 'aggregator', plural: 'aggregators' } as const,
+  [ModuleType.DIRECTIVE]: { singular: 'directive', plural: 'directives' } as const,
+  [ModuleType.SEARCH]: { singular: 'search', plural: 'searches' } as const,
+  [ModuleType.CONVERGER]: { singular: 'converger', plural: 'convergers' } as const,
+  [ModuleType.HITL]: { singular: 'hitl', plural: 'hitls' } as const,
+  [ModuleType.RETURNER]: { singular: 'returner', plural: 'returners' } as const,
+  [ModuleType.PAUSER]: { singular: 'pauser', plural: 'pausers' } as const,
+  [ModuleType.STARTER]: { singular: 'starter', plural: 'starters' } as const,
 };
 
 /**
