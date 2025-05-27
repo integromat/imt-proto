@@ -9,7 +9,7 @@
     "integromat",
     "imt"
   ],
-  "version": "2.8.1",
+  "version": "2.8.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -47,6 +47,7 @@
     "node": ">=16.19.0"
   },
   "scripts": {
+    "prepublishOnly": "npm run build && npm test",
     "build": "tsc --build tsconfig.json --clean && tsc --build tsconfig.json",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
