@@ -2,18 +2,33 @@ export type Bundle = { array?: Array<any> } & Record<string, any>;
 
 export type Link = {
   type: 'link';
+  keyLabel: string;
   valueLabel: string;
   resourceId?: string;
   resourceType: 'execution' | 'scenario';
   additionalParams?: Record<string, any>;
 };
 
+export type Centicredits = {
+  type: 'centicredits';
+  additionalParams: {
+    centicreditsConsumption?: number;
+    [key: string]: any;
+  };
+};
+
 export type Metadata = {
   version: number;
-  keyLabel: string;
-} & Link;
+} & (Link | Centicredits);
 
 export type MetadataList = Array<Metadata>;
+
+export type CenticreditsConsumption = {
+  module: {
+    cost: number;
+    duration: number;
+  };
+};
 
 export type DoneCallback = (err?: Error | null) => void;
 
