@@ -4,7 +4,6 @@ import * as publicApi from './index';
 import './compatibility-extensions';
 
 declare global {
-  /* eslint-disable no-var */
   var IMT_PROTO_LOADED: boolean;
   var requireCommon: (name: string) => any;
 
@@ -48,7 +47,6 @@ declare global {
   var IMTHITL: typeof publicApi.IMTHITL;
   var IMTReturner: typeof publicApi.IMTReturner;
   var IMTStarter: typeof publicApi.IMTStarter;
-  /* eslint-enable no-var */
 }
 
 if (!global.IMT_PROTO_LOADED) {
