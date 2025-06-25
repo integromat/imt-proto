@@ -1,5 +1,5 @@
 // NOTE(m.skvely): There are a lot of crimes here, we have to disable many rules to make this work
-/* eslint-disable @typescript-eslint/ban-types,@typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call */
 
 type AnyConstructor = {
   new (...args: any[]): any;
