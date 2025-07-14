@@ -24,10 +24,19 @@ export type Metadata = {
 export type MetadataList = Array<Metadata>;
 
 export type CenticreditsConsumption = {
-  module: {
+  module?: {
     cost: number;
     duration: number;
   };
+  aiMappings?: {
+    cost: number;
+    triggerField?: string;
+  }[];
+  aiFilterings?: {
+    cost: number;
+    triggerField?: string;
+  }[];
+  totalCost: number;
 };
 
 export type DoneCallback = (err?: Error | null) => void;
