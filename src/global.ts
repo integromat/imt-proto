@@ -1,3 +1,10 @@
+/**
+ * @module Global
+ *
+ * Global namespace setup and compatibility layer for the Make Native Apps.
+ * Provides backward compatibility and global access to IMT classes and functions.
+ */
+
 // noinspection ES6ConvertVarToLetConst
 
 import * as publicApi from './index';
@@ -53,10 +60,13 @@ if (!global.IMT_PROTO_LOADED) {
   global.IMT_PROTO_LOADED = true;
 
   /**
-   * Require a module from a common collection of preloaded modules. This method is set later by Integration's core.
+   * Requires a module from a common collection of preloaded modules.
    *
-   * @param {String} name Module nane.
-   * @returns {*}
+   * This method is set later by Integration's core and provides access
+   * to shared modules and utilities across the Make Native Apps ecosystem.
+   *
+   * @param name - Module name to require from the common collection
+   * @returns The required module or null if not found
    */
   if (!global.requireCommon) global.requireCommon = () => null;
 

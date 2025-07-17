@@ -1,62 +1,119 @@
-import { Bundle } from './types';
+/**
+ * @module Error
+ *
+ * Comprehensive error handling system for Make scenario executions.
+ * Provides specialized error classes for different failure scenarios and system behaviors.
+ */
+
+import type { Bundle } from './types';
 
 declare global {
+  /**
+   * Extended Error interface with additional properties for the application's error handling system.
+   */
   interface Error {
-    name: string;
-    message: string;
-    stack?: string;
-    hash?: string;
-    bundle?: Bundle;
-    suberrors?: Error[];
-    external?: any;
     /**
-     * @deprecated use hash instead
+     * The name of the error.
+     */
+    name: string;
+    /**
+     * The error message.
+     */
+    message: string;
+    /**
+     * Optional stack trace of the error.
+     */
+    stack?: string;
+    /**
+     * Unique hash identifier for the error instance.
+     */
+    hash?: string;
+    /**
+     * Optional bundle associated with the error.
+     */
+    bundle?: Bundle;
+    /**
+     * Collection of nested errors that contributed to this error.
+     */
+    suberrors?: Error[];
+    /**
+     * External data related to the error from third-party systems.
+     */
+    external?: unknown;
+    /**
+     * @deprecated Use hash instead. Kept for backward compatibility.
      */
     imtExceptionHash?: string; // moved from imt-blueprint - it is the same thing as hash, it is just a historical inconsistency
     /**
-     * @deprecated use `cause` instead
+     * @deprecated Use standard Error.cause property instead. Kept for backward compatibility.
      */
     imtInternalError?: Error; // moved from imt-blueprint
+
+    /**
+     * Serializes the error object to JSON format.
+     * @returns Serialized error object.
+     */
     toJSON(): ErrorJSON;
   }
 }
 
+/**
+ * JSON representation of an Error object for serialization purposes.
+ */
 export type ErrorJSON = {
+  /**
+   * The name of the error.
+   */
   name: string;
+  /**
+   * The error message.
+   */
   message: string;
+  /**
+   * Optional stack trace of the error.
+   */
   stack?: string;
+  /**
+   * Unique hash identifier for the error instance.
+   */
   hash?: string;
   /**
-   * @deprecated use hash instead
+   * @deprecated Use hash instead. Kept for backward compatibility.
    */
   imtExceptionHash?: string;
   /**
-   * @deprecated do not use
+   * @deprecated Do not use. Use standard Error.cause property instead.
    */
   imtInternalError?: ErrorJSON;
+  /**
+   * Optional bundle associated with the error.
+   */
   bundle?: Bundle;
+  /**
+   * Collection of nested errors that contributed to this error.
+   */
   suberrors?: ErrorJSON[];
+  /**
+   * External data related to the error from third-party systems.
+   */
   external?: unknown;
 };
 
 /**
- * Unknown Error. Used when non-instanceof-error error happens in program logic.
+ * Error class used when a non-Error object is thrown or encountered in program logic.
+ * Converts any error-like object or string into a proper Error instance.
  *
- * @param {*} err Original error.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
+ * @param err - The original error object or error message string.
  */
-
 export class UnknownError extends Error {
-  constructor(err: Error | string) {
+  constructor(error: Error | string) {
     super();
 
-    if ('object' === typeof err) {
-      Object.assign(this, err);
-      this.message = err.message || '<no message>';
-    } else if ('string' === typeof err) {
-      this.message = err;
+    if ('object' === typeof error) {
+      Object.assign(this, error);
+      this.message = error.message || '<no message>';
+    } else if ('string' === typeof error) {
+      this.message = error;
     }
 
     this.name = 'UnknownError';
@@ -71,14 +128,10 @@ export class UnknownError extends Error {
 }
 
 /**
- * Runtime Error. Used when error happens in program logic, not in invalid data. Flow will be rolled back.
- *
- * @param {String} message Error message.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
+ * Error class for runtime execution failures in program logic.
+ * Used when an error is not related to invalid data but to a logical issue in execution.
+ * When thrown, the process flow will be rolled back.
  */
-
 export class RuntimeError extends Error {
   constructor(message: string) {
     super(message);
@@ -91,14 +144,10 @@ export class RuntimeError extends Error {
 }
 
 /**
- * Data Error. Used on invalid data. Bundle will be moved to DLQ. Process flow will be commited normally.
- *
- * @param {String} message Error message.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
+ * Error class for invalid data scenarios.
+ * When thrown, the bundle will be moved to Dead Letter Queue (DLQ)
+ * while the process flow commits normally.
  */
-
 export class DataError extends Error {
   constructor(message: string) {
     super(message);
@@ -111,14 +160,10 @@ export class DataError extends Error {
 }
 
 /**
- * Inconsistency Error. Used when commit/rollback fails. Process flow stops immediately. Commited data remain commited.
- *
- * @param {String} message Error message.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
+ * Error class for system consistency violations.
+ * Used when a commit or rollback operation fails, indicating a potential data integrity issue.
+ * When thrown, the process flow stops immediately while any already committed data remains committed.
  */
-
 export class InconsistencyError extends Error {
   constructor(message: string) {
     super(message);
@@ -131,19 +176,18 @@ export class InconsistencyError extends Error {
 }
 
 /**
- * Rate Limit Error. Used when API rate limit is exceeded.
+ * Error class for API rate limit violations.
+ * Used when an external API rate limit is exceeded and operations need to be delayed.
  *
- * **IMPORTANT**: Also freezes the scenario for some time.
+ * **IMPORTANT**: Throwing this error freezes the scenario execution for the specified delay time.
  *
- * @param {String} message Error message.
- * @param {Number} [delay] Delay in milliseconds. Optional, default is 20 minutes.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
- * @property {Number} delay Delay in milliseconds.
+ * @param message - The error message explaining the rate limit violation.
+ * @param delay - Delay in milliseconds before retrying the operation.
  */
-
 export class RateLimitError extends Error {
+  /**
+   * The time in milliseconds to wait before retrying the operation.
+   */
   public delay: number;
 
   constructor(message: string, delay: number) {
@@ -158,14 +202,9 @@ export class RateLimitError extends Error {
 }
 
 /**
- * Out Of Space Error. Used when service reports out of space.
- *
- * @param {String} message Error message.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
+ * Error class for storage capacity limitations.
+ * Used when a service reports that it has not enough storage space to complete the requested operation.
  */
-
 export class OutOfSpaceError extends Error {
   constructor(message: string) {
     super(message);
@@ -178,14 +217,10 @@ export class OutOfSpaceError extends Error {
 }
 
 /**
- * Connection Error. Used when there is a problem with connection to the service.
- *
- * @param {String} message Error message.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
+ * Error class for service connectivity issues.
+ * Used when a connection to an external service cannot be established
+ * or is interrupted during operation.
  */
-
 export class ConnectionError extends Error {
   constructor(message: string) {
     super(message);
@@ -198,16 +233,12 @@ export class ConnectionError extends Error {
 }
 
 /**
- * Invalid Configuration Error. Used when configuration is broken and user interaction is required.
+ * Error class for configuration-related issues.
+ * Used when the system configuration is broken or invalid in a way that requires
+ * user intervention to resolve.
  *
- * **IMPORTANT**: Also disables the scenario.
- *
- * @param {String} message Error message.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
+ * **IMPORTANT**: Throwing this error automatically disables the scenario until resolved.
  */
-
 export class InvalidConfigurationError extends Error {
   constructor(message: string) {
     super(message);
@@ -220,16 +251,12 @@ export class InvalidConfigurationError extends Error {
 }
 
 /**
- * Invalid Access Token Error. Used when service access token is expired or invalid.
+ * Error class for authentication token issues.
+ * Used when a service access token has expired or is otherwise invalid.
+ * Extends InvalidConfigurationError as it's a specific configuration problem.
  *
- * **IMPORTANT**: Also disables the scenario.
- *
- * @param {String} message Error message.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
+ * **IMPORTANT**: Throwing this error automatically disables the scenario until the token is renewed.
  */
-
 export class InvalidAccessTokenError extends InvalidConfigurationError {
   constructor(message: string) {
     super(message);
@@ -240,16 +267,12 @@ export class InvalidAccessTokenError extends InvalidConfigurationError {
 }
 
 /**
- * Invalid Access Token Error. Used when unexpected things occurs.
+ * Error class for unexpected and critical system failures.
+ * Used when unpredicted conditions occur that cannot be handled by the system.
  *
- * **IMPORTANT**: Also disables and lock the scenario. Staff revision is required in order to unlock the scenario.
- *
- * @param {String} message Error message.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
+ * **IMPORTANT**: Throwing this error disables and locks the scenario.
+ * Administrative staff intervention is required to unlock the scenario.
  */
-
 export class UnexpectedError extends Error {
   constructor(message: string) {
     super(message);
@@ -262,16 +285,12 @@ export class UnexpectedError extends Error {
 }
 
 /**
- * Max Results Exceeded Error. Used when limit of results was exceeded.
+ * Error class for result size limit violations.
+ * Used when the number of results returned by an operation exceeds
+ * the maximum allowable limit.
  *
- * **IMPORTANT**: Also disables the scenario.
- *
- * @param {String} message Error message.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
+ * **IMPORTANT**: Throwing this error automatically disables the scenario.
  */
-
 export class MaxResultsExceededError extends Error {
   constructor(message: string) {
     super(message);
@@ -284,16 +303,11 @@ export class MaxResultsExceededError extends Error {
 }
 
 /**
- * Max File Size Exceeded Error. Used when limit of file size was exceeded.
+ * Error class for file size limit violations.
+ * Used when a file's size exceeds the maximum allowable limit for processing.
  *
- * **IMPORTANT**: Also disables the scenario.
- *
- * @param {String} message Error message.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
+ * **IMPORTANT**: Throwing this error automatically disables the scenario.
  */
-
 export class MaxFileSizeExceededError extends Error {
   constructor(message: string) {
     super(message);
@@ -306,17 +320,17 @@ export class MaxFileSizeExceededError extends Error {
 }
 
 /**
- * Incomplete Data Error. Used when received data are incomplete.
+ * Error class for incomplete data scenarios.
+ * Used when received data is missing required fields or components.
+ * Can specify a delay before retrying the operation.
  *
- * @param {String} message Error message.
- * @param {Number} [delay] Delay in milliseconds. Optional.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
- * @property {Number} delay Delay in milliseconds.
+ * @param message - The error message explaining what data is incomplete.
+ * @param delay - Delay in milliseconds before retrying the operation.
  */
-
 export class IncompleteDataError extends Error {
+  /**
+   * The time in milliseconds to wait before retrying the operation.
+   */
   public delay: number;
 
   constructor(message: string, delay: number) {
@@ -331,14 +345,10 @@ export class IncompleteDataError extends Error {
 }
 
 /**
- * Duplicate Data Error. Used when service receives duplicate data.
- *
- * @param {String} message Error message.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
+ * Error class for duplicate data scenarios.
+ * Used when a service receives data that it has already processed or stored,
+ * violating uniqueness constraints.
  */
-
 export class DuplicateDataError extends Error {
   constructor(message: string) {
     super(message);
@@ -351,14 +361,10 @@ export class DuplicateDataError extends Error {
 }
 
 /**
- * Module Timeout Error. Used when service module operation exceeds time limit.
- *
- * @param {String} message Error message.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
+ * Error class for module execution timeout.
+ * Used when a service module operation takes longer than its allotted time limit,
+ * indicating a potential performance issue or infinite loop.
  */
-
 export class ModuleTimeoutError extends Error {
   constructor(message: string) {
     super(message);
@@ -371,14 +377,10 @@ export class ModuleTimeoutError extends Error {
 }
 
 /**
- * Scenario Timeout Error. Used when service scenario execution exceeds time limit.
- *
- * @param {String} message Error message.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
+ * Error class for scenario execution timeout.
+ * Used when the entire scenario execution exceeds its allocated time limit,
+ * often indicating complex processing or performance bottlenecks.
  */
-
 export class ScenarioTimeoutError extends Error {
   constructor(message: string) {
     super(message);
@@ -391,14 +393,10 @@ export class ScenarioTimeoutError extends Error {
 }
 
 /**
- * Used when processing of a scenario exceeds operations limit.
- *
- * @param {String} message Error message.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
+ * Error class for operation quota violations.
+ * Used when the processing of a scenario exceeds the maximum number of
+ * allowed operations, preventing resource exhaustion.
  */
-
 export class OperationsLimitExceededError extends Error {
   constructor(message: string) {
     super(message);
@@ -411,14 +409,10 @@ export class OperationsLimitExceededError extends Error {
 }
 
 /**
- * Used when processing of a scenario exceeds data size limit.
- *
- * @param {String} message Error message.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
+ * Error class for data size limit violations.
+ * Used when the processing of a scenario involves data that exceeds
+ * the maximum allowable size limit, preventing memory issues.
  */
-
 export class DataSizeLimitExceededError extends Error {
   constructor(message: string) {
     super(message);
@@ -431,14 +425,10 @@ export class DataSizeLimitExceededError extends Error {
 }
 
 /**
- * Used when execution is interrupted.
- *
- * @param {String} message Error message.
- *
- * @property {String} stack Call stack.
- * @property {String} message Error message.
+ * Error class for execution interruption scenarios.
+ * Used when the normal execution flow is forcibly interrupted by an external
+ * event or user action rather than completing naturally.
  */
-
 export class ExecutionInterruptedError extends Error {
   constructor(message: string) {
     super(message);
@@ -451,9 +441,9 @@ export class ExecutionInterruptedError extends Error {
 }
 
 /**
- * Error JSON serialization.
+ * Adds JSON serialization capability to all Error objects.
+ * Allows errors to be properly serialized when using JSON.stringify.
  */
-
 Object.defineProperty(Error.prototype, 'toJSON', {
   enumerable: false,
   writable: true,
@@ -464,24 +454,45 @@ Object.defineProperty(Error.prototype, 'toJSON', {
       stack: this.stack,
     };
 
-    if (this.hash != null) json.hash = this.hash;
-    if (this.bundle != null) json.bundle = this.bundle;
-    if (Array.isArray(this.suberrors)) json.suberrors = this.suberrors.map((item: Error) => item);
-    if (this.external != null) json.external = this.external;
-    if (this.imtInternalError) json.imtInternalError = this.imtInternalError;
-    if (this.imtExceptionHash) json.imtExceptionHash = this.imtExceptionHash;
+    if (this.hash != undefined) {
+      json.hash = this.hash;
+    }
+
+    if (this.bundle != undefined) {
+      json.bundle = this.bundle;
+    }
+
+    if (Array.isArray(this.suberrors)) {
+      json.suberrors = this.suberrors;
+    }
+
+    if (this.external != undefined) {
+      json.external = this.external;
+    }
+
+    if (this.imtInternalError) {
+      json.imtInternalError = this.imtInternalError;
+    }
+
+    if (this.imtExceptionHash) {
+      json.imtExceptionHash = this.imtExceptionHash;
+    }
 
     return json;
   },
 });
 
 /**
- * Hash and imtExceptionHash are the same thing with different names - this keeps them synchronized to just 1 value
+ * Property definition that synchronizes hash and imtExceptionHash.
+ * Both properties reference the same value but with different names for historical compatibility.
+ * This getter/setter ensures they remain synchronized to a single value.
  */
 Object.defineProperty(Error.prototype, 'imtExceptionHash', {
   enumerable: true,
   /**
-   *   imt-bluperint does some crazy things and the proto get's loaded multiple times. Without this, it fails on redefinition of the same property
+   * Making the property configurable allows it to be redefined when the prototype is loaded multiple times.
+   * This is necessary because imt-blueprint loads the prototype in unexpected ways,
+   * which would otherwise cause property redefinition errors.
    */
   configurable: true,
   set(this: Error, newValue: string) {

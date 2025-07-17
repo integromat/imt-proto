@@ -1,8 +1,8 @@
-import * as assert from 'assert';
 import { IMTAction } from '../src/action';
 import { DataError } from '../src/error';
 import { IMTBase } from '../src/base';
-import { Bundle, DoneWithInfoCallback } from '../src/types';
+import type { Bundle, DoneWithInfoCallback } from '../src/types';
+import { initializeAsync, writeAsync, commitAsync, rollbackAsync, finalizeAsync } from './helpers';
 
 class TestAction extends IMTAction {
   write(bundle: Bundle, done: DoneWithInfoCallback) {
@@ -13,66 +13,38 @@ class TestAction extends IMTAction {
 }
 
 describe('IMTAction', () => {
-  it('should operate successfully', (done) => {
+  it('should operate successfully', async () => {
     const input = {
       number: 1,
     };
 
     const action = new TestAction();
-    action.initialize((err) => {
-      if (err) {
-        done(err);
-        return;
-      }
 
-      action.write(input, (err, output) => {
-        if (err) {
-          done(err);
-          return;
-        }
+    await initializeAsync(action);
 
-        assert.ok(action instanceof IMTBase);
-        assert.ok(action instanceof IMTAction);
-        assert.strictEqual(action.type, 4);
-        assert.strictEqual(output.result, 2, 'Result should be equal to 2.');
+    const output = await writeAsync(action, input);
 
-        action.commit((err) => {
-          if (err) {
-            done(err);
-            return;
-          }
+    expect(action).toBeInstanceOf(IMTBase);
+    expect(action).toBeInstanceOf(IMTAction);
+    expect(action.type).toBe(4);
+    expect(output.result).toBe(2);
 
-          action.finalize(done);
-        });
-      });
-    });
+    await commitAsync(action);
+    await finalizeAsync(action);
   });
 
-  it('should fail with DataError', (done) => {
+  it('should fail with DataError', async () => {
     const input = {
       number: 11,
     };
 
     const action = new TestAction();
-    action.initialize((err) => {
-      if (err) {
-        done(err);
-        return;
-      }
 
-      action.write(input, (err) => {
-        assert.ok(err, 'Write should return error.');
-        assert.ok(err instanceof DataError, 'Error should be instanceof DataError.');
+    await initializeAsync(action);
 
-        action.rollback((err) => {
-          if (err) {
-            done(err);
-            return;
-          }
+    await expect(writeAsync(action, input)).rejects.toBeInstanceOf(DataError);
 
-          action.finalize(done);
-        });
-      });
-    });
+    await rollbackAsync(action);
+    await finalizeAsync(action);
   });
 });

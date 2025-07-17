@@ -1,25 +1,37 @@
-import { IMTBase, ModuleType } from './base';
-import { Bundle, DoneWithResultCallback } from './types';
-
 /**
- * Base class for all Feeders.
+ * @module Pauser
+ *
+ * Provides pause functionality for temporarily halting scenario execution.
+ * Pausers allow scenarios to wait for external conditions or manual intervention.
  */
 
+import { IMTBase, ModuleType } from './base';
+import type { Bundle, DoneWithResultCallback } from './types';
+
+/**
+ * Base class for all Pauser modules.
+ *
+ * Pausers temporarily halt scenario execution, allowing scenarios to wait
+ * for external conditions, manual intervention, or time-based delays.
+ * This is essential for coordinating with external systems or human approval processes.
+ */
 export class IMTPauser extends IMTBase {
   public readonly type = ModuleType.PAUSER;
 
   /**
-   * Ininiates the pause operation.
+   * Initiates the pause operation.
    *
-   * @param {Object} bundle Collection of directives for pause.
-   * @callback done Callback to call when pre-pause operations are done.
-   *     @param {Error} err Error on error, otherwise null.
-   *     @param {Object} bundle Collection of output data.
+   * This method must be overridden by subclasses to implement specific
+   * pause logic, such as waiting for external events, user input, or
+   * time-based delays.
+   *
+   * @param bundle - Collection of directives and data for the pause operation
+   * @param done - Callback to invoke when pre-pause operations are complete
+   * @throws {Error} Always throws since this method must be overridden
    */
-
   pause(bundle: Bundle, done: DoneWithResultCallback): void {
     void bundle;
     void done;
-    throw new Error("Must override a superclass method 'pause'.");
+    throw new Error("Must override superclass method 'pause'");
   }
 }

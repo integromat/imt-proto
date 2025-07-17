@@ -1,8 +1,6 @@
-/*
- * This is just a meta-file.
- * The configuration is loaded separately for Unit and Integration tests.
- */
-module.exports = {
+import type { Config } from 'jest';
+
+const config: Config = {
   /* Global Settings */
   preset: 'ts-jest',
   globals: {
@@ -24,7 +22,7 @@ module.exports = {
   moduleFileExtensions: ['js', 'ts'],
 
   /* Match */
-  testMatch: ['<rootDir>/test/**'],
+  testMatch: ['<rootDir>/test/**/*.spec.ts', '<rootDir>/test/**/*.test.ts'],
 
   /* Coverage Settings */
   coverageThreshold: {
@@ -40,3 +38,5 @@ module.exports = {
   coveragePathIgnorePatterns: [],
   coverageReporters: ['text', 'text-summary', 'lcov'],
 };
+
+export default config;

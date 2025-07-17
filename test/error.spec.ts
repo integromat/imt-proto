@@ -1,46 +1,45 @@
-import * as assert from 'assert';
 import { DataError, InvalidAccessTokenError, UnknownError } from '../src/error';
 
 describe('Error', () => {
   it('UnknownError', () => {
-    let e = new UnknownError(new Error('Error message.'));
+    let unknownError = new UnknownError(new Error('Error message.'));
 
-    assert.equal(e.message, 'Error message.');
-    assert.ok(/^UnknownError: Error message.\n/.test(e.stack!));
+    expect(unknownError.message).toBe('Error message.');
+    expect(unknownError.stack).toMatch(/^UnknownError: Error message.\n/);
 
-    let err = JSON.parse(JSON.stringify(e));
+    let errorObject = JSON.parse(JSON.stringify(unknownError));
 
-    assert.equal(err.message, 'Error message.');
+    expect(errorObject.message).toBe('Error message.');
 
     // ---
 
-    const te: any = new TypeError('Error message.');
-    te.something = true;
-    e = new UnknownError(te);
+    const typeError: any = new TypeError('Error message.');
+    typeError.something = true;
+    unknownError = new UnknownError(typeError);
 
-    assert.equal(e.message, 'Error message.');
-    assert.ok(/^UnknownError: Error message.\n/.test(e.stack!));
+    expect(unknownError.message).toBe('Error message.');
+    expect(unknownError.stack).toMatch(/^UnknownError: Error message.\n/);
 
-    err = JSON.parse(JSON.stringify(e));
+    errorObject = JSON.parse(JSON.stringify(unknownError));
 
-    assert.equal(err.message, 'Error message.');
-    assert.equal(err.something, true);
+    expect(errorObject.message).toBe('Error message.');
+    expect(errorObject.something).toBe(true);
   });
 
   it('DataError', () => {
-    const e = new DataError('Some message.');
+    const dataError = new DataError('Some message.');
 
-    assert.equal(e.name, 'DataError');
-    assert.equal(e.message, 'Some message.');
-    assert.ok(/^DataError: Some message.\n/.test(e.stack!));
+    expect(dataError.name).toBe('DataError');
+    expect(dataError.message).toBe('Some message.');
+    expect(dataError.stack).toMatch(/^DataError: Some message.\n/);
   });
 
   it('InvalidAccessTokenError', () => {
-    const e = new InvalidAccessTokenError('Some message.');
+    const invalidTokenError = new InvalidAccessTokenError('Some message.');
 
-    assert.equal(e.name, 'InvalidAccessTokenError');
-    assert.equal(e.message, 'Some message.');
-    assert.ok(/^InvalidAccessTokenError: Some message.\n/.test(e.stack!));
+    expect(invalidTokenError.name).toBe('InvalidAccessTokenError');
+    expect(invalidTokenError.message).toBe('Some message.');
+    expect(invalidTokenError.stack).toMatch(/^InvalidAccessTokenError: Some message.\n/);
   });
 
   it('JSON serialization with sub-error', () => {
@@ -53,7 +52,7 @@ describe('Error', () => {
     error.suberrors = [subError];
     error.imtInternalError = subError;
 
-    assert.deepStrictEqual(JSON.parse(JSON.stringify(error)), {
+    expect(JSON.parse(JSON.stringify(error))).toEqual({
       name: 'DataError',
       message: 'Some message.',
       stack: error.stack,
@@ -87,7 +86,7 @@ describe('Error', () => {
     error.imtInternalError = subError;
     subError.suberrors = [subSubError];
 
-    assert.deepStrictEqual(JSON.parse(JSON.stringify(error)), {
+    expect(JSON.parse(JSON.stringify(error))).toEqual({
       name: 'DataError',
       message: 'Some message.',
       stack: error.stack,
@@ -133,7 +132,7 @@ describe('Error', () => {
     error.suberrors = [subError];
     error.imtInternalError = subError;
 
-    assert.deepStrictEqual(JSON.parse(JSON.stringify(error)), {
+    expect(JSON.parse(JSON.stringify(error))).toEqual({
       name: 'DataError',
       message: 'Some message.',
       stack: error.stack,
@@ -155,11 +154,11 @@ describe('Error', () => {
     const error = new Error('Some Message');
 
     error.hash = 'hash value';
-    expect(error.hash).toEqual('hash value');
-    expect(error.imtExceptionHash).toEqual('hash value');
+    expect(error.hash).toBe('hash value');
+    expect(error.imtExceptionHash).toBe('hash value');
 
     error.imtExceptionHash = 'imtExceptionHash';
-    expect(error.hash).toEqual('imtExceptionHash');
-    expect(error.imtExceptionHash).toEqual('imtExceptionHash');
+    expect(error.hash).toBe('imtExceptionHash');
+    expect(error.imtExceptionHash).toBe('imtExceptionHash');
   });
 });

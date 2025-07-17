@@ -1,80 +1,95 @@
-import { DoneCallback, DoneWithFormCallback, DoneWithInfoCallback, DoneWithResultCallback } from './types';
-import type { Request } from 'request';
-import { EventEmitter } from 'events';
+/**
+ * @module Hook
+ *
+ * Webhook processing functionality for handling incoming HTTP requests.
+ * Hooks parse, filter, and process data from external webhook sources.
+ */
 
-export type Item = any;
-export type HookData = any;
+import { EventEmitter } from 'events';
+import type { NoParametersCallback } from './types';
+import type { ApiData, EnvironmentData } from './base';
+
+type Events = {
+  response: [{ status: number; headers: Record<string, string>; body: unknown }];
+  requestLogOverride: [Record<string, any>];
+};
 
 /**
  * Base class for all Hooks.
  *
- * @property {Object} data Collection of data specific to this hook. Read only.
+ * Provides the foundation for webhook processing including initialization,
+ * request parsing, item filtering, and form specification building.
+ * All hook implementations should extend this class and override the
+ * appropriate methods for their specific functionality.
  */
+export class IMTHook<
+  INPUT = unknown,
+  ITEM extends Record<string, any> = Record<string, any>,
+  DATA extends Record<string, any> = Record<string, any>,
+> extends EventEmitter<Events> {
+  data?: DATA;
+  environment?: EnvironmentData | null = null;
+  api?: ApiData;
+  flags?: Record<string, any>;
 
-export class IMTHook extends EventEmitter {
+  // Webhook-specific properties use by Gateway
+  learning?: boolean;
+  loadUDT?: (udtId: string, done: (error: Error | null, udt: Record<string, any>) => void) => void;
+  generateUDT?: (
+    type: 'json' | 'xml' | 'form' | 'query',
+    data: unknown,
+    done: (error: Error | null, spec: Record<string, any>) => void,
+  ) => void;
+  savePayloadStructure?: (spec: Record<string, any>, done: NoParametersCallback) => void;
+  respond?: (status: number, headers: Record<string, string>, body: unknown) => void;
+
   /**
    * Initializes the hook. Function that overrides should always call super.
    *
-   * @callback done Callback to call when hook is initialized.
-   *     @param {Error} err Error on error, otherwise null.
+   * @param done - Callback to call when hook is initialized
    */
-
-  initialize(done: DoneCallback): void {
-    if ('function' === typeof done) done();
+  initialize(done: NoParametersCallback): void {
+    if (typeof done === 'function') {
+      done();
+    }
   }
 
   /**
    * Finalizes the hook. Function that overrides should always call super.
    *
-   * @callback done Callback to call when hook is finalized.
-   *     @param {Error} err Error on error, otherwise null.
+   * @param done - Callback to call when hook is finalized
    */
-
-  finalize(done: DoneCallback): void {
-    if ('function' === typeof done) done();
+  finalize(done: NoParametersCallback): void {
+    if (typeof done === 'function') {
+      done();
+    }
   }
 
   /**
-   * Parse request.
+   * Parse input and extract items.
    *
-   * @param {Request} request Request object.
-   * @callback done Callback to call when test is complete.
-   *     @param {Error} err Error on error, otherwise null.
-   *     @param {Array} items Array of items parsed from request.
+   * @param input - Input to parse
+   * @param done - Callback to call when parsing is complete
+   * @throws {Error} Always throws as this method must be overridden
    */
-
-  parse(request: Request, done: DoneWithResultCallback): void {
-    void request;
+  parse(input: INPUT, done: (error?: Error | null, items?: ITEM[]) => void): void {
+    void input;
     void done;
-    throw new Error("Must override a superclass method 'parse'.");
+    throw new Error("Must override the superclass method 'parse'");
   }
+
   /**
    * Filter received items. Only effective in shared webhooks.
    *
-   * @param {Object} Item
-   * @param {Object} Hook's data object.
-   * @callback done Callback to call when filter was resolved.
-   *     @param {Error} err Error on error, otherwise null.
-   *     @param {Boolean} passed Whether the item should be accepted.
+   * @param item - Item to filter
+   * @param data - Hook's data object
+   * @param done - Callback to call when filter was resolved
    */
-
-  filter(item: Item, data: HookData, done: DoneWithInfoCallback): void {
-    if ('function' === typeof done) done(null, true);
-  }
-
-  /**
-   * Builds the Form Specification.
-   * If the Hook is capable of providing the Input Structure as the Form Specification,
-   * this function will pass the specification to the callback.
-   * Relies on the hook.data.
-   * Used for Form Hooks.
-   *
-   * @param {Request} req Request object to make headers and stuff available inside
-   * @callback done Callback to call when the Form is built.
-   *     @param {Error} err Error on error, otherwise null.
-   *     @param {Object} form The Form Specification
-   */
-  getFormSpec(req: Request, done: DoneWithFormCallback) {
-    if ('function' === typeof done) done();
+  filter(item: ITEM, data: DATA, done: (error?: Error | null, value?: boolean) => void): void {
+    void item;
+    void data;
+    if (typeof done === 'function') {
+      done(undefined, true);
+    }
   }
 }

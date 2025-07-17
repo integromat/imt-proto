@@ -1,7 +1,14 @@
+/**
+ * @module Base
+ *
+ * Core base classes and types for the Make Native Apps.
+ * Provides the fundamental building blocks that all Native Apps modules inherit from.
+ */
+
 import * as util from 'util';
-import { Warning } from './warning';
 import { EventEmitter } from 'events';
-import { DoneCallback, DoneWithReportCallback } from './types';
+import { Warning } from './warning';
+import type { DoneCallback, DoneWithReportCallback } from './types';
 
 export type CommonData = Record<string, any>;
 
@@ -14,6 +21,8 @@ export type Parameters = {
 export type ScenarioData = Record<string, any>;
 
 export type EnvironmentData = Record<string, any>;
+
+export type ApiData = Record<string, any>;
 
 export type InternalData = Record<string, any>;
 
@@ -52,20 +61,31 @@ export const moduleTypeNames = {
   [ModuleType.STARTER]: { singular: 'starter', plural: 'starters' } as const,
 };
 
+type Events = {
+  log: [message: string | Warning | Error];
+  warn: [message: string | Warning | Error];
+  debug: [messages: any[]];
+  audit: [auditPayload: Record<string, unknown>];
+};
+
 /**
- * Base class for all Modules.
+ * Base class for all Native Apps modules providing core functionality and shared interfaces.
  *
- * @property scenario - Collection of scenario parameters. Read only.
- * @property common - Collection of common parameters. Read only.
- * @property data - Collection of data specific to one concrete occurance of this module in Scenario.
- * @property parameters - Collection of config parameters. Read only.
- * @property environment - Collection of environment variables. Read only.
- * @property type - Module type. Read only.
+ * @extends EventEmitter
  *
- * @event log - Dispatched when message is about to be printed to info log.
- * @event warn - Dispatched when message is about to be printed to warning log.
+ * @property {ScenarioData} scenario - Collection of scenario parameters (read-only)
+ * @property {CommonData} common - Collection of common parameters shared across modules (read-only)
+ * @property {ModuleData} data - Module-specific data for this instance in the scenario
+ * @property {Parameters} parameters - Configuration parameters (read-only)
+ * @property {EnvironmentData} environment - Environment variables (read-only)
+ * @property {ModuleType} type - Module type identifier (read-only)
+ *
+ * @fires IMTBase#log - When a message should be logged to info log
+ * @fires IMTBase#warn - When a warning message should be logged
+ * @fires IMTBase#debug - When a debug message should be logged
+ * @fires IMTBase#audit - When an audit trail entry should be recorded
  */
-export class IMTBase extends EventEmitter {
+export class IMTBase extends EventEmitter<Events> {
   public readonly type: ModuleType = ModuleType.NONE;
 
   public static readonly MODULETYPE_NONE = ModuleType.NONE;
@@ -91,116 +111,112 @@ export class IMTBase extends EventEmitter {
   public internal: InternalData | null = null;
 
   /**
-   * Initializes the module. Function that overrides should always call super.
+   * Initializes the module. Derived classes should always call super.initialize().
    *
-   * @callback done Callback to call when module is initialized.
-   *     @param {Error} err Error on error, otherwise null.
+   * @param {DoneCallback} done - Callback invoked when initialization completes
+   * @returns {void}
    */
-
-  initialize(done: DoneCallback) {
-    if ('function' === typeof done) done();
+  initialize(done: DoneCallback): void {
+    if (typeof done === 'function') done();
   }
 
   /**
-   * Finalizes the module. Function that overrides should always call super.
+   * Finalizes the module and cleans up resources. Derived classes should always call super.finalize().
    *
-   * @callback done Callback to call when module is finalized.
-   *     @param {Error} err Error on error, otherwise null.
+   * @param {DoneCallback} done - Callback invoked when finalization completes
+   * @returns {void}
    */
-
-  finalize(done: DoneCallback) {
+  finalize(done: DoneCallback): void {
     this.removeAllListeners();
-    if ('function' === typeof done) done();
+    if (typeof done === 'function') done();
   }
 
   /**
-   * Adds module to a shared transaction.
+   * Adds this module to a shared transaction scope.
    *
-   * @param {Number} [id] Transaction ID. If omited, new transaction ID is generated.
-   * @return {Number} Transaction ID.
+   * @param transactionId - Optional existing transaction ID. If omitted, generates new ID
+   * @returns The transaction ID being used
+   * @throws {Error} If not implemented by derived class
    */
-  addSharedTransaction(id: number): number {
-    void id;
-    throw new Error("Must override a superclass method 'addSharedTransaction'.");
+  addSharedTransaction(transactionId: number): number {
+    void transactionId;
+    throw new Error("Must override superclass method 'addSharedTransaction'");
   }
 
   /**
-   * Emit audit message to Engine log. The arguments provided are intended to be shown in the Audit Trail for Module Execution Logs
+   * Emits an audit message for the Module Execution Log.
    *
-   * @param {object} payload Payload to be added to the Module Execution Log
+   * @param {Record<string, unknown>} auditPayload - Data to be recorded in the audit trail
+   * @returns {void}
    */
-
-  audit(payload: Record<string, unknown>) {
-    this.emit('audit', payload);
+  audit(auditPayload: Record<string, unknown>): void {
+    this.emit('audit', auditPayload);
   }
 
   /**
-   * Commit all operations.
+   * Commits all pending operations in the module.
    *
-   * @callback done Callback to call when operations are done.
-   *     @param {Error} err Error on error, otherwise null.
-   *     @param {Array} report Commit report (see docs).
+   * @param {DoneWithReportCallback} done - Callback invoked with commit results
+   * @returns {void}
    */
-
-  commit(done: DoneWithReportCallback) {
-    if ('function' === typeof done) done(null, null);
+  commit(done: DoneWithReportCallback): void {
+    if (typeof done === 'function') done(null, null);
   }
 
   /**
-   * Print debug message to Scenario info log. Debug messages are only visible to system administrators.
+   * Logs a debug message visible only to system administrators.
    *
-   * @param {...*} message Message to be printed to Scenario info log.
+   * @param {...any} messages - Debug message components to be logged
+   * @returns {void}
    */
-
-  debug(...args: any[]) {
-    this.emit('debug', Array.prototype.slice.call(args));
+  debug(...messages: any[]): void {
+    this.emit('debug', Array.prototype.slice.call(messages));
   }
 
   /**
-   * Print message to Scenario info log.
+   * Logs an informational message to the Scenario log.
    *
-   * @param {...String|Warning|Error} message Message to be printed to Scenario info log.
+   * @param {...(string | Warning | Error)} messages - Message components to be logged
+   * @returns {void}
    */
-
-  log(...args: any[]) {
-    if (args[0] instanceof Warning || args[0] instanceof Error) {
-      this.emit('log', args[0]);
+  log(...messages: any[]): void {
+    if (messages[0] instanceof Warning || messages[0] instanceof Error) {
+      this.emit('log', messages[0]);
     } else {
-      this.emit('log', util.format(...args));
+      this.emit('log', util.format(...messages));
     }
   }
 
   /**
-   * Reset the module so it can be reused again.
+   * Resets the module state for reuse.
+   *
+   * @returns {void}
    */
-
   reset(): void {
     return;
   }
 
   /**
-   * Rollback all operations.
+   * Rolls back all pending operations in the module.
    *
-   * @callback done Callback to call when operations are done.
-   *     @param {Error} err Error on error, otherwise null.
-   *     @param {Array} report Rollback report (see docs).
+   * @param {DoneWithReportCallback} done - Callback invoked with rollback results
+   * @returns {void}
    */
-
-  rollback(done: DoneWithReportCallback) {
-    if ('function' === typeof done) done(null, null);
+  rollback(done: DoneWithReportCallback): void {
+    if (typeof done === 'function') done(null, null);
   }
 
   /**
-   * Print message to Scenario warning log.
+   * Logs a warning message to the Scenario warning log.
    *
-   * @param {...String} message Message to be printed to Scenario warning log.
+   * @param {...(string | Warning | Error)} warnings - Warning to be logged
+   * @returns {void}
    */
-
-  warn(...args: any[]) {
-    if (args[0] instanceof Warning || args[0] instanceof Error) {
-      this.emit('warn', args[0]);
+  warn(...warnings: unknown[]): void {
+    if (warnings[0] instanceof Warning || warnings[0] instanceof Error) {
+      this.emit('warn', warnings[0]);
     } else {
-      this.emit('warn', util.format(...args));
+      this.emit('warn', util.format(...warnings));
     }
   }
 }
