@@ -1,3 +1,12 @@
+/**
+ * @module CompatibilityExtensions
+ *
+ * Legacy compatibility extensions for backward compatibility with older IMT code.
+ * These extensions provide deprecated functionality that should not be used in new code.
+ *
+ * @deprecated This module provides legacy compatibility only. New code should use modern patterns.
+ */
+
 // NOTE(m.skvely): There are a lot of crimes here, we have to disable many rules to make this work
 /* eslint-disable @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call */
 

@@ -1,11 +1,8 @@
-import * as assert from 'assert';
 import { Warning } from '../src/warning';
 
 describe('Warning', () =>
-  it('general', (done) => {
-    const w = new Warning('Warning message.');
-    assert.equal(w.message, 'Warning message.');
-    assert.equal(typeof w.stack, 'string');
-
-    done();
+  it('general', () => {
+    const warning = new Warning('Warning message.');
+    expect(warning.message).toBe('Warning message.');
+    expect(typeof warning.stack).toBe('string');
   }));

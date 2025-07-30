@@ -1,6 +1,13 @@
-import { Readable } from 'stream';
-import { CommonData, ModuleData } from './base';
-import { DoneCallback } from './types';
+/**
+ * @module Account
+ *
+ * Account management and authentication for external service integrations.
+ * Provides base classes for handling credentials, OAuth flows, and service connections.
+ */
+
+import type { Readable } from 'stream';
+import type { ApiData, CommonData, EnvironmentData, ModuleData, ScenarioData } from './base';
+import type { DoneCallback } from './types';
 
 export type Scope = string[];
 
@@ -9,76 +16,84 @@ export type DoneWithUrlCallback = (err?: Error | null, url?: string) => void;
 /**
  * Base class for all Accounts.
  *
- * @property common - Collection of common parameters. Read only.
- * @property data - Collection of config parameters.
+ * @class IMTAccount
+ * @property {string | number | null} id - The unique identifier for the account
+ * @property {string | null} name - The display name of the account
+ * @property {CommonData | null} common - Collection of common parameters (read-only)
+ * @property {ModuleData | null} data - Collection of config parameters
+ * @property {EnvironmentData | null} environment - Environment configuration data
+ * @property {ScenarioData | null} scenario - Scenario configuration data
+ * @property {ApiData} [api] - Optional API configuration for custom apps accounts
+ * @property {Function} [log] - Function for logging messages
+ * @property {Function} [debug] - Function for debug logging
  */
 export class IMTAccount {
-  public common: CommonData | null;
-  public data: ModuleData | null;
+  id: string | number | null = null;
+  name: string | null = null;
+  common: CommonData | null = null;
+  data: ModuleData | null = null;
+  environment: EnvironmentData | null = null;
+  scenario: ScenarioData | null = null;
+  api?: ApiData;
 
-  constructor() {
-    this.common = null;
-    this.data = null;
-  }
+  log?: (...args: any[]) => void;
+  debug?: (...args: any[]) => void;
 
   /**
-   * Initializes the account. Function that overrides should always call super.
+   * Initializes the account. Function that overrides should always call the parent method using super.
    *
-   * @callback done Callback to call when account is initialized.
-   * 	@param {Error} err - Error on error, otherwise null.
+   * @param {DoneCallback} done - Callback function executed when initialization completes
+   * @returns {void}
    */
-  initialize(done: DoneCallback) {
+  initialize(done: DoneCallback): void {
     if ('function' === typeof done) done();
   }
 
   /**
-   * Finalizes the account. Function that overrides should always call super.
+   * Finalizes the account. Function that overrides should always call the parent method using super.
    *
-   * @callback done Callback to call when account is finalized.
-   *     @param {Error} err Error on error, otherwise null.
+   * @param {DoneCallback} done - Callback function executed when finalization completes
+   * @returns {void}
    */
-  finalize(done: DoneCallback) {
+  finalize(done: DoneCallback): void {
     if ('function' === typeof done) done();
   }
 
   /**
-   * Test account connection.
+   * Tests account connection.
    *
-   * @callback done Callback to call when test is complete.
-   *     @param {Error} err Error on error, otherwise null.
-   *     @param {Boolean} valid True if account is valid.
+   * @param {(error?: Error | null, valid?: boolean) => void} done - Callback executed when test completes
+   * @returns {void}
    */
-  test(done: DoneCallback) {
+  test(done: (error?: Error | null, valid?: boolean) => void): void {
     if ('function' === typeof done) done();
   }
 
   /**
-   * Test account validity.
+   * Validates account configuration.
    *
-   * @callback done Callback to call when validation is complete.
-   *     @param {Error} err Error on error, otherwise null.
-   *     @param {Boolean} changed True if validation made changes in account's data.
+   * @param {(error?: Error | null, changed?: boolean) => void} done - Callback executed when validation completes
+   * @returns {void}
    */
-  validate(done: DoneCallback) {
+  validate(done: (error?: Error | null, changed?: boolean) => void): void {
     if ('function' === typeof done) done();
   }
 }
 
-/*
-Base class for all OAuth Accounts.
-*/
-
+/**
+ * Base class for all OAuth Accounts.
+ *
+ * @class IMTOAuthAccount
+ * @extends IMTAccount
+ */
 export class IMTOAuthAccount extends IMTAccount {
-  private id?: string | null;
-
   /**
    * Sets account ID by received data.
-   *
-   * @param {stream.Readdable} req HTTP request stream.
-   * @callback done Callback to call when account was resolved from request.
-   *     @param {Error} err Error on error, otherwise null.
+   * @param req - HTTP request stream
+   * @param done - Callback called when the account was resolved from request
    */
-  accountFromCallbackRequest(req: Readable, done: DoneCallback) {
+  accountFromCallbackRequest(req: Readable, done: DoneCallback): void {
+    void req;
     this.id = null;
 
     if ('function' === typeof done) done();
@@ -86,55 +101,48 @@ export class IMTOAuthAccount extends IMTAccount {
 
   /**
    * Create authorization request and redirect user to OAuth provider.
-   *
-   * @param {Array} scope Array of permission to request.
-   * @callback done Callback to call when authorization request is complete.
-   *     @param {Error} err Error on error, otherwise null.
-   *     @param {String} url URL to redirect user to.
+   * @param scope - Array of permissions to request
+   * @param done - Callback called when authorization request is complete
    */
-  authorize(scope: Scope, done: DoneWithUrlCallback) {
+  authorize(scope: Scope, done: DoneWithUrlCallback): void {
+    void scope;
     if ('function' === typeof done) done();
   }
 
   /**
    * Callback from OAuth provider.
-   *
-   * @param {stream.Readdable} req HTTP request stream.
-   * @callback done Callback to call when authorization request is complete.
-   *     @param {Error} err Error on error, otherwise null.
+   * @param req - HTTP request stream
+   * @param done - Callback called when authorization request is complete
    */
-  callback(req: Readable, done: DoneCallback) {
+  callback(req: Readable, done: DoneCallback): void {
+    void req;
     if ('function' === typeof done) done();
   }
 
   /**
    * Create scope extension request and redirect user to OAuth provider.
-   *
-   * @param {Array} scope Array of permission to request.
-   * @callback done Callback to call when authorization request is complete.
-   *     @param {Error} err Error on error, otherwise null.
-   *     @param {String} url URL to redirect user to.
+   * @param scope - Array of permissions to request
+   * @param done - Callback called when extension request is complete
    */
-  extendScope(scope: Scope, done: DoneWithUrlCallback) {
+  extendScope(scope: Scope, done: DoneWithUrlCallback): void {
+    void scope;
     if ('function' === typeof done) done();
   }
 
   /**
    * Create reauthorization request and redirect user to OAuth provider.
-   *
-   * @callback done Callback to call when authorization request is complete.
-   *     @param {Error} err Error on error, otherwise null.
-   *     @param {String} url URL to redirect user to.
+   * @param {DoneWithUrlCallback} done Callback called when reauthorization request is complete
+   * @param {Error | null} done.error Error object if reauthorization failed, null otherwise
+   * @param {string} [done.url] URL to redirect user to
    */
   reauthorize(done: DoneWithUrlCallback) {
     if ('function' === typeof done) done();
   }
 
   /**
-   * Invalidate current access token.
-   *
-   * @callback done Callback to call when invalidation request is complete.
-   *     @param {Error} err Error on error, otherwise null.
+   * Invalidate the current access token.
+   * @param {DoneCallback} done Callback called when invalidation request is complete
+   * @param {Error | null} done.error Error object if invalidation failed, null otherwise
    */
   invalidate(done: DoneCallback) {
     if ('function' === typeof done) done();
