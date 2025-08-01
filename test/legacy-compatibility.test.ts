@@ -10,12 +10,10 @@ describe('Legacy Compatibility', () => {
     IMTHook,
     IMTConverger,
     IMTRouter,
-    IMTListener,
     IMTAccount,
     IMTOAuthAccount,
     IMTTrigger,
     IMTGatewayTrigger,
-    IMTPauser,
     IMTBase,
     IMTRPC,
     IMTFeeder,
@@ -57,17 +55,14 @@ describe('Legacy Compatibility', () => {
     expect(global.DataSizeLimitExceededError).toBeDefined();
     expect(global.ExecutionInterruptedError).toBeDefined();
     expect(global.IMTRouter).toBeDefined();
-    expect(global.IMTListener).toBeDefined();
     expect(global.IMTAccount).toBeDefined();
     expect(global.IMTOAuthAccount).toBeDefined();
     expect(global.IMTTrigger).toBeDefined();
     expect(global.IMTGatewayTrigger).toBeDefined();
-    expect(global.IMTPauser).toBeDefined();
     expect(global.IMTBase).toBeDefined();
     expect(global.IMTRPC).toBeDefined();
     expect(global.IMTFeeder).toBeDefined();
     expect(global.IMTTransformer).toBeDefined();
-    expect(global.IMTHITL).toBeDefined();
     expect(global.IMTReturner).toBeDefined();
     expect(global.IMTStarter).toBeDefined();
   });
@@ -100,17 +95,14 @@ describe('Legacy Compatibility', () => {
     expect(global.DataSizeLimitExceededError === publicApi.DataSizeLimitExceededError).toBe(true);
     expect(global.ExecutionInterruptedError === publicApi.ExecutionInterruptedError).toBe(true);
     expect(global.IMTRouter === publicApi.IMTRouter).toBe(true);
-    expect(global.IMTListener === publicApi.IMTListener).toBe(true);
     expect(global.IMTAccount === publicApi.IMTAccount).toBe(true);
     expect(global.IMTOAuthAccount === publicApi.IMTOAuthAccount).toBe(true);
     expect(global.IMTTrigger === publicApi.IMTTrigger).toBe(true);
     expect(global.IMTGatewayTrigger === publicApi.IMTGatewayTrigger).toBe(true);
-    expect(global.IMTPauser === publicApi.IMTPauser).toBe(true);
     expect(global.IMTBase === publicApi.IMTBase).toBe(true);
     expect(global.IMTRPC === publicApi.IMTRPC).toBe(true);
     expect(global.IMTFeeder === publicApi.IMTFeeder).toBe(true);
     expect(global.IMTTransformer === publicApi.IMTTransformer).toBe(true);
-    expect(global.IMTHITL === publicApi.IMTHITL).toBe(true);
     expect(global.IMTReturner === publicApi.IMTReturner).toBe(true);
     expect(global.IMTStarter === publicApi.IMTStarter).toBe(true);
   });

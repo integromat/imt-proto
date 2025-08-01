@@ -3,9 +3,6 @@ import {
   IMTAggregator,
   IMTConverger,
   IMTFeeder,
-  IMTHITL,
-  IMTListener,
-  IMTPauser,
   IMTRouter,
   IMTTransformer,
   IMTTrigger,
@@ -21,9 +18,6 @@ describe('ModuleType', () => {
       new IMTAggregator(),
       new IMTConverger(),
       new IMTFeeder(),
-      new IMTHITL(),
-      new IMTListener(),
-      new IMTPauser(),
       new IMTRouter(),
       new IMTTransformer(),
       new IMTTrigger(),
@@ -46,9 +40,6 @@ describe('ModuleType', () => {
         case ModuleType.ACTION:
           expect(module).toBeInstanceOf(IMTAction);
           break;
-        case ModuleType.LISTENER:
-          expect(module).toBeInstanceOf(IMTListener);
-          break;
         case ModuleType.FEEDER:
           expect(module).toBeInstanceOf(IMTFeeder);
           break;
@@ -57,12 +48,6 @@ describe('ModuleType', () => {
           break;
         case ModuleType.CONVERGER:
           expect(module).toBeInstanceOf(IMTConverger);
-          break;
-        case ModuleType.HITL:
-          expect(module).toBeInstanceOf(IMTHITL);
-          break;
-        case ModuleType.PAUSER:
-          expect(module).toBeInstanceOf(IMTPauser);
           break;
         case ModuleType.RETURNER:
           expect(module).toBeInstanceOf(IMTReturner);

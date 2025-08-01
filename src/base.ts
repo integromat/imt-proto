@@ -23,15 +23,12 @@ export enum ModuleType {
   TRANSFORMER = 2,
   ROUTER = 3,
   ACTION = 4,
-  LISTENER = 5,
   FEEDER = 6,
   AGGREGATOR = 7,
   DIRECTIVE = 8,
   SEARCH = 9,
   CONVERGER = 10,
-  HITL = 11,
   RETURNER = 12,
-  PAUSER = 13,
   STARTER = 14,
 }
 
@@ -40,15 +37,12 @@ export const moduleTypeNames = {
   [ModuleType.TRANSFORMER]: { singular: 'transformer', plural: 'transformers' } as const,
   [ModuleType.ROUTER]: { singular: 'router', plural: 'routers' } as const,
   [ModuleType.ACTION]: { singular: 'action', plural: 'actions' } as const,
-  [ModuleType.LISTENER]: { singular: 'listener', plural: 'listeners' } as const,
   [ModuleType.FEEDER]: { singular: 'feeder', plural: 'feeders' } as const,
   [ModuleType.AGGREGATOR]: { singular: 'aggregator', plural: 'aggregators' } as const,
   [ModuleType.DIRECTIVE]: { singular: 'directive', plural: 'directives' } as const,
   [ModuleType.SEARCH]: { singular: 'search', plural: 'searches' } as const,
   [ModuleType.CONVERGER]: { singular: 'converger', plural: 'convergers' } as const,
-  [ModuleType.HITL]: { singular: 'hitl', plural: 'hitls' } as const,
   [ModuleType.RETURNER]: { singular: 'returner', plural: 'returners' } as const,
-  [ModuleType.PAUSER]: { singular: 'pauser', plural: 'pausers' } as const,
   [ModuleType.STARTER]: { singular: 'starter', plural: 'starters' } as const,
 };
 
@@ -73,13 +67,10 @@ export class IMTBase extends EventEmitter {
   public static readonly MODULETYPE_TRANSFORMER = ModuleType.TRANSFORMER;
   public static readonly MODULETYPE_ROUTER = ModuleType.ROUTER;
   public static readonly MODULETYPE_ACTION = ModuleType.ACTION;
-  public static readonly MODULETYPE_LISTENER = ModuleType.LISTENER;
   public static readonly MODULETYPE_FEEDER = ModuleType.FEEDER;
   public static readonly MODULETYPE_AGGREGATOR = ModuleType.AGGREGATOR;
   public static readonly MODULETYPE_DIRECTIVE = ModuleType.DIRECTIVE;
   public static readonly MODULETYPE_CONVERGER = ModuleType.CONVERGER;
-  public static readonly MODULETYPE_HITL = ModuleType.HITL;
-  public static readonly MODULETYPE_PAUSER = ModuleType.PAUSER;
   public static readonly MODULETYPE_RETURNER = ModuleType.RETURNER;
   public static readonly MODULETYPE_STARTER = ModuleType.STARTER;
 
