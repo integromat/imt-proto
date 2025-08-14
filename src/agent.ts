@@ -1,6 +1,7 @@
 import { IMTBase, ModuleType } from './base';
 
-export type RegisterToolsParams = {
+export type AgentResources = {
+  agentOutputSpec: Record<string, any>;
   tools: Array<{
     id: number;
     name: string;
@@ -11,9 +12,12 @@ export type RegisterToolsParams = {
   }>;
 };
 
+export type Context = Record<string, any>;
+
 export type UseToolAction = {
   type: 'useToolAction';
   toolId: number;
+  context: Context;
   data: Record<string, any>;
 };
 
@@ -32,6 +36,7 @@ export type InitialActionResult = {
 
 export type PreviousActionResult = {
   type: 'previousActionResult';
+  context: Context;
   status: 'SUCCESS' | 'ERROR' | 'WARNING';
   data: Record<string, any>;
 };
@@ -41,7 +46,5 @@ type NextActionParams = InitialActionResult | PreviousActionResult;
 export abstract class IMTAgent extends IMTBase {
   public readonly type = ModuleType.AGENT;
 
-  abstract registerTools(params: RegisterToolsParams): void;
-
-  abstract getNextAction(params: NextActionParams): Promise<Action>;
+  abstract getNextAction(nextActionParams: NextActionParams, agentResources: AgentResources): Promise<Action>;
 }
