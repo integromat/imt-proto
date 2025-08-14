@@ -51,6 +51,7 @@ export const moduleTypeNames = {
   [ModuleType.RETURNER]: { singular: 'returner', plural: 'returners' } as const,
   [ModuleType.PAUSER]: { singular: 'pauser', plural: 'pausers' } as const,
   [ModuleType.STARTER]: { singular: 'starter', plural: 'starters' } as const,
+  [ModuleType.AGENT]: { singular: 'agent', plural: 'agents' } as const,
 };
 
 /**
