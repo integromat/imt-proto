@@ -19,7 +19,7 @@ export type UseToolAction = {
 
 export type FinishAction = {
   type: 'finishAction';
-  status: 'SUCCESS' | 'FAILURE' | 'WARNING';
+  status: 'SUCCESS' | 'ERROR' | 'WARNING';
   data: Record<string, any>;
 };
 
@@ -32,7 +32,7 @@ export type InitialActionResult = {
 
 export type PreviousActionResult = {
   type: 'previousActionResult';
-  status: 'SUCCESS' | 'FAILURE' | 'WARNING';
+  status: 'SUCCESS' | 'ERROR' | 'WARNING';
   data: Record<string, any>;
 };
 
