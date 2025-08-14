@@ -33,6 +33,7 @@ export enum ModuleType {
   RETURNER = 12,
   PAUSER = 13,
   STARTER = 14,
+  AGENT = 15,
 }
 
 export const moduleTypeNames = {
@@ -82,6 +83,7 @@ export class IMTBase extends EventEmitter {
   public static readonly MODULETYPE_PAUSER = ModuleType.PAUSER;
   public static readonly MODULETYPE_RETURNER = ModuleType.RETURNER;
   public static readonly MODULETYPE_STARTER = ModuleType.STARTER;
+  public static readonly MODULETYPE_AGENT = ModuleType.AGENT;
 
   public common: CommonData | null = null;
   public data: ModuleData | null = null;
