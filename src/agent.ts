@@ -5,7 +5,7 @@ export type RegisterToolsParams = {
     id: number;
     name: string;
     description: string;
-    inputSchema: {
+    inputSpecification: {
       [key: string]: any; // <- spec schema from blueprint
     };
   }>;
