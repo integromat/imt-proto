@@ -38,12 +38,14 @@ export type PreviousActionResult = {
 
 type NextActionParams = InitialActionResult | PreviousActionResult;
 
-export class IMTAgent extends IMTBase {
+export abstract class IMTAgent extends IMTBase {
   public readonly type = ModuleType.AGENT;
 
-  registerTools(params: RegisterToolsParams): void {}
+  registerTools(params: RegisterToolsParams): void {
+    throw new Error("Must override a superclass method 'registerTools'.");
+  }
 
   async getNextAction(params: NextActionParams): Promise<Action> {
-    throw new Error('Not implemented');
+    throw new Error("Must override a superclass method 'getNextAction'.");
   }
 }
