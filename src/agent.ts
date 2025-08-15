@@ -7,9 +7,7 @@ export type AgentResources = {
     id: number;
     name: string;
     description: string;
-    inputSpecification: {
-      [key: string]: any; // <- spec schema from blueprint
-    };
+    inputSpecification: Record<string, any>;
   }>;
 };
 
