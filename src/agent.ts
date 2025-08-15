@@ -47,8 +47,10 @@ export type PreviousActionResult = {
 
 type NextActionParams = InitialActionResult | PreviousActionResult;
 
-export abstract class IMTAgent extends IMTBase {
+export class IMTAgent extends IMTBase {
   public readonly type = ModuleType.AGENT;
 
-  abstract getNextAction(nextActionParams: NextActionParams, agentResources: AgentResources): Promise<Action>;
+  getNextAction(nextActionParams: NextActionParams, agentResources: AgentResources): Promise<Action> {
+    throw new Error("Must override a superclass method 'write'.");
+  }
 }

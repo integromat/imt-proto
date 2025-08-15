@@ -22,6 +22,7 @@ describe('Legacy Compatibility', () => {
     IMTTransformer,
     IMTReturner,
     IMTStarter,
+    IMTAgent,
   ];
 
   it('exports global variables', () => {
@@ -70,6 +71,7 @@ describe('Legacy Compatibility', () => {
     expect(global.IMTHITL).toBeDefined();
     expect(global.IMTReturner).toBeDefined();
     expect(global.IMTStarter).toBeDefined();
+    expect(global.IMTAgent).toBeDefined();
   });
 
   it('should have same values for globals and for public API', () => {
@@ -113,6 +115,7 @@ describe('Legacy Compatibility', () => {
     expect(global.IMTHITL === publicApi.IMTHITL).toBe(true);
     expect(global.IMTReturner === publicApi.IMTReturner).toBe(true);
     expect(global.IMTStarter === publicApi.IMTStarter).toBe(true);
+    expect(global.IMTAgent === publicApi.IMTAgent).toBe(true);
   });
 
   it('should be compatible with CoffeeScript classes', () => {
@@ -122,9 +125,11 @@ describe('Legacy Compatibility', () => {
       for (const key in parent) {
         if (hasProp.call(parent, key)) child[key] = parent[key];
       }
+
       function Constructor(this: any) {
         this.constructor = child;
       }
+
       Constructor.prototype = parent.prototype;
       child.prototype = new (Constructor as any)();
       child.__super__ = parent.prototype;
