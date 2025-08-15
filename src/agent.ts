@@ -51,6 +51,6 @@ export class IMTAgent extends IMTBase {
   public readonly type = ModuleType.AGENT;
 
   getNextAction(nextActionParams: NextActionParams, agentResources: AgentResources): Promise<Action> {
-    throw new Error("Must override a superclass method 'write'.");
+    throw new Error("Must override a superclass method 'getNextAction'.");
   }
 }
