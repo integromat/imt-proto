@@ -47,6 +47,7 @@ declare global {
   var IMTHITL: typeof publicApi.IMTHITL;
   var IMTReturner: typeof publicApi.IMTReturner;
   var IMTStarter: typeof publicApi.IMTStarter;
+  var IMTAgent: typeof publicApi.IMTAgent;
 }
 
 if (!global.IMT_PROTO_LOADED) {
@@ -100,4 +101,5 @@ if (!global.IMT_PROTO_LOADED) {
   global.IMTHITL = publicApi.IMTHITL;
   global.IMTReturner = publicApi.IMTReturner;
   global.IMTStarter = publicApi.IMTStarter;
+  global.IMTAgent = publicApi.IMTAgent;
 }
