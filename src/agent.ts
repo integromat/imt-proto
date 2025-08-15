@@ -1,4 +1,5 @@
 import { IMTBase, ModuleType } from './base';
+import { Bundle } from './types';
 
 export type AgentResources = {
   agentOutputSpec: Record<string, any>;
@@ -12,33 +13,38 @@ export type AgentResources = {
   }>;
 };
 
-export type Context = Record<string, any>;
+export type AgentContext = Record<string, any>;
 
 export type UseToolAction = {
   type: 'useToolAction';
-  toolId: number;
-  context: Context;
-  data: Record<string, any>;
+  selectedTool: {
+    id: number;
+    input: Bundle;
+  };
+  context: AgentContext;
 };
 
 export type FinishAction = {
   type: 'finishAction';
   status: 'SUCCESS' | 'ERROR' | 'WARNING';
-  data: Record<string, any>;
+  outputBundle: Bundle;
 };
 
 export type Action = UseToolAction | FinishAction;
 
 export type InitialActionResult = {
   type: 'initialActionResult';
-  data: Record<string, any>;
+  inputBundle: Bundle;
 };
-
+export type PreviousActionResultValue = {
+  toolOutputBundle: Bundle;
+};
 export type PreviousActionResult = {
   type: 'previousActionResult';
-  context: Context;
+  context: AgentContext;
   status: 'SUCCESS' | 'ERROR' | 'WARNING';
-  data: Record<string, any>;
+  previousAction: UseToolAction;
+  previousActionResult: PreviousActionResultValue;
 };
 
 type NextActionParams = InitialActionResult | PreviousActionResult;
