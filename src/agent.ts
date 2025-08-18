@@ -45,7 +45,7 @@ export type PreviousActionResult = {
   previousActionResult: PreviousActionResultValue;
 };
 
-type NextActionParams = InitialActionResult | PreviousActionResult;
+export type NextActionParams = InitialActionResult | PreviousActionResult;
 
 export class IMTAgent extends IMTBase {
   public readonly type = ModuleType.AGENT;
