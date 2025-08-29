@@ -7,7 +7,7 @@ export type AgentResources = {
     id: number;
     name: string;
     description: string;
-    inputSpecification: Record<string, any>;
+    inputSchema: Record<string, any>;
   }>;
 };
 
@@ -24,9 +24,20 @@ export type UseToolAction = {
 
 export type FinishAction = {
   type: 'finishAction';
-  status: 'SUCCESS' | 'ERROR' | 'WARNING';
-  outputBundle: Bundle;
-};
+} & (
+  | {
+      status: 'SUCCESS';
+      outputBundle: Bundle;
+    }
+  | {
+      status: 'WARNING';
+      warningMessage: string;
+    }
+  | {
+      status: 'ERROR';
+      error: Error;
+    }
+);
 
 export type Action = UseToolAction | FinishAction;
 
@@ -34,9 +45,11 @@ export type InitialActionResult = {
   type: 'initialActionResult';
   inputBundle: Bundle;
 };
+
 export type PreviousActionResultValue = {
   toolOutputBundle: Bundle;
 };
+
 export type PreviousActionResult = {
   type: 'previousActionResult';
   context: AgentContext;
