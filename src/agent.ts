@@ -31,6 +31,7 @@ export type FinishAction = {
     }
   | {
       status: 'WARNING';
+      outputBundle: Bundle;
       warningMessage: string;
     }
   | {
