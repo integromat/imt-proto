@@ -38,7 +38,7 @@ export type FinishAction = Readonly<
       }>
     | Readonly<{
         status: 'ERROR';
-        error: Readonly<Error>;
+        error: Error;
       }>
   )
 >;
