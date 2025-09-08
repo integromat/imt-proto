@@ -2,69 +2,75 @@ import { IMTBase, ModuleType } from './base';
 import { Bundle } from './types';
 
 export type AgentResources = {
-  agentOutputSpec: Record<string, any>;
-  tools: Array<{
-    id: number;
-    name: string;
-    description: string;
-    inputSchema: Record<string, any>;
-  }>;
+  agentOutputSpec: Readonly<Record<string, any>>;
+  tools: Readonly<
+    Array<
+      Readonly<{
+        id: number;
+        name: string;
+        description: string;
+        inputSchema: Readonly<Record<string, any>>;
+      }>
+    >
+  >;
 };
 
-export type AgentContext = Record<string, any>;
+export type AgentContext = Readonly<Record<string, any>>;
 
-export type UseToolAction = {
+type SelectedTool = Readonly<{
+  id: number;
+  input: Readonly<Bundle>;
+}>;
+
+export type UseToolAction = Readonly<{
   type: 'useToolAction';
-  selectedTool: {
-    id: number;
-    input: Bundle;
-  };
+  selectedTool: SelectedTool;
   context: AgentContext;
-};
+}>;
 
-export type FinishAction = {
-  type: 'finishAction';
-} & (
-  | {
-      status: 'SUCCESS';
-      outputBundle: Bundle;
-    }
-  | {
-      status: 'WARNING';
-      outputBundle: Bundle;
-      warningMessage: string;
-    }
-  | {
-      status: 'ERROR';
-      error: Error;
-    }
-);
+export type FinishAction = Readonly<
+  {
+    type: 'finishAction';
+  } & (
+    | Readonly<{
+        status: 'SUCCESS';
+        outputBundle: Readonly<Bundle>;
+      }>
+    | Readonly<{
+        status: 'ERROR';
+        error: Readonly<Error>;
+      }>
+  )
+>;
 
 export type Action = UseToolAction | FinishAction;
 
-export type InitialActionResult = {
+export type InitialActionResult = Readonly<{
   type: 'initialActionResult';
-  inputBundle: Bundle;
-};
+  inputBundle: Readonly<Bundle>;
+}>;
 
-export type PreviousActionResultValue = {
-  toolOutputBundle: Bundle;
-};
+export type PreviousActionResultValue = Readonly<{
+  toolOutputBundle: Readonly<Bundle>;
+}>;
 
-export type PreviousActionResult = {
+export type PreviousActionResult = Readonly<{
   type: 'previousActionResult';
   context: AgentContext;
   status: 'SUCCESS' | 'ERROR' | 'WARNING';
   previousAction: UseToolAction;
   previousActionResult: PreviousActionResultValue;
-};
+}>;
 
 export type NextActionParams = InitialActionResult | PreviousActionResult;
 
 export class IMTAgent extends IMTBase {
   public readonly type = ModuleType.AGENT;
 
-  getNextAction(nextActionParams: NextActionParams, agentResources: AgentResources): Promise<Action> {
+  getNextAction(
+    nextActionParams: Readonly<NextActionParams>,
+    agentResources: Readonly<AgentResources>,
+  ): Promise<Readonly<Action>> {
     throw new Error("Must override a superclass method 'getNextAction'.");
   }
 }
