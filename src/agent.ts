@@ -71,7 +71,7 @@ export type ThreadHistory = Readonly<{
 export type ThreadContext = Readonly<{ history: ThreadHistory }>;
 
 export type GetThreadContextParams = Readonly<{
-  threadId?: string;
+  threadId: string;
 }>;
 
 export class IMTAgent extends IMTBase {
