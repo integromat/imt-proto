@@ -68,10 +68,14 @@ export type ThreadHistoryRecord = Readonly<Record<any, any>>;
 export type ThreadHistory = Readonly<Array<ThreadHistoryRecord>>;
 export type ThreadContext = Readonly<{ threadHistory: ThreadHistory }>;
 
+export type GetThreadContextParams = Readonly<{
+  threadId?: string;
+}>;
+
 export class IMTAgent extends IMTBase {
   public readonly type = ModuleType.AGENT;
 
-  getThreadContext(): Promise<ThreadContext> {
+  getThreadContext(params: GetThreadContextParams): Promise<ThreadContext> {
     return Promise.resolve({ threadHistory: [] });
   }
 
