@@ -64,8 +64,22 @@ export type PreviousActionResult = Readonly<{
 
 export type NextActionParams = InitialActionResult | PreviousActionResult;
 
+export type ThreadHistoryRecord = Readonly<Record<any, any>>;
+export type ThreadHistory = Readonly<{
+  records: Readonly<Array<ThreadHistoryRecord>>;
+}>;
+export type ThreadContext = Readonly<{ history: ThreadHistory }>;
+
+export type GetThreadContextParams = Readonly<{
+  threadId: string;
+}>;
+
 export class IMTAgent extends IMTBase {
   public readonly type = ModuleType.AGENT;
+
+  getThreadContext(params: GetThreadContextParams): Promise<ThreadContext> {
+    return Promise.resolve({ history: { records: [] } });
+  }
 
   getNextAction(
     nextActionParams: Readonly<NextActionParams>,
