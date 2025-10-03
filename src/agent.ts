@@ -1,5 +1,5 @@
 import { IMTBase, ModuleType } from './base';
-import { Bundle } from './types';
+import { Bundle, Metadata, MetadataList } from './types';
 
 export type AgentResources = {
   agentOutputSpec: Readonly<Record<string, any>>;
@@ -31,6 +31,7 @@ export type UseToolAction = Readonly<{
 export type FinishAction = Readonly<
   {
     type: 'finishAction';
+    metadata?: Readonly<MetadataList>;
   } & (
     | Readonly<{
         status: 'SUCCESS';
