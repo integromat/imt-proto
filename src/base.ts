@@ -34,6 +34,7 @@ export enum ModuleType {
   PAUSER = 13,
   STARTER = 14,
   AGENT = 15,
+  IF_ELSE = 16,
 }
 
 export const moduleTypeNames = {
@@ -52,6 +53,7 @@ export const moduleTypeNames = {
   [ModuleType.PAUSER]: { singular: 'pauser', plural: 'pausers' } as const,
   [ModuleType.STARTER]: { singular: 'starter', plural: 'starters' } as const,
   [ModuleType.AGENT]: { singular: 'agent', plural: 'agents' } as const,
+  [ModuleType.IF_ELSE]: { singular: 'if-else', plural: 'if-elses' } as const,
 };
 
 /**
@@ -85,6 +87,7 @@ export class IMTBase extends EventEmitter {
   public static readonly MODULETYPE_RETURNER = ModuleType.RETURNER;
   public static readonly MODULETYPE_STARTER = ModuleType.STARTER;
   public static readonly MODULETYPE_AGENT = ModuleType.AGENT;
+  public static readonly MODULETYPE_IF_ELSE = ModuleType.IF_ELSE;
 
   public common: CommonData | null = null;
   public data: ModuleData | null = null;
