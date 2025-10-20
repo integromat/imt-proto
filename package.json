@@ -9,7 +9,7 @@
     "integromat",
     "imt"
   ],
-  "version": "2.10.0",
+  "version": "2.11.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
