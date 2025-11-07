@@ -26,6 +26,8 @@ export type UseToolAction = Readonly<{
   type: 'useToolAction';
   selectedTool: SelectedTool;
   context: AgentContext;
+  reasoning?: Readonly<string>;
+  content?: Readonly<string>;
 }>;
 
 export type FinishAction = Readonly<
