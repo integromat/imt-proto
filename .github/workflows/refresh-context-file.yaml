@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   refresh-if-needed:
+    if: ${{ !contains(github.actor, '[bot]') }}
     runs-on: ubuntu-latest
     timeout-minutes: 3 # three times the average; avoid burning credits when stuck
     steps:
