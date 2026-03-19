@@ -1,5 +1,5 @@
 import { IMTBase, ModuleType } from './base';
-import { Bundle } from './types';
+import { Bundle, Metadata, MetadataList } from './types';
 
 export type AgentResources = {
   agentOutputSpec: Readonly<Record<string, any>>;
@@ -26,11 +26,14 @@ export type UseToolAction = Readonly<{
   type: 'useToolAction';
   selectedTool: SelectedTool;
   context: AgentContext;
+  reasoning?: Readonly<string>;
+  content?: Readonly<string>;
 }>;
 
 export type FinishAction = Readonly<
   {
     type: 'finishAction';
+    metadata?: Readonly<MetadataList>;
   } & (
     | Readonly<{
         status: 'SUCCESS';
@@ -64,8 +67,23 @@ export type PreviousActionResult = Readonly<{
 
 export type NextActionParams = InitialActionResult | PreviousActionResult;
 
+export type ThreadHistoryRecord = Readonly<Record<any, any>>;
+export type ThreadHistory = Readonly<{
+  records: Readonly<Array<ThreadHistoryRecord>>;
+}>;
+export type ThreadContext = Readonly<{ history: ThreadHistory }>;
+
+export type GetThreadContextParams = Readonly<{
+  threadId: string;
+  iterationsFromHistoryCount?: number;
+}>;
+
 export class IMTAgent extends IMTBase {
   public readonly type = ModuleType.AGENT;
+
+  getThreadContext(params: GetThreadContextParams): Promise<ThreadContext> {
+    return Promise.resolve({ history: { records: [] } });
+  }
 
   getNextAction(
     nextActionParams: Readonly<NextActionParams>,
