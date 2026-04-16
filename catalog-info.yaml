@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: imt-proto
+  annotations:
+    github.com/project-slug: integromat/imt-proto
+spec:
+  type: library
+  lifecycle: production
+  owner: group:default/build-and-run
+  partOfCoreProduct: true
