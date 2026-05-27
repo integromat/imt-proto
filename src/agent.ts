@@ -10,6 +10,7 @@ export type AgentResources = {
         name: string;
         description: string;
         inputSchema: Readonly<Record<string, any>>;
+        excludedOutputFields?: Readonly<string[]>;
       }>
     >
   >;
