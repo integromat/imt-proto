@@ -17,6 +17,11 @@ export type EnvironmentData = Record<string, any>;
 
 export type InternalData = Record<string, any>;
 
+/** `type` namespaces the producing app's variants; `event` discriminates within a namespace. */
+export type ProgressContent =
+  | { type: 'aiBrowserProgress'; event: 'sessionStarted'; liveViewUrl?: string }
+  | { type: 'aiBrowserProgress'; event: 'step'; stepIndex: number; summary: string; stepType?: string };
+
 export enum ModuleType {
   NONE = 0,
   TRIGGER = 1,
@@ -68,6 +73,7 @@ export const moduleTypeNames = {
  *
  * @event log - Dispatched when message is about to be printed to info log.
  * @event warn - Dispatched when message is about to be printed to warning log.
+ * @event progress - Dispatched when module reports execution progress.
  */
 export class IMTBase extends EventEmitter {
   public readonly type: ModuleType = ModuleType.NONE;
@@ -174,6 +180,16 @@ export class IMTBase extends EventEmitter {
     } else {
       this.emit('log', util.format(...args));
     }
+  }
+
+  /**
+   * Report module execution progress to Scenario execution log.
+   *
+   * @param {ProgressContent} content Progress content to be added to the Module Execution Log.
+   */
+
+  progress(content: ProgressContent) {
+    this.emit('progress', content);
   }
 
   /**
