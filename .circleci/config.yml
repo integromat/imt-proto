@@ -22,9 +22,6 @@ jobs:
       - testing-orb/run_tests:
           test_type: unit
           command: npm run test:unit
-      - testing-orb/upload_and_comment_coverage:
-          lcov_file_path: ./coverage/unit/lcov.info
-          test_type: unit
       - store_artifacts:
           path: coverage/unit
       - store_test_results:
