@@ -47,9 +47,13 @@ export type UseInternalToolAction = Readonly<{
 export type InternalToolResultAction = Readonly<
   {
     type: 'internalToolResultAction';
+    toolCallId: string;
     context: AgentContext;
     executionTime?: number;
-  } & (Readonly<{ status: 'SUCCESS'; resultBundle: Readonly<Bundle> }> | Readonly<{ status: 'ERROR'; error: Error }>)
+  } & (
+    | Readonly<{ status: 'SUCCESS'; toolOutputBundle: Readonly<Bundle> }>
+    | Readonly<{ status: 'ERROR'; error: Error }>
+  )
 >;
 
 export type FinishAction = Readonly<
