@@ -30,6 +30,28 @@ export type UseToolAction = Readonly<{
   content?: Readonly<string>;
 }>;
 
+export type InternalToolCall = Readonly<{
+  toolCallId: string;
+  name: string;
+  input: Readonly<Bundle>;
+}>;
+
+export type UseInternalToolAction = Readonly<{
+  type: 'useInternalToolAction';
+  internalTool: InternalToolCall;
+  context: AgentContext;
+  reasoning?: Readonly<string>;
+  content?: Readonly<string>;
+}>;
+
+export type InternalToolResultAction = Readonly<
+  {
+    type: 'internalToolResultAction';
+    context: AgentContext;
+    executionTime?: number;
+  } & (Readonly<{ status: 'SUCCESS'; resultBundle: Readonly<Bundle> }> | Readonly<{ status: 'ERROR'; error: Error }>)
+>;
+
 export type FinishAction = Readonly<
   {
     type: 'finishAction';
@@ -46,7 +68,7 @@ export type FinishAction = Readonly<
   )
 >;
 
-export type Action = UseToolAction | FinishAction;
+export type Action = UseToolAction | UseInternalToolAction | InternalToolResultAction | FinishAction;
 
 export type InitialActionResult = Readonly<{
   type: 'initialActionResult';
@@ -61,11 +83,17 @@ export type PreviousActionResult = Readonly<{
   type: 'previousActionResult';
   context: AgentContext;
   status: 'SUCCESS' | 'ERROR' | 'WARNING';
-  previousAction: UseToolAction;
+  previousAction: UseToolAction | UseInternalToolAction;
   previousActionResult: PreviousActionResultValue;
 }>;
 
-export type NextActionParams = InitialActionResult | PreviousActionResult;
+export type ExecuteInternalToolParams = Readonly<{
+  type: 'executeInternalToolParams';
+  internalTool: InternalToolCall;
+  context: AgentContext;
+}>;
+
+export type NextActionParams = InitialActionResult | PreviousActionResult | ExecuteInternalToolParams;
 
 export type ThreadHistoryRecord = Readonly<Record<any, any>>;
 export type ThreadHistory = Readonly<{
