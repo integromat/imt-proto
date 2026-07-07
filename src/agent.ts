@@ -13,6 +13,16 @@ export type AgentResources = {
       }>
     >
   >;
+  /**
+   * Nested-agent flags derived by the engine from the blueprint structure.
+   * The AI agents backend cannot tell root and nested agent runs apart from the
+   * ISC context alone, so the engine computes them and passes them alongside the
+   * resources. Grouped under `flags` to keep them out of the resources root.
+   */
+  flags: Readonly<{
+    hasNestedAgents: boolean;
+    isNestedAgent: boolean;
+  }>;
 };
 
 export type AgentContext = Readonly<Record<string, any>>;
