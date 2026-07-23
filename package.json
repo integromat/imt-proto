@@ -26,21 +26,17 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@eslint/js": "^9.29.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^18.15.11",
     "@types/request": "^2.48.12",
-    "@typescript-eslint/parser": "^8.35.0",
-    "eslint": "^9.29.0",
-    "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-prettier": "^5.5.0",
     "jest": "^30.0.3",
     "jest-junit": "^16.0.0",
-    "prettier": "^3.6.1",
+    "oxfmt": "^0.60.0",
+    "oxlint": "^1.75.0",
+    "oxlint-tsgolint": "^7.0.2001",
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3",
-    "typescript-eslint": "^8.35.0"
+    "typescript": "^5.8.3"
   },
   "engines": {
     "node": ">=20.19.0"
@@ -48,11 +44,11 @@
   "scripts": {
     "prepublishOnly": "npm run build && npm test",
     "build": "tsc --build tsconfig.lib.json --clean && tsc --build tsconfig.lib.json",
-    "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
     "test": "npm run lint && npm run test:unit",
     "test:unit": "jest --coverage",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
   }
 }

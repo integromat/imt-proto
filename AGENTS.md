@@ -4,7 +4,7 @@
 
 TypeScript library of abstract base classes ("proto-classes") that define the contract between the Make/Integromat engine and native app integration modules. Published as `@integromat/proto` on npm.
 
-**Tech stack**: TypeScript, Node.js ≥20, Jest + ts-jest, ESLint + Prettier.
+**Tech stack**: TypeScript, Node.js ≥20, Jest + ts-jest, Oxlint (type-aware) + Oxfmt.
 
 ## Why / Domain Concepts
 
@@ -71,9 +71,11 @@ Source in `src/` (flat, 25 files). Tests in `test/` (flat, 8 files). Build outpu
 
 **Build**: `npm run build` — runs `tsc --build tsconfig.lib.json` (clean + rebuild). Uses `tsconfig.lib.json` for library output only (excludes specs).
 
-**Test**: `npm test` — runs ESLint then Jest. Unit tests only: `npm run test:unit`.
+**Test**: `npm test` — runs Oxlint then Jest. Unit tests only: `npm run test:unit`.
 
-**Two tsconfigs**: `tsconfig.lib.json` for build (includes `src/` only), `tsconfig.spec.json` for tests (includes `src/` + `test/`, adds `jest` types). Both extend root `tsconfig.json` (target ES5, CommonJS).
+**Lint/format**: `npm run lint` (Oxlint, type-aware via `oxlint-tsgolint`; config in `.oxlintrc.json`), `npm run format:check` / `npm run format` (Oxfmt; config in `.oxfmtrc.json`). Type-aware linting reads the root `tsconfig.json` (ES2022/Node16, includes src+test+config JS), since tsgolint rejects the ES5/node10/baseUrl options — those live only in `tsconfig.lib.json` (build emit) and `tsconfig.spec.json`.
+
+**Three tsconfigs**: root `tsconfig.json` is the type-check/editor/lint base (ES2022, Node16, includes src+test+config JS, `node`+`jest` types). `tsconfig.lib.json` for build (includes `src/` only; overrides to ES5/CommonJS/node, `node`-only types — this is what produces the published emit) and `tsconfig.spec.json` for tests (includes `src/` + `test/`; overrides to ES5/CommonJS/node, adds `jest` types). Both extend root. ES5/node10/baseUrl are intentionally kept OUT of the root so tsgolint (type-aware oxlint) can parse it.
 
 **Test pattern**: each spec creates an inline concrete subclass, exercises the full lifecycle (`initialize → operation → commit/rollback → finalize`), and asserts with a mix of Node `assert` and Jest `expect`. No shared fixtures or helpers.
 

@@ -1,7 +1,12 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "target": "ES5",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "allowJs": false,
+    "types": ["node"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.spec.ts"]
