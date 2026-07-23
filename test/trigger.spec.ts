@@ -19,7 +19,7 @@ class TestTrigger extends IMTTrigger {
 }
 
 describe('IMTTrigger', () => {
-  it('should operate successfuly', async () => {
+  it('should operate successfully', async () => {
     const trigger = new TestTrigger();
     trigger.parameters = { host: 'www.integromat.com' };
     await run((done) => trigger.initialize(done));

@@ -7,5 +7,5 @@ export function run<T = void>(fn: (done: (err?: Error | null, result?: T) => voi
 
 /** Waits for a single named event and resolves with its payload. */
 export function onceEvent<T = unknown>(module: IMTBase, event: string): Promise<T> {
-  return new Promise((resolve) => module.on(event, (payload: T) => resolve(payload)));
+  return new Promise((resolve) => module.once(event, (payload: T) => resolve(payload)));
 }
