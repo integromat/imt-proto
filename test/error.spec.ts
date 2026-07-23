@@ -27,6 +27,20 @@ describe('Error', () => {
     assert.equal(err.something, true);
   });
 
+  it('UnknownError with object without a message', () => {
+    const e = new UnknownError({} as Error);
+
+    assert.equal(e.name, 'UnknownError');
+    assert.equal(e.message, '<no message>');
+  });
+
+  it('UnknownError with string', () => {
+    const e = new UnknownError('Just a string.');
+
+    assert.equal(e.name, 'UnknownError');
+    assert.equal(e.message, 'Just a string.');
+  });
+
   it('DataError', () => {
     const e = new DataError('Some message.');
 
@@ -149,6 +163,14 @@ describe('Error', () => {
       },
       imtExceptionHash: 'im-hash',
     });
+  });
+
+  it('JSON serialization should include bundle when present', () => {
+    const error: any = new DataError('Some message.');
+    error.bundle = { id: 1 };
+
+    const json = JSON.parse(JSON.stringify(error));
+    assert.deepStrictEqual(json.bundle, { id: 1 });
   });
 
   it('should keep hash and imtExceptionHash in sync', () => {
