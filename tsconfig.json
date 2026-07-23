@@ -17,16 +17,7 @@
     "types": ["node", "vitest/globals"],
     "declaration": true,
     "declarationMap": true,
-    "sourceMap": true,
-    "composite": true
+    "sourceMap": true
   },
-  "include": ["src/**/*.ts", "test/**/*.ts", "*.js", "*.mjs"],
-  "references": [
-    {
-      "path": "./tsconfig.spec.json"
-    },
-    {
-      "path": "./tsconfig.lib.json"
-    }
-  ]
+  "include": ["src/**/*.ts", "test/**/*.ts", "*.js", "*.mjs", "vite.config.ts"],
 }

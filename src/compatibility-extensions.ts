@@ -1,25 +1,29 @@
 // NOTE(m.skvely): There are a lot of crimes here, we have to disable many rules to make this work
-/* eslint-disable @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-function-type */
+
+export {};
 
 type AnyConstructor = {
   new (...args: any[]): any;
 };
 
-interface Function {
-  /**
-   * @deprecated
-   */
-  property(prop: PropertyKey, desc: PropertyDescriptor): void;
+declare global {
+  interface Function {
+    /**
+     * @deprecated
+     */
+    property(prop: PropertyKey, desc: PropertyDescriptor): void;
 
-  /**
-   * @deprecated
-   */
-  inherits<T>(parent: T): Function;
+    /**
+     * @deprecated
+     */
+    inherits<T>(parent: T): Function;
 
-  /**
-   * @deprecated
-   */
-  __super__?: Function;
+    /**
+     * @deprecated
+     */
+    __super__?: Function;
+  }
 }
 
 Object.defineProperty(Function.prototype, 'property', {
@@ -34,7 +38,7 @@ Object.defineProperty(Function.prototype, 'inherits', {
   writable: true,
   configurable: true,
   value<T extends AnyConstructor, P extends AnyConstructor>(this: T, parent: P) {
-    const child = this as unknown as P & T;
+    const child = this as unknown as P & T & Function;
 
     for (const key in parent) {
       if (Object.prototype.hasOwnProperty.call(parent, key)) {
