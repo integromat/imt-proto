@@ -6,7 +6,8 @@ jobs:
     docker:
       - image: cimg/node:24.0
     steps:
-      - checkout
+      - checkout:
+          method: full
       - run:
           command: |
             corepack enable
@@ -25,19 +26,6 @@ jobs:
           path: coverage/unit
       - store_test_results:
           path: coverage/unit
-      - persist_to_workspace:
-          root: .
-          paths:
-            - coverage/unit
-  sonarqube:
-    docker:
-      - image: 'cimg/base:2025.11'
-    resource_class: small
-    steps:
-      - checkout:
-          method: full
-      - attach_workspace:
-          at: .
       - sonarqube/scan
 workflows:
   build:
@@ -46,7 +34,4 @@ workflows:
           context:
             - org-default
             - testing
-      - sonarqube:
-          requires:
-            - test-and-build
-          context: sonarqube-prod
+            - sonarqube-prod
