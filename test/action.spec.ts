@@ -31,7 +31,10 @@ describe('IMTAction', () => {
   it('should fail with DataError', async () => {
     const action = new TestAction();
     await run((done) => action.initialize(done));
-    await assert.rejects(run((done) => action.write({ number: 11 }, done)), DataError);
+    await assert.rejects(
+      run((done) => action.write({ number: 11 }, done)),
+      DataError,
+    );
     await run((done) => action.rollback(done));
     await run((done) => action.finalize(done));
   });

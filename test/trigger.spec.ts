@@ -45,7 +45,10 @@ describe('IMTTrigger', () => {
     const trigger = new TestTrigger();
     trigger.parameters = { host: '127.0.0.1' };
     await run((done) => trigger.initialize(done));
-    await assert.rejects(run((done) => trigger.read(done)), ConnectionError);
+    await assert.rejects(
+      run((done) => trigger.read(done)),
+      ConnectionError,
+    );
     await run((done) => trigger.rollback(done));
     await run((done) => trigger.finalize(done));
   });

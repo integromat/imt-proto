@@ -19,5 +19,5 @@
     "declarationMap": true,
     "sourceMap": true
   },
-  "include": ["src/**/*.ts", "test/**/*.ts", "*.js", "*.mjs", "vite.config.ts"],
+  "include": ["src/**/*.ts", "test/**/*.ts", "*.js", "*.mjs", "vite.config.ts"]
 }
