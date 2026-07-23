@@ -13,66 +13,72 @@ class TestAction extends IMTAction {
 }
 
 describe('IMTAction', () => {
-  it('should operate successfully', (done) => {
-    const input = {
-      number: 1,
-    };
+  it('should operate successfully', () =>
+    new Promise<void>((resolve, reject) => {
+      const done = (err?: Error | null) => (err ? reject(err) : resolve());
 
-    const action = new TestAction();
-    action.initialize((err) => {
-      if (err) {
-        done(err);
-        return;
-      }
+      const input = {
+        number: 1,
+      };
 
-      action.write(input, (err, output) => {
+      const action = new TestAction();
+      action.initialize((err) => {
         if (err) {
           done(err);
           return;
         }
 
-        assert.ok(action instanceof IMTBase);
-        assert.ok(action instanceof IMTAction);
-        assert.strictEqual(action.type, 4);
-        assert.strictEqual(output.result, 2, 'Result should be equal to 2.');
-
-        action.commit((err) => {
+        action.write(input, (err, output) => {
           if (err) {
             done(err);
             return;
           }
 
-          action.finalize(done);
+          assert.ok(action instanceof IMTBase);
+          assert.ok(action instanceof IMTAction);
+          assert.strictEqual(action.type, 4);
+          assert.strictEqual(output.result, 2, 'Result should be equal to 2.');
+
+          action.commit((err) => {
+            if (err) {
+              done(err);
+              return;
+            }
+
+            action.finalize(done);
+          });
         });
       });
-    });
-  });
+    }));
 
-  it('should fail with DataError', (done) => {
-    const input = {
-      number: 11,
-    };
+  it('should fail with DataError', () =>
+    new Promise<void>((resolve, reject) => {
+      const done = (err?: Error | null) => (err ? reject(err) : resolve());
 
-    const action = new TestAction();
-    action.initialize((err) => {
-      if (err) {
-        done(err);
-        return;
-      }
+      const input = {
+        number: 11,
+      };
 
-      action.write(input, (err) => {
-        assert.ok(err, 'Write should return error.');
-        assert.ok(err instanceof DataError, 'Error should be instanceof DataError.');
+      const action = new TestAction();
+      action.initialize((err) => {
+        if (err) {
+          done(err);
+          return;
+        }
 
-        action.rollback((err) => {
-          if (err) {
-            done(err);
-            return;
-          }
+        action.write(input, (err) => {
+          assert.ok(err, 'Write should return error.');
+          assert.ok(err instanceof DataError, 'Error should be instanceof DataError.');
 
-          action.finalize(done);
+          action.rollback((err) => {
+            if (err) {
+              done(err);
+              return;
+            }
+
+            action.finalize(done);
+          });
         });
       });
-    });
-  });
+    }));
 });

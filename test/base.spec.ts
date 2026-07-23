@@ -5,38 +5,44 @@ class TestModule extends IMTBase {}
 
 describe('IMTBase', () => {
   describe('progress', () => {
-    it('should emit progress event with sessionStarted content', (done) => {
-      const module = new TestModule();
-      const content: ProgressContent = {
-        type: 'aiBrowserProgress',
-        event: 'sessionStarted',
-        liveViewUrl: 'https://example.com/live',
-      };
+    it('should emit progress event with sessionStarted content', () =>
+      new Promise<void>((resolve, reject) => {
+        const done = (err?: Error | null) => (err ? reject(err) : resolve());
 
-      module.on('progress', (received) => {
-        assert.deepStrictEqual(received, content);
-        module.finalize(done);
-      });
+        const module = new TestModule();
+        const content: ProgressContent = {
+          type: 'aiBrowserProgress',
+          event: 'sessionStarted',
+          liveViewUrl: 'https://example.com/live',
+        };
 
-      module.progress(content);
-    });
+        module.on('progress', (received) => {
+          assert.deepStrictEqual(received, content);
+          module.finalize(done);
+        });
 
-    it('should emit progress event with step content', (done) => {
-      const module = new TestModule();
-      const content: ProgressContent = {
-        type: 'aiBrowserProgress',
-        event: 'step',
-        stepIndex: 1,
-        summary: 'Navigated to example.com',
-        stepType: 'tool-call',
-      };
+        module.progress(content);
+      }));
 
-      module.on('progress', (received) => {
-        assert.deepStrictEqual(received, content);
-        module.finalize(done);
-      });
+    it('should emit progress event with step content', () =>
+      new Promise<void>((resolve, reject) => {
+        const done = (err?: Error | null) => (err ? reject(err) : resolve());
 
-      module.progress(content);
-    });
+        const module = new TestModule();
+        const content: ProgressContent = {
+          type: 'aiBrowserProgress',
+          event: 'step',
+          stepIndex: 1,
+          summary: 'Navigated to example.com',
+          stepType: 'tool-call',
+        };
+
+        module.on('progress', (received) => {
+          assert.deepStrictEqual(received, content);
+          module.finalize(done);
+        });
+
+        module.progress(content);
+      }));
   });
 });

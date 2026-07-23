@@ -18,67 +18,73 @@ class TestTrigger extends IMTTrigger {
 }
 
 describe('IMTTrigger', () => {
-  it('should operate successfuly', (done) => {
-    const trigger = new TestTrigger();
-    trigger.parameters = { host: 'www.integromat.com' };
-    trigger.initialize((err) => {
-      if (err) {
-        done(err);
-        return;
-      }
+  it('should operate successfuly', () =>
+    new Promise<void>((resolve, reject) => {
+      const done = (err?: Error | null) => (err ? reject(err) : resolve());
 
-      trigger.read((err, output) => {
+      const trigger = new TestTrigger();
+      trigger.parameters = { host: 'www.integromat.com' };
+      trigger.initialize((err) => {
         if (err) {
           done(err);
           return;
         }
 
-        assert.ok(trigger instanceof IMTBase);
-        assert.ok(trigger instanceof IMTTrigger);
-        assert.strictEqual(trigger.type, 1);
-        assert.deepStrictEqual(
-          output,
-          [
-            { id: 1, name: 'Peter' },
-            { id: 2, name: 'Patrick' },
-          ],
-          'Output not as expected.',
-        );
-
-        trigger.commit((err) => {
+        trigger.read((err, output) => {
           if (err) {
             done(err);
             return;
           }
 
-          trigger.finalize(done);
+          assert.ok(trigger instanceof IMTBase);
+          assert.ok(trigger instanceof IMTTrigger);
+          assert.strictEqual(trigger.type, 1);
+          assert.deepStrictEqual(
+            output,
+            [
+              { id: 1, name: 'Peter' },
+              { id: 2, name: 'Patrick' },
+            ],
+            'Output not as expected.',
+          );
+
+          trigger.commit((err) => {
+            if (err) {
+              done(err);
+              return;
+            }
+
+            trigger.finalize(done);
+          });
         });
       });
-    });
-  });
+    }));
 
-  it('should fail with ConnectionError', (done) => {
-    const trigger = new TestTrigger();
-    trigger.parameters = { host: '127.0.0.1' };
-    trigger.initialize((err) => {
-      if (err) {
-        done(err);
-        return;
-      }
+  it('should fail with ConnectionError', () =>
+    new Promise<void>((resolve, reject) => {
+      const done = (err?: Error | null) => (err ? reject(err) : resolve());
 
-      trigger.read((err) => {
-        assert.ok(err, 'Write should return error.');
-        assert.ok(err instanceof ConnectionError, 'Error should be instanceof DataError.');
+      const trigger = new TestTrigger();
+      trigger.parameters = { host: '127.0.0.1' };
+      trigger.initialize((err) => {
+        if (err) {
+          done(err);
+          return;
+        }
 
-        trigger.rollback((err) => {
-          if (err) {
-            done(err);
-            return;
-          }
+        trigger.read((err) => {
+          assert.ok(err, 'Write should return error.');
+          assert.ok(err instanceof ConnectionError, 'Error should be instanceof DataError.');
 
-          trigger.finalize(done);
+          trigger.rollback((err) => {
+            if (err) {
+              done(err);
+              return;
+            }
+
+            trigger.finalize(done);
+          });
         });
       });
-    });
-  });
+    }));
 });
