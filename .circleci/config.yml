@@ -6,22 +6,23 @@ jobs:
   test-and-build:
     executor:
       name: testing-orb/default
-      tag: '20.19.0'
+      tag: '24.0.0'
     steps:
       - checkout
       - run:
           command: |
-            npm ci
+            corepack enable
+            pnpm install --frozen-lockfile
           name: Install deps
       - run:
-          command: npm run format:check
+          command: pnpm format:check
           name: Check formatting
       - run:
-          command: npm run lint
+          command: pnpm lint
           name: Check lint
       - testing-orb/run_tests:
           test_type: unit
-          command: npm run test:unit
+          command: pnpm test:unit
       - store_artifacts:
           path: coverage/unit
       - store_test_results:

@@ -27,7 +27,7 @@
   "license": "MIT",
   "devDependencies": {
     "@swc/core": "^1.15.46",
-    "@types/node": "^18.15.11",
+    "@types/node": "^24.13.3",
     "@types/request": "^2.48.12",
     "@vitest/coverage-v8": "^3.0.0",
     "oxfmt": "^0.60.0",
@@ -38,14 +38,15 @@
     "vitest": "^3.0.0"
   },
   "engines": {
-    "node": ">=20.19.0"
+    "node": ">=24.0.0"
   },
+  "packageManager": "pnpm@11.16.0",
   "scripts": {
-    "prepublishOnly": "npm run build && npm test",
+    "prepublishOnly": "pnpm build && pnpm test",
     "build": "tsc --build tsconfig.lib.json --clean && tsc --build tsconfig.lib.json",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
-    "test": "npm run lint && npm run test:unit",
+    "test": "pnpm lint && pnpm test:unit",
     "test:unit": "vitest run --coverage",
     "format": "oxfmt",
     "format:check": "oxfmt --check"

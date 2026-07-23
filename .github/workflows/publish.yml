@@ -16,11 +16,14 @@ jobs:
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+
       - name: Setup Node.js
         uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
         with:
-          node-version: "20"
-          cache: "npm"
+          node-version: "24"
+          cache: "pnpm"
           registry-url: "https://registry.npmjs.org"
 
       - name: Install npm supporting trusted publishing
@@ -28,11 +31,11 @@ jobs:
         # Ensure npm 11.5.1 or later for trusted publishing (OIDC)
         run: npm install -g npm@11.6.0
 
-      - run: npm ci
+      - run: pnpm install --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - run: npm run build
+      - run: pnpm build
 
       - name: Check package.json version matches Git tag
         run: |

@@ -1,0 +1,5 @@
+# pnpm 11 reads settings from here (the `pnpm` field in package.json is no longer read).
+# Native toolchain packages allowed to run install scripts (verified: build + tests pass).
+allowBuilds:
+  '@swc/core': true
+  esbuild: true
