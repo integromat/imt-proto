@@ -3,6 +3,7 @@ import * as assert from 'assert';
 import { ConnectionError } from '../src/error';
 import { DoneWithResultCallback } from '../src/types';
 import { IMTBase } from '../src';
+import { run } from './helpers';
 
 class TestTrigger extends IMTTrigger {
   fetch = () => undefined;
@@ -18,73 +19,34 @@ class TestTrigger extends IMTTrigger {
 }
 
 describe('IMTTrigger', () => {
-  it('should operate successfuly', () =>
-    new Promise<void>((resolve, reject) => {
-      const done = (err?: Error | null) => (err ? reject(err) : resolve());
+  it('should operate successfuly', async () => {
+    const trigger = new TestTrigger();
+    trigger.parameters = { host: 'www.integromat.com' };
+    await run((done) => trigger.initialize(done));
+    const output = await run<Array<{ id: number; name: string }>>((done) => trigger.read(done));
 
-      const trigger = new TestTrigger();
-      trigger.parameters = { host: 'www.integromat.com' };
-      trigger.initialize((err) => {
-        if (err) {
-          done(err);
-          return;
-        }
+    assert.ok(trigger instanceof IMTBase);
+    assert.ok(trigger instanceof IMTTrigger);
+    assert.strictEqual(trigger.type, 1);
+    assert.deepStrictEqual(
+      output,
+      [
+        { id: 1, name: 'Peter' },
+        { id: 2, name: 'Patrick' },
+      ],
+      'Output not as expected.',
+    );
 
-        trigger.read((err, output) => {
-          if (err) {
-            done(err);
-            return;
-          }
+    await run((done) => trigger.commit(done));
+    await run((done) => trigger.finalize(done));
+  });
 
-          assert.ok(trigger instanceof IMTBase);
-          assert.ok(trigger instanceof IMTTrigger);
-          assert.strictEqual(trigger.type, 1);
-          assert.deepStrictEqual(
-            output,
-            [
-              { id: 1, name: 'Peter' },
-              { id: 2, name: 'Patrick' },
-            ],
-            'Output not as expected.',
-          );
-
-          trigger.commit((err) => {
-            if (err) {
-              done(err);
-              return;
-            }
-
-            trigger.finalize(done);
-          });
-        });
-      });
-    }));
-
-  it('should fail with ConnectionError', () =>
-    new Promise<void>((resolve, reject) => {
-      const done = (err?: Error | null) => (err ? reject(err) : resolve());
-
-      const trigger = new TestTrigger();
-      trigger.parameters = { host: '127.0.0.1' };
-      trigger.initialize((err) => {
-        if (err) {
-          done(err);
-          return;
-        }
-
-        trigger.read((err) => {
-          assert.ok(err, 'Write should return error.');
-          assert.ok(err instanceof ConnectionError, 'Error should be instanceof DataError.');
-
-          trigger.rollback((err) => {
-            if (err) {
-              done(err);
-              return;
-            }
-
-            trigger.finalize(done);
-          });
-        });
-      });
-    }));
+  it('should fail with ConnectionError', async () => {
+    const trigger = new TestTrigger();
+    trigger.parameters = { host: '127.0.0.1' };
+    await run((done) => trigger.initialize(done));
+    await assert.rejects(run((done) => trigger.read(done)), ConnectionError);
+    await run((done) => trigger.rollback(done));
+    await run((done) => trigger.finalize(done));
+  });
 });

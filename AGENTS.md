@@ -79,7 +79,7 @@ Source in `src/` (flat, 25 files). Tests in `test/` (flat, 8 files). Build outpu
 
 **Two tsconfigs** (both ES2022/Node16 now — no ES5, since SWC handles ES5 emit and TS7 dropped the option): root `tsconfig.json` is the type-check/editor/lint base (includes src+test+config JS, `node`+`vitest/globals` types; auto-discovered by Oxlint's type-aware pass and used by the editor — nothing runs `tsc` against it). `tsconfig.lib.json` extends root and drives the declaration build (includes `src/` only, `emitDeclarationOnly`, `allowJs: false`, `node`-only types, excludes `*.spec.ts` — produces the published `.d.ts`; inherits `declaration`/`declarationMap`/`outDir` from root).
 
-**Test pattern**: each spec creates an inline concrete subclass, exercises the full lifecycle (`initialize → operation → commit/rollback → finalize`), and asserts with a mix of Node `assert` and Vitest `expect`. No shared fixtures or helpers.
+**Test pattern**: each spec creates an inline concrete subclass, exercises the full lifecycle (`initialize → operation → commit/rollback → finalize`), and asserts with a mix of Node `assert` and Vitest `expect`. Shared callback/event helpers live in `test/helpers.ts` (`run` wraps a Node-style callback method into a Promise that resolves with its result; `onceEvent` resolves with the payload of a single named event) — not a spec file, so Vitest ignores it. No other shared fixtures.
 
 **Two package entry points**:
 

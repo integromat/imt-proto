@@ -1,11 +1,7 @@
 import * as assert from 'assert';
 import { Readable } from 'stream';
 import { IMTAccount, IMTOAuthAccount } from '../src/account';
-
-/** Runs a Node-style callback method and resolves once it calls back. */
-function run(fn: (done: (err?: Error | null) => void) => void): Promise<void> {
-  return new Promise((resolve, reject) => fn((err) => (err ? reject(err) : resolve())));
-}
+import { run } from './helpers';
 
 describe('IMTAccount', () => {
   it('should initialize with null common and data', () => {

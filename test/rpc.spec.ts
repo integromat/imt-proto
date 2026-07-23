@@ -2,6 +2,7 @@ import * as assert from 'assert';
 import { EventEmitter } from 'events';
 import { IMTRPC } from '../src/rpc';
 import { DoneWithResultCallback } from '../src/types';
+import { run } from './helpers';
 
 class TestRPC extends IMTRPC {
   execute(done: DoneWithResultCallback) {
@@ -19,14 +20,11 @@ describe('IMTRPC', () => {
     assert.strictEqual(rpc.internal, null);
   });
 
-  it('should run lifecycle callbacks', () =>
-    new Promise<void>((resolve, reject) => {
-      const rpc = new IMTRPC();
-      rpc.initialize((err) => {
-        if (err) return reject(err);
-        rpc.finalize((err) => (err ? reject(err) : resolve()));
-      });
-    }));
+  it('should run lifecycle callbacks', async () => {
+    const rpc = new IMTRPC();
+    await run((done) => rpc.initialize(done));
+    await run((done) => rpc.finalize(done));
+  });
 
   it('should not throw when lifecycle methods are called without a callback', () => {
     const rpc = new IMTRPC();
@@ -39,14 +37,10 @@ describe('IMTRPC', () => {
     assert.throws(() => new IMTRPC().execute(() => undefined), /execute/);
   });
 
-  it('execute should return response when overridden', () =>
-    new Promise<void>((resolve, reject) => {
-      new TestRPC().execute((err, response) => {
-        if (err) return reject(err);
-        assert.deepStrictEqual(response, { rows: [1, 2, 3] });
-        resolve();
-      });
-    }));
+  it('execute should return response when overridden', async () => {
+    const response = await run<{ rows: number[] }>((done) => new TestRPC().execute(done));
+    assert.deepStrictEqual(response, { rows: [1, 2, 3] });
+  });
 
   it('debug should throw when not overridden', () => {
     assert.throws(() => new IMTRPC().debug(), /debug/);

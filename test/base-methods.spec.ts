@@ -1,13 +1,9 @@
 import * as assert from 'assert';
 import { IMTBase, ModuleType } from '../src/base';
 import { Warning } from '../src/warning';
+import { onceEvent, run } from './helpers';
 
 class TestModule extends IMTBase {}
-
-/** Waits for a single named event and resolves with its payload. */
-function onceEvent<T = unknown>(module: IMTBase, event: string): Promise<T> {
-  return new Promise((resolve) => module.on(event, (payload: T) => resolve(payload)));
-}
 
 describe('IMTBase methods', () => {
   it('should default type to NONE', () => {
@@ -77,23 +73,15 @@ describe('IMTBase methods', () => {
     assert.strictEqual(await received, error);
   });
 
-  it('commit should call done with null report', () =>
-    new Promise<void>((resolve, reject) => {
-      new TestModule().commit((err, report) => {
-        if (err) return reject(err);
-        assert.strictEqual(report, null);
-        resolve();
-      });
-    }));
+  it('commit should call done with null report', async () => {
+    const report = await run<unknown[] | null>((done) => new TestModule().commit(done));
+    assert.strictEqual(report, null);
+  });
 
-  it('rollback should call done with null report', () =>
-    new Promise<void>((resolve, reject) => {
-      new TestModule().rollback((err, report) => {
-        if (err) return reject(err);
-        assert.strictEqual(report, null);
-        resolve();
-      });
-    }));
+  it('rollback should call done with null report', async () => {
+    const report = await run<unknown[] | null>((done) => new TestModule().rollback(done));
+    assert.strictEqual(report, null);
+  });
 
   it('lifecycle methods should not throw when called without a callback', () => {
     const module = new TestModule();
@@ -112,14 +100,10 @@ describe('IMTBase methods', () => {
     assert.throws(() => new TestModule().addSharedTransaction(1), /addSharedTransaction/);
   });
 
-  it('finalize should remove all listeners', () =>
-    new Promise<void>((resolve, reject) => {
-      const module = new TestModule();
-      module.on('log', () => reject(new Error('listener should have been removed')));
-      module.finalize((err) => {
-        if (err) return reject(err);
-        assert.strictEqual(module.listenerCount('log'), 0);
-        resolve();
-      });
-    }));
+  it('finalize should remove all listeners', async () => {
+    const module = new TestModule();
+    module.on('log', () => assert.fail('listener should have been removed'));
+    await run((done) => module.finalize(done));
+    assert.strictEqual(module.listenerCount('log'), 0);
+  });
 });
