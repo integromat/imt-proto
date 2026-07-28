@@ -19,3 +19,4 @@ export * from './returner';
 export * from './starter';
 export * from './agent';
 export * from './conditional';
+export * from './endpoint';

@@ -24,6 +24,7 @@ describe('Legacy Compatibility', () => {
     IMTStarter,
     IMTAgent,
     IMTConditional,
+    IMTEndpoint,
   ];
 
   it('exports global variables', () => {
@@ -74,6 +75,7 @@ describe('Legacy Compatibility', () => {
     expect(global.IMTStarter).toBeDefined();
     expect(global.IMTAgent).toBeDefined();
     expect(global.IMTConditional).toBeDefined();
+    expect(global.IMTEndpoint).toBeDefined();
   });
 
   it('should have same values for globals and for public API', () => {
@@ -119,6 +121,7 @@ describe('Legacy Compatibility', () => {
     expect(global.IMTStarter === publicApi.IMTStarter).toBe(true);
     expect(global.IMTAgent === publicApi.IMTAgent).toBe(true);
     expect(global.IMTConditional === publicApi.IMTConditional).toBe(true);
+    expect(global.IMTEndpoint === publicApi.IMTEndpoint).toBe(true);
   });
 
   it('should be compatible with CoffeeScript classes', () => {
