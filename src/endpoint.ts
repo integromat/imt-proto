@@ -1,6 +1,6 @@
-import * as util from 'util';
+import * as util from 'node:util';
 import { Warning } from './warning';
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import { CommonData, EnvironmentData, InternalData } from './base';
 import { DoneCallback, DoneWithResultCallback } from './types';
 
@@ -53,8 +53,6 @@ export class IMTEndpoint extends EventEmitter {
    */
 
   execute(input: EndpointInput, done: DoneWithResultCallback): void {
-    void input;
-    void done;
     throw new Error("Must override a superclass method 'execute'.");
   }
 
