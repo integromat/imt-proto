@@ -29,6 +29,8 @@ Every node type in a Make scenario (triggers, actions, transformers, etc.) must 
 - `IMTRPC` (EventEmitter) — dynamic data lookup; override `execute(done)`
 - `IMTHook` (EventEmitter) — webhook handler; override `parse(request, done)`
 - `IMTAccount` / `IMTOAuthAccount` (no EventEmitter) — connection auth; OAuth subclass adds full auth flow
+- `IMTEndpoint` (EventEmitter) — Endpoints' base class; override `execute(input, done)`. Replaces the
+  compiled-as-`IMTRPC` shortcut Endpoints used previously — `instanceof IMTRPC` is deliberately `false`
 
 **Key patterns**:
 
@@ -65,7 +67,7 @@ Every node type in a Make scenario (triggers, actions, transformers, etc.) must 
 
 ## How
 
-Source in `src/` (flat, 24 files). Tests in `test/` (flat, 6 files). Build output in `dist/` (not in git).
+Source in `src/` (flat, 25 files). Tests in `test/` (flat, 8 files). Build output in `dist/` (not in git).
 
 **Build**: `npm run build` — runs `tsc --build tsconfig.lib.json` (clean + rebuild). Uses `tsconfig.lib.json` for library output only (excludes specs).
 

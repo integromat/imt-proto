@@ -49,6 +49,7 @@ declare global {
   var IMTStarter: typeof publicApi.IMTStarter;
   var IMTAgent: typeof publicApi.IMTAgent;
   var IMTConditional: typeof publicApi.IMTConditional;
+  var IMTEndpoint: typeof publicApi.IMTEndpoint;
 }
 
 if (!global.IMT_PROTO_LOADED) {
@@ -104,4 +105,5 @@ if (!global.IMT_PROTO_LOADED) {
   global.IMTStarter = publicApi.IMTStarter;
   global.IMTAgent = publicApi.IMTAgent;
   global.IMTConditional = publicApi.IMTConditional;
+  global.IMTEndpoint = publicApi.IMTEndpoint;
 }
