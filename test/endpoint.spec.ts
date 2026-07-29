@@ -68,6 +68,17 @@ describe('IMTEndpoint', () => {
     assert.throws(() => endpoint.execute({}, () => undefined), /Must override a superclass method 'execute'\./);
   });
 
+  it('should remove all listeners on finalize', (done) => {
+    const endpoint = new IMTEndpoint();
+    endpoint.on('log', () => undefined);
+    assert.strictEqual(endpoint.listenerCount('log'), 1);
+
+    endpoint.finalize(() => {
+      assert.strictEqual(endpoint.listenerCount('log'), 0);
+      done();
+    });
+  });
+
   describe('logging', () => {
     it('should emit debug event with the arguments array', (done) => {
       const endpoint = new IMTEndpoint();
@@ -124,6 +135,30 @@ describe('IMTEndpoint', () => {
       });
 
       endpoint.warn(warning);
+    });
+
+    it('should emit log event with an Error instance verbatim', (done) => {
+      const endpoint = new IMTEndpoint();
+      const error = new Error('log error');
+
+      endpoint.on('log', (message) => {
+        assert.strictEqual(message, error);
+        done();
+      });
+
+      endpoint.log(error);
+    });
+
+    it('should emit warn event with an Error instance verbatim', (done) => {
+      const endpoint = new IMTEndpoint();
+      const error = new Error('warn error');
+
+      endpoint.on('warn', (message) => {
+        assert.strictEqual(message, error);
+        done();
+      });
+
+      endpoint.warn(error);
     });
   });
 });

@@ -64,6 +64,7 @@ export class IMTEndpoint extends EventEmitter {
    */
 
   finalize(done: DoneCallback): void {
+    this.removeAllListeners();
     if ('function' === typeof done) done();
   }
 
