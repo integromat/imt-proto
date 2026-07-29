@@ -38,6 +38,8 @@ export type UseToolAction = Readonly<{
   context: AgentContext;
   reasoning?: Readonly<string>;
   content?: Readonly<string>;
+  /** Model's input token limit, as reported by the agents backend. Absent = unknown. */
+  contextWindow?: Readonly<number>;
 }>;
 
 export type InternalToolCall = Readonly<{
@@ -52,6 +54,8 @@ export type UseInternalToolAction = Readonly<{
   context: AgentContext;
   reasoning?: Readonly<string>;
   content?: Readonly<string>;
+  /** Model's input token limit, as reported by the agents backend. Absent = unknown. */
+  contextWindow?: Readonly<number>;
 }>;
 
 export type InternalToolResultAction = Readonly<
