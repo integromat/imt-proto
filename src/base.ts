@@ -34,12 +34,10 @@ export enum ModuleType {
   DIRECTIVE = 8,
   SEARCH = 9,
   CONVERGER = 10,
-  HITL = 11,
+  PAUSER = 11,
   RETURNER = 12,
-  PAUSER = 13,
   STARTER = 14,
   AGENT = 15,
-  CONDITIONAL = 16,
 }
 
 export const moduleTypeNames = {
@@ -53,12 +51,10 @@ export const moduleTypeNames = {
   [ModuleType.DIRECTIVE]: { singular: 'directive', plural: 'directives' } as const,
   [ModuleType.SEARCH]: { singular: 'search', plural: 'searches' } as const,
   [ModuleType.CONVERGER]: { singular: 'converger', plural: 'convergers' } as const,
-  [ModuleType.HITL]: { singular: 'hitl', plural: 'hitls' } as const,
-  [ModuleType.RETURNER]: { singular: 'returner', plural: 'returners' } as const,
   [ModuleType.PAUSER]: { singular: 'pauser', plural: 'pausers' } as const,
+  [ModuleType.RETURNER]: { singular: 'returner', plural: 'returners' } as const,
   [ModuleType.STARTER]: { singular: 'starter', plural: 'starters' } as const,
   [ModuleType.AGENT]: { singular: 'agent', plural: 'agents' } as const,
-  [ModuleType.CONDITIONAL]: { singular: 'conditional', plural: 'conditionals' } as const,
 };
 
 /**
@@ -88,12 +84,10 @@ export class IMTBase extends EventEmitter {
   public static readonly MODULETYPE_AGGREGATOR = ModuleType.AGGREGATOR;
   public static readonly MODULETYPE_DIRECTIVE = ModuleType.DIRECTIVE;
   public static readonly MODULETYPE_CONVERGER = ModuleType.CONVERGER;
-  public static readonly MODULETYPE_HITL = ModuleType.HITL;
   public static readonly MODULETYPE_PAUSER = ModuleType.PAUSER;
   public static readonly MODULETYPE_RETURNER = ModuleType.RETURNER;
   public static readonly MODULETYPE_STARTER = ModuleType.STARTER;
   public static readonly MODULETYPE_AGENT = ModuleType.AGENT;
-  public static readonly MODULETYPE_CONDITIONAL = ModuleType.CONDITIONAL;
 
   public common: CommonData | null = null;
   public data: ModuleData | null = null;

@@ -39,16 +39,13 @@ declare global {
   var IMTOAuthAccount: typeof publicApi.IMTOAuthAccount;
   var IMTTrigger: typeof publicApi.IMTTrigger;
   var IMTGatewayTrigger: typeof publicApi.IMTGatewayTrigger;
-  var IMTPauser: typeof publicApi.IMTPauser;
   var IMTBase: typeof publicApi.IMTBase;
   var IMTRPC: typeof publicApi.IMTRPC;
   var IMTFeeder: typeof publicApi.IMTFeeder;
   var IMTTransformer: typeof publicApi.IMTTransformer;
-  var IMTHITL: typeof publicApi.IMTHITL;
   var IMTReturner: typeof publicApi.IMTReturner;
   var IMTStarter: typeof publicApi.IMTStarter;
   var IMTAgent: typeof publicApi.IMTAgent;
-  var IMTConditional: typeof publicApi.IMTConditional;
   var IMTEndpoint: typeof publicApi.IMTEndpoint;
 }
 
@@ -95,15 +92,12 @@ if (!global.IMT_PROTO_LOADED) {
   global.IMTOAuthAccount = publicApi.IMTOAuthAccount;
   global.IMTTrigger = publicApi.IMTTrigger;
   global.IMTGatewayTrigger = publicApi.IMTGatewayTrigger;
-  global.IMTPauser = publicApi.IMTPauser;
   global.IMTBase = publicApi.IMTBase;
   global.IMTRPC = publicApi.IMTRPC;
   global.IMTFeeder = publicApi.IMTFeeder;
   global.IMTTransformer = publicApi.IMTTransformer;
-  global.IMTHITL = publicApi.IMTHITL;
   global.IMTReturner = publicApi.IMTReturner;
   global.IMTStarter = publicApi.IMTStarter;
   global.IMTAgent = publicApi.IMTAgent;
-  global.IMTConditional = publicApi.IMTConditional;
   global.IMTEndpoint = publicApi.IMTEndpoint;
 }
