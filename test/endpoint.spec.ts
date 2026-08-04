@@ -4,6 +4,7 @@ import { DataError } from '../src/error';
 import { Warning } from '../src/warning';
 import { DoneWithResultCallback } from '../src/types';
 import { EndpointInput, IMTEndpoint } from '../src/endpoint';
+import { onceEvent, run } from './helpers';
 
 class TestEndpoint extends IMTEndpoint {
   execute(input: EndpointInput, done: DoneWithResultCallback) {
@@ -14,52 +15,28 @@ class TestEndpoint extends IMTEndpoint {
 }
 
 describe('IMTEndpoint', () => {
-  it('should operate successfully', (done) => {
-    const input = {
-      number: 1,
-    };
-
+  it('should operate successfully', async () => {
     const endpoint = new TestEndpoint();
-    endpoint.initialize((err) => {
-      if (err) {
-        done(err);
-        return;
-      }
+    await run((done) => endpoint.initialize(done));
 
-      endpoint.execute(input, (err, output) => {
-        if (err) {
-          done(err);
-          return;
-        }
+    const output = await run<{ result: number }>((done) => endpoint.execute({ number: 1 }, done));
 
-        assert.ok(endpoint instanceof IMTEndpoint);
-        assert.ok(!(endpoint instanceof IMTRPC), 'Endpoint should not be an instance of IMTRPC.');
-        assert.strictEqual(output.result, 2, 'Result should be equal to 2.');
+    assert.ok(endpoint instanceof IMTEndpoint);
+    assert.ok(!(endpoint instanceof IMTRPC), 'Endpoint should not be an instance of IMTRPC.');
+    assert.strictEqual(output.result, 2, 'Result should be equal to 2.');
 
-        endpoint.finalize(done);
-      });
-    });
+    await run((done) => endpoint.finalize(done));
   });
 
-  it('should fail with DataError', (done) => {
-    const input = {
-      number: 11,
-    };
-
+  it('should fail with DataError', async () => {
     const endpoint = new TestEndpoint();
-    endpoint.initialize((err) => {
-      if (err) {
-        done(err);
-        return;
-      }
+    await run((done) => endpoint.initialize(done));
 
-      endpoint.execute(input, (err) => {
-        assert.ok(err, 'Execute should return error.');
-        assert.ok(err instanceof DataError, 'Error should be instanceof DataError.');
+    const err = await run((done) => endpoint.execute({ number: 11 }, (error) => done(null, error)));
+    assert.ok(err, 'Execute should return error.');
+    assert.ok(err instanceof DataError, 'Error should be instanceof DataError.');
 
-        endpoint.finalize(done);
-      });
-    });
+    await run((done) => endpoint.finalize(done));
   });
 
   it('should throw when execute is not overridden', () => {
@@ -68,97 +45,67 @@ describe('IMTEndpoint', () => {
     assert.throws(() => endpoint.execute({}, () => undefined), /Must override a superclass method 'execute'\./);
   });
 
-  it('should remove all listeners on finalize', (done) => {
+  it('should remove all listeners on finalize', async () => {
     const endpoint = new IMTEndpoint();
     endpoint.on('log', () => undefined);
     assert.strictEqual(endpoint.listenerCount('log'), 1);
 
-    endpoint.finalize(() => {
-      assert.strictEqual(endpoint.listenerCount('log'), 0);
-      done();
-    });
+    await run((done) => endpoint.finalize(done));
+    assert.strictEqual(endpoint.listenerCount('log'), 0);
   });
 
   describe('logging', () => {
-    it('should emit debug event with the arguments array', (done) => {
+    it('should emit debug event with the arguments array', async () => {
       const endpoint = new IMTEndpoint();
-
-      endpoint.on('debug', (args) => {
-        assert.deepStrictEqual(args, ['debug message']);
-        done();
-      });
-
+      const received = onceEvent(endpoint, 'debug');
       endpoint.debug('debug message');
+      assert.deepStrictEqual(await received, ['debug message']);
     });
 
-    it('should emit log event with a formatted string', (done) => {
+    it('should emit log event with a formatted string', async () => {
       const endpoint = new IMTEndpoint();
-
-      endpoint.on('log', (message) => {
-        assert.strictEqual(message, 'log message');
-        done();
-      });
-
+      const received = onceEvent(endpoint, 'log');
       endpoint.log('log message');
+      assert.strictEqual(await received, 'log message');
     });
 
-    it('should emit log event with the Warning instance verbatim', (done) => {
+    it('should emit log event with the Warning instance verbatim', async () => {
       const endpoint = new IMTEndpoint();
       const warning = new Warning('log warning');
-
-      endpoint.on('log', (message) => {
-        assert.strictEqual(message, warning);
-        done();
-      });
-
+      const received = onceEvent(endpoint, 'log');
       endpoint.log(warning);
+      assert.strictEqual(await received, warning);
     });
 
-    it('should emit warn event with a formatted string', (done) => {
+    it('should emit warn event with a formatted string', async () => {
       const endpoint = new IMTEndpoint();
-
-      endpoint.on('warn', (message) => {
-        assert.strictEqual(message, 'warn message');
-        done();
-      });
-
+      const received = onceEvent(endpoint, 'warn');
       endpoint.warn('warn message');
+      assert.strictEqual(await received, 'warn message');
     });
 
-    it('should emit warn event with the Warning instance verbatim', (done) => {
+    it('should emit warn event with the Warning instance verbatim', async () => {
       const endpoint = new IMTEndpoint();
       const warning = new Warning('warn warning');
-
-      endpoint.on('warn', (message) => {
-        assert.strictEqual(message, warning);
-        done();
-      });
-
+      const received = onceEvent(endpoint, 'warn');
       endpoint.warn(warning);
+      assert.strictEqual(await received, warning);
     });
 
-    it('should emit log event with an Error instance verbatim', (done) => {
+    it('should emit log event with an Error instance verbatim', async () => {
       const endpoint = new IMTEndpoint();
       const error = new Error('log error');
-
-      endpoint.on('log', (message) => {
-        assert.strictEqual(message, error);
-        done();
-      });
-
+      const received = onceEvent(endpoint, 'log');
       endpoint.log(error);
+      assert.strictEqual(await received, error);
     });
 
-    it('should emit warn event with an Error instance verbatim', (done) => {
+    it('should emit warn event with an Error instance verbatim', async () => {
       const endpoint = new IMTEndpoint();
       const error = new Error('warn error');
-
-      endpoint.on('warn', (message) => {
-        assert.strictEqual(message, error);
-        done();
-      });
-
+      const received = onceEvent(endpoint, 'warn');
       endpoint.warn(error);
+      assert.strictEqual(await received, error);
     });
   });
 });
