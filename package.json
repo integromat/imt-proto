@@ -26,33 +26,30 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@eslint/js": "^9.29.0",
-    "@types/jest": "^30.0.0",
-    "@types/node": "^18.15.11",
-    "@types/request": "^2.48.12",
-    "@typescript-eslint/parser": "^8.35.0",
-    "eslint": "^9.29.0",
-    "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-prettier": "^5.5.0",
-    "jest": "^30.0.3",
-    "jest-junit": "^16.0.0",
-    "prettier": "^3.6.1",
-    "ts-jest": "^29.4.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3",
-    "typescript-eslint": "^8.35.0"
+    "@swc/cli": "0.8.1",
+    "@swc/core": "1.15.46",
+    "@types/node": "24.13.3",
+    "@types/request": "2.48.13",
+    "@vitest/coverage-v8": "4.1.10",
+    "oxfmt": "0.60.0",
+    "oxlint": "1.75.0",
+    "oxlint-tsgolint": "7.0.2001",
+    "typescript": "7.0.2",
+    "unplugin-swc": "1.5.9",
+    "vitest": "4.1.10"
   },
   "engines": {
-    "node": ">=20.19.0"
+    "node": ">=24.0.0"
   },
+  "packageManager": "pnpm@11.16.0",
   "scripts": {
-    "prepublishOnly": "npm run build && npm test",
-    "build": "tsc --build tsconfig.lib.json --clean && tsc --build tsconfig.lib.json",
-    "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
-    "test": "npm run lint && npm run test:unit",
-    "test:unit": "jest --coverage",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "prepublishOnly": "pnpm build && pnpm test",
+    "build": "rm -rf dist && swc src --out-dir dist --strip-leading-paths && tsc -p tsconfig.lib.json",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "test": "pnpm lint && pnpm test:unit",
+    "test:unit": "vitest run --coverage",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
   }
 }

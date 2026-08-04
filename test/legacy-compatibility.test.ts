@@ -178,6 +178,14 @@ describe('Legacy Compatibility', () => {
     }
   });
 
+  it('should allow defining a prototype property using .property', () => {
+    function Klass(this: any) {}
+    (Klass as any).property('answer', { value: 42, enumerable: true });
+
+    const instance = new (Klass as any)();
+    expect(instance.answer).toBe(42);
+  });
+
   it('should allow extending class using ES6 extends', () => {
     for (const extendableClass of EXTENDABLE_CLASSES) {
       class ChildClass extends extendableClass {}

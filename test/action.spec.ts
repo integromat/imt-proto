@@ -3,6 +3,7 @@ import { IMTAction } from '../src/action';
 import { DataError } from '../src/error';
 import { IMTBase } from '../src/base';
 import { Bundle, DoneWithInfoCallback } from '../src/types';
+import { run } from './helpers';
 
 class TestAction extends IMTAction {
   write(bundle: Bundle, done: DoneWithInfoCallback) {
@@ -13,66 +14,28 @@ class TestAction extends IMTAction {
 }
 
 describe('IMTAction', () => {
-  it('should operate successfully', (done) => {
-    const input = {
-      number: 1,
-    };
-
+  it('should operate successfully', async () => {
     const action = new TestAction();
-    action.initialize((err) => {
-      if (err) {
-        done(err);
-        return;
-      }
+    await run((done) => action.initialize(done));
+    const output = await run<{ result: number }>((done) => action.write({ number: 1 }, done));
 
-      action.write(input, (err, output) => {
-        if (err) {
-          done(err);
-          return;
-        }
+    assert.ok(action instanceof IMTBase);
+    assert.ok(action instanceof IMTAction);
+    assert.strictEqual(action.type, 4);
+    assert.strictEqual(output.result, 2, 'Result should be equal to 2.');
 
-        assert.ok(action instanceof IMTBase);
-        assert.ok(action instanceof IMTAction);
-        assert.strictEqual(action.type, 4);
-        assert.strictEqual(output.result, 2, 'Result should be equal to 2.');
-
-        action.commit((err) => {
-          if (err) {
-            done(err);
-            return;
-          }
-
-          action.finalize(done);
-        });
-      });
-    });
+    await run((done) => action.commit(done));
+    await run((done) => action.finalize(done));
   });
 
-  it('should fail with DataError', (done) => {
-    const input = {
-      number: 11,
-    };
-
+  it('should fail with DataError', async () => {
     const action = new TestAction();
-    action.initialize((err) => {
-      if (err) {
-        done(err);
-        return;
-      }
-
-      action.write(input, (err) => {
-        assert.ok(err, 'Write should return error.');
-        assert.ok(err instanceof DataError, 'Error should be instanceof DataError.');
-
-        action.rollback((err) => {
-          if (err) {
-            done(err);
-            return;
-          }
-
-          action.finalize(done);
-        });
-      });
-    });
+    await run((done) => action.initialize(done));
+    await assert.rejects(
+      run((done) => action.write({ number: 11 }, done)),
+      DataError,
+    );
+    await run((done) => action.rollback(done));
+    await run((done) => action.finalize(done));
   });
 });

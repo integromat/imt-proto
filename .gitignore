@@ -7,6 +7,5 @@ _site
 .vscode
 dist/
 coverage
-junit.xml
 *.tgz
 *.tsbuildinfo

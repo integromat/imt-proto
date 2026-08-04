@@ -1,44 +1,33 @@
 version: 2.1
 orbs:
-  testing-orb: integromat/testing-orb@1.3.0
+  node: circleci/node@7.2.1
   sonarqube: integromat/sonarqube-orb@2.1.1
 jobs:
   test-and-build:
-    executor:
-      name: testing-orb/default
-      tag: '20.19.0'
+    docker:
+      - image: node:24-bookworm
     steps:
-      - checkout
+      - checkout:
+          method: full
       - run:
-          command: |
-            npm ci
-          name: Install deps
+          command: corepack enable
+          name: Enable pnpm
+      - node/install-packages:
+          pkg-manager: pnpm
+          override-ci-command: pnpm install --frozen-lockfile
       - run:
-          command: npm run format:check
+          command: pnpm format:check
           name: Check formatting
       - run:
-          command: npm run lint
+          command: pnpm lint
           name: Check lint
-      - testing-orb/run_tests:
-          test_type: unit
-          command: npm run test:unit
+      - run:
+          command: pnpm test:unit
+          name: Run unit tests
       - store_artifacts:
           path: coverage/unit
       - store_test_results:
           path: coverage/unit
-      - persist_to_workspace:
-          root: .
-          paths:
-            - coverage/unit
-  sonarqube:
-    docker:
-      - image: 'cimg/base:2025.11'
-    resource_class: small
-    steps:
-      - checkout:
-          method: full
-      - attach_workspace:
-          at: .
       - sonarqube/scan
 workflows:
   build:
@@ -47,7 +36,4 @@ workflows:
           context:
             - org-default
             - testing
-      - sonarqube:
-          requires:
-            - test-and-build
-          context: sonarqube-prod
+            - sonarqube-prod

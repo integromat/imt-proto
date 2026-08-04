@@ -1,11 +1,12 @@
 import * as assert from 'assert';
 import { IMTBase, ProgressContent } from '../src/base';
+import { onceEvent, run } from './helpers';
 
 class TestModule extends IMTBase {}
 
 describe('IMTBase', () => {
   describe('progress', () => {
-    it('should emit progress event with sessionStarted content', (done) => {
+    it('should emit progress event with sessionStarted content', async () => {
       const module = new TestModule();
       const content: ProgressContent = {
         type: 'aiBrowserProgress',
@@ -13,15 +14,14 @@ describe('IMTBase', () => {
         liveViewUrl: 'https://example.com/live',
       };
 
-      module.on('progress', (received) => {
-        assert.deepStrictEqual(received, content);
-        module.finalize(done);
-      });
-
+      const received = onceEvent<ProgressContent>(module, 'progress');
       module.progress(content);
+      assert.deepStrictEqual(await received, content);
+
+      await run((done) => module.finalize(done));
     });
 
-    it('should emit progress event with step content', (done) => {
+    it('should emit progress event with step content', async () => {
       const module = new TestModule();
       const content: ProgressContent = {
         type: 'aiBrowserProgress',
@@ -31,12 +31,11 @@ describe('IMTBase', () => {
         stepType: 'tool-call',
       };
 
-      module.on('progress', (received) => {
-        assert.deepStrictEqual(received, content);
-        module.finalize(done);
-      });
-
+      const received = onceEvent<ProgressContent>(module, 'progress');
       module.progress(content);
+      assert.deepStrictEqual(await received, content);
+
+      await run((done) => module.finalize(done));
     });
   });
 });

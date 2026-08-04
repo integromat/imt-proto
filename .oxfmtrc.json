@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "singleQuote": true,
+  "printWidth": 120,
+  "quoteProps": "preserve",
+  "sortPackageJson": false,
+  "ignorePatterns": ["dist/", "coverage/", "pnpm-lock.yaml", ".circleci/", ".github/"]
+}
