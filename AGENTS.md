@@ -17,9 +17,7 @@ Every node type in a Make scenario (triggers, actions, transformers, etc.) must 
 - `IMTTransformer` → override `transform(bundle, done)`
 - `IMTAggregator`, `IMTFeeder` → extend Transformer; Feeder provides default `transform` that flattens `bundle.array`
 - `IMTListener` → override `start(done)` / `stop(done)`
-- `IMTRouter`, `IMTConverger`, `IMTConditional` — marker classes, no override needed
-- `IMTHITL` → override `execute(bundle, done)`
-- `IMTPauser` → override `pause(bundle, done)`
+- `IMTRouter`, `IMTConverger` — marker classes, no override needed
 - `IMTReturner` → override `returnData(bundle, done)`
 - `IMTStarter` → override `start(done)`
 - `IMTAgent` → Promise-based; override `getNextAction(params, resources): Promise<Action>`
@@ -36,7 +34,7 @@ Every node type in a Make scenario (triggers, actions, transformers, etc.) must 
 
 - All module methods use Node-style `(err?, result?, metadata?)` callbacks — except `IMTAgent` which uses Promises
 - `log/warn/debug/audit` on `IMTBase` emit named events (`'log'`, `'warn'`, `'debug'`, `'audit'`) — the engine subscribes to these; they do not write anywhere directly
-- `ModuleType` enum in `src/base.ts` assigns integer IDs 0–16 to each module kind; same integers mirrored as static constants on `IMTBase` (e.g., `IMTBase.MODULETYPE_ACTION`)
+- `ModuleType` enum in `src/base.ts` assigns integer IDs to each module kind (0–15, with gaps at 13/16 left by removed types); same integers mirrored as static constants on `IMTBase` (e.g., `IMTBase.MODULETYPE_ACTION`)
 - Gateway variants (`IMTGatewayTrigger`, `IMTGatewayAction`, `IMTGatewayResponder`) are empty type-marker subclasses
 - `finalize()` always calls `removeAllListeners()`; commit/rollback default to no-ops
 
