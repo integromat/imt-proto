@@ -2,6 +2,7 @@
   "$schema": "https://swc.rs/schema.json",
   "jsc": {
     "target": "es5",
+    "loose": true,
     "parser": {
       "syntax": "typescript",
       "decorators": true

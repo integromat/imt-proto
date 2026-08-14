@@ -149,6 +149,11 @@ describe('Legacy Compatibility', () => {
       const instance = new (CoffeeClass as any)();
       expect(instance).toBeInstanceOf(CoffeeClass);
       expect(instance).toBeInstanceOf(extendableClass);
+      // Instance fields set by base constructors (e.g. `type`) must land on the
+      // legacy `this`, not a detached object. `instanceof` alone doesn't catch a
+      // Reflect.construct fork — comparing the field against a native-`new`
+      // instance does. See the `loose` note in vitest.config.ts / .swcrc.
+      expect(instance.type).toBe(new (extendableClass as any)().type);
     }
   });
 
@@ -167,6 +172,10 @@ describe('Legacy Compatibility', () => {
       const instance = new (ChildClass as any)();
       expect(instance).toBeInstanceOf(ChildClass);
       expect(instance).toBeInstanceOf(extendableClass);
+      // `.inherits` + `__super__.constructor.call(this)` must initialize the
+      // base instance fields on `this` (regression guard for the SWC
+      // Reflect.construct fork that left `type` undefined).
+      expect(instance.type).toBe(new (extendableClass as any)().type);
     }
   });
 
