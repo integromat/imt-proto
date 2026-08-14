@@ -1,3 +1,4 @@
+import * as util from 'node:util';
 import '../src/global';
 import * as publicApi from '../src/index';
 
@@ -149,10 +150,6 @@ describe('Legacy Compatibility', () => {
       const instance = new (CoffeeClass as any)();
       expect(instance).toBeInstanceOf(CoffeeClass);
       expect(instance).toBeInstanceOf(extendableClass);
-      // Instance fields set by base constructors (e.g. `type`) must land on the
-      // legacy `this`, not a detached object. `instanceof` alone doesn't catch a
-      // Reflect.construct fork — comparing the field against a native-`new`
-      // instance does. See the `loose` note in vitest.config.ts / .swcrc.
       expect(instance.type).toBe(new (extendableClass as any)().type);
     }
   });
@@ -172,10 +169,35 @@ describe('Legacy Compatibility', () => {
       const instance = new (ChildClass as any)();
       expect(instance).toBeInstanceOf(ChildClass);
       expect(instance).toBeInstanceOf(extendableClass);
-      // `.inherits` + `__super__.constructor.call(this)` must initialize the
-      // base instance fields on `this` (regression guard for the SWC
-      // Reflect.construct fork that left `type` undefined).
       expect(instance.type).toBe(new (extendableClass as any)().type);
+    }
+  });
+
+  it('preserves parent field initializers when legacy code calls Base.call(this) via plain util.inherits', () => {
+    function LegacyEcho(this: any) {
+      IMTAction.call(this);
+    }
+    util.inherits(LegacyEcho, IMTAction);
+
+    const instance = new (LegacyEcho as any)();
+
+    expect(instance.type).toBe(publicApi.ModuleType.ACTION);
+  });
+
+  it('preserves parent field initializers across the whole compat matrix when legacy code calls Base.call(this) via plain util.inherits', () => {
+    // IMTHook has no field set by its own or an ancestor constructor (it only extends
+    // EventEmitter), and EventEmitter lazily self-initializes `_events` on first
+    // `.on()`/`.emit()` call - so it can't observe this bug the same way the others can.
+    for (const extendableClass of EXTENDABLE_CLASSES.filter((klass) => klass !== IMTHook)) {
+      function LegacyChild(this: any) {
+        extendableClass.call(this);
+      }
+      util.inherits(LegacyChild as any, extendableClass as any);
+
+      const instance = new (LegacyChild as any)();
+
+      expect(instance).toBeInstanceOf(extendableClass);
+      expect(instance.common).toBe(null);
     }
   });
 
