@@ -192,7 +192,7 @@ describe('Legacy Compatibility', () => {
       function LegacyChild(this: any) {
         extendableClass.call(this);
       }
-      util.inherits(LegacyChild as any, extendableClass as any);
+      util.inherits(LegacyChild, extendableClass);
 
       const instance = new (LegacyChild as any)();
 
