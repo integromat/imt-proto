@@ -16,6 +16,16 @@ export default defineConfig({
       swcrc: false,
       jsc: {
         target: 'es5',
+        // Mirror `.swcrc`. `loose` makes super-constructor calls compile to
+        // `Super.apply(this, args)` and class fields to `this.x = …` assignments
+        // instead of the spec-faithful `Reflect.construct` + `_defineProperty`
+        // helpers. That distinction is load-bearing for the CoffeeScript compat
+        // path: legacy apps invoke the super-constructor as a plain function on
+        // an existing `this`, and only the `apply`-based lowering mutates that
+        // `this` (Reflect.construct builds a detached object, dropping instance
+        // fields like `type`). Keep this in sync with `.swcrc` so tests exercise
+        // the same lowering the published lib ships.
+        loose: true,
         parser: { syntax: 'typescript', decorators: true },
         transform: { legacyDecorator: true, decoratorMetadata: true },
       },
