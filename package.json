@@ -14,6 +14,9 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
+    "./types": {
+      "types": "./src/types.ts"
+    },
     "./global": "./dist/global.js"
   },
   "files": [

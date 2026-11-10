@@ -22,6 +22,46 @@ import { ... } from '@integromat/proto';
 require('@integromat/proto/global');
 ```
 
+## Credit-cost metadata
+
+Native apps can report a complete module-cost breakdown through the existing
+`centicredits` operation metadata. The same metadata is supported by callback
+modules and an agent's `FinishAction.metadata`.
+
+```ts
+import type { MetadataList } from '@integromat/proto';
+
+const metadata = [
+  {
+    type: 'centicredits',
+    version: 1,
+    additionalParams: {
+      centicreditsConsumption: 400,
+      breakdown: [
+        { label: 'Action performed', value: 100 },
+        { label: 'AI tokens', value: 250 },
+        { label: 'Eval tokens', value: 50 },
+      ],
+    },
+  },
+] satisfies MetadataList;
+```
+
+`CreditBreakdownItem` defines each row as `{ label: string; value: number }`.
+Browser consumers can import the metadata contract with `import type` from
+`@integromat/proto/types`; this entry point exposes types without runtime classes.
+Values are non-negative integer centicredits, and labels must be non-empty and
+unique within the array. The producer includes every module-cost component,
+including the base operation charge, so the rows describe the aggregate module
+cost. Other charges, such as AI mapping costs, are separate from this breakdown.
+
+The array is optional and does not change billing: the engine still evaluates
+the module's `centicreditsFormula` to calculate its charge. Apps without a
+breakdown keep their existing behavior. For own-key connections, omit token
+rows when token-credit billing does not apply; an operation-only breakdown is
+valid. Consumers must validate metadata received over the network and use the
+recorded charged total when the breakdown is unavailable or a charge is waived.
+
 ## License
 
 Copyright (c) 2014-2020 Integromat

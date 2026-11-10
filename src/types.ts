@@ -9,10 +9,24 @@ export type Link = {
   additionalParams?: Record<string, any>;
 };
 
+/** One display row in a module's complete credit-cost breakdown. */
+export type CreditBreakdownItem = {
+  /** Non-empty display label, unique within the breakdown. */
+  label: string;
+  /** Non-negative integer cost in centicredits (100 centicredits = 1 credit). */
+  value: number;
+};
+
 export type Centicredits = {
   type: 'centicredits';
   additionalParams: {
     centicreditsConsumption?: number;
+    /**
+     * Optional complete module-cost breakdown, including any base operation charge.
+     * Entries describe the aggregate cost; they do not create additional charges.
+     * Omit token rows when token-credit billing does not apply (e.g. own-key connections).
+     */
+    breakdown?: CreditBreakdownItem[];
     [key: string]: any;
   };
 };
